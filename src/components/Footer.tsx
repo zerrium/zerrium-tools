@@ -1,8 +1,8 @@
 'use client'
 
-import {Box, chakra, Container, Stack, Text, useColorModeValue, VisuallyHidden,} from '@chakra-ui/react'
-import {FaGithub} from 'react-icons/fa'
-import {ReactNode} from 'react'
+import { Box, chakra, Container, Stack, Text, useColorModeValue, VisuallyHidden, } from '@chakra-ui/react'
+import { FaGithub } from 'react-icons/fa'
+import { ReactNode } from 'react'
 
 const SocialButton = ({
                         children,
@@ -44,10 +44,10 @@ export function Footer() {
         as={Stack}
         maxW={'6xl'}
         py={4}
-        direction={{base: 'column', md: 'row'}}
+        direction={{ base: 'column', md: 'row' }}
         spacing={4}
-        justify={{base: 'center', md: 'space-between'}}
-        align={{base: 'center', md: 'center'}}>
+        justify={{ base: 'center', md: 'space-between' }}
+        align={{ base: 'center', md: 'center' }}>
         <Text>© 2023 Zerrium. All rights reserved.</Text>
         <Stack direction={'row'} spacing={6}>
           <SocialButton label={'Twitter'} href={'#'}>

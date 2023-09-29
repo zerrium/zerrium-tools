@@ -1,4 +1,4 @@
-import React, {ReactText} from 'react'
+import React from 'react'
 import {
   Box,
   BoxProps,
@@ -15,9 +15,9 @@ import {
   useColorModeValue,
   useDisclosure
 } from "@chakra-ui/react"
-import {ColorModeSwitcher} from "./ColorModeSwitcher"
-import {FiCompass, FiHome, FiMenu, FiSettings, FiStar, FiTrendingUp,} from 'react-icons/fi'
-import {IconType} from 'react-icons'
+import { ColorModeSwitcher } from "../ColorModeSwitcher"
+import { FiCompass, FiHome, FiMenu, FiSettings, FiStar, FiTrendingUp, } from 'react-icons/fi'
+import { IconType } from 'react-icons'
 import { Footer } from "./Footer"
 
 interface LinkItemProps {
@@ -26,19 +26,19 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  {name: 'Home', icon: FiHome},
-  {name: 'Trending', icon: FiTrendingUp},
-  {name: 'Explore', icon: FiCompass},
-  {name: 'Favourites', icon: FiStar},
-  {name: 'Settings', icon: FiSettings},
+  { name: 'Home', icon: FiHome },
+  { name: 'Trending', icon: FiTrendingUp },
+  { name: 'Explore', icon: FiCompass },
+  { name: 'Favourites', icon: FiStar },
+  { name: 'Settings', icon: FiSettings },
 ]
 
-export function Page() {
-  const {isOpen, onOpen, onClose} = useDisclosure()
+const Page: React.FC<React.PropsWithChildren> = ({ children }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <ChakraProvider theme={theme}>
       <Box>
-        <SidebarContent onClose={() => onClose} display={{base: 'none', md: 'block'}}/>
+        <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }}/>
         <Drawer
           isOpen={isOpen}
           placement="left"
@@ -51,21 +51,15 @@ export function Page() {
           </DrawerContent>
         </Drawer>
         {/* mobilenav */}
-        <MobileNav display={{base: 'flex', md: 'none'}} onOpen={onOpen}/>
-        <Box ml={{base: 0, md: 60}}>
+        <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen}/>
+        <Box ml={{ base: 0, md: 60 }}>
           <Box position="absolute" right="0" zIndex="9999" p="5" display={{ base: "none", md: "block" }}>
             <ColorModeSwitcher/>
           </Box>
           <Box p="15" pb="120">
-            {/* Content */}
-            <Text>AAA</Text>
-            <Text>AAA</Text>
-            <Text>AAA</Text>
-            <Text>AAA</Text>
-            <Text>AAA</Text>
-            <Text>AAA</Text>
+            {children}
           </Box>
-          <Box position="fixed" bottom="0" left="0" right="0" ml={{base: 0, md: 60}}>
+          <Box position="fixed" bottom="0" left="0" right="0" ml={{ base: 0, md: 60 }}>
             <Footer/>
           </Box>
         </Box>
@@ -78,13 +72,13 @@ interface SidebarProps extends BoxProps {
   onClose: () => void
 }
 
-const SidebarContent = ({onClose, ...rest}: SidebarProps) => {
+const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
       borderRight="1px"
       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-      w={{base: 'full', md: 60}}
+      w={{ base: 'full', md: 60 }}
       pos="fixed"
       h="full"
       {...rest}>
@@ -92,7 +86,7 @@ const SidebarContent = ({onClose, ...rest}: SidebarProps) => {
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
           Zerrium Tools
         </Text>
-        <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
+        <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose}/>
       </Flex>
       {LinkItems.map((link) => (
         <NavItem key={link.name} icon={link.icon}>
@@ -105,16 +99,16 @@ const SidebarContent = ({onClose, ...rest}: SidebarProps) => {
 
 interface NavItemProps extends FlexProps {
   icon: IconType
-  children: ReactText
+  children: string | number
 }
 
-const NavItem = ({icon, children, ...rest}: NavItemProps) => {
+const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
   return (
     <Box
       as="a"
       href="#"
-      style={{textDecoration: 'none'}}
-      _focus={{boxShadow: 'none'}}>
+      style={{ textDecoration: 'none' }}
+      _focus={{ boxShadow: 'none' }}>
       <Flex
         align="center"
         p="4"
@@ -147,11 +141,11 @@ interface MobileProps extends FlexProps {
   onOpen: () => void
 }
 
-const MobileNav = ({onOpen, ...rest}: MobileProps) => {
+const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   return (
     <Flex
-      ml={{base: 0, md: 60}}
-      px={{base: 4, md: 24}}
+      ml={{ base: 0, md: 60 }}
+      px={{ base: 4, md: 24 }}
       height="20"
       alignItems="center"
       bg={useColorModeValue('white', 'gray.900')}
@@ -175,3 +169,5 @@ const MobileNav = ({onOpen, ...rest}: MobileProps) => {
     </Flex>
   )
 }
+
+export default Page;

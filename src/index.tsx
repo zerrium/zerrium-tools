@@ -1,9 +1,9 @@
-import {ColorModeScript} from "@chakra-ui/react"
+import { ColorModeScript } from "@chakra-ui/react"
 import * as React from "react"
 import * as ReactDOM from "react-dom/client"
-import { Page } from "./Page"
 import reportWebVitals from "./reportWebVitals"
 import * as serviceWorker from "./serviceWorker"
+import { Test } from "./pages/Test";
 
 
 const container = document.getElementById("root")
@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(container)
 root.render(
   <React.StrictMode>
     <ColorModeScript/>
-    <Page/>
+    <Test/>
   </React.StrictMode>,
 )
 
