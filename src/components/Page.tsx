@@ -15,7 +15,7 @@ import {
   useColorModeValue,
   useDisclosure
 } from "@chakra-ui/react"
-import { ColorModeSwitcher } from "../ColorModeSwitcher"
+import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { FiCompass, FiHome, FiMenu, FiSettings, FiStar, FiTrendingUp, } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import { Footer } from "./Footer"
