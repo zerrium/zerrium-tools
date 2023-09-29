@@ -1,5 +1,9 @@
 import React from 'react'
 import {
+  Accordion,
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
   Box,
   BoxProps,
   ChakraProvider,
@@ -16,22 +20,22 @@ import {
   useDisclosure
 } from "@chakra-ui/react"
 import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { FiCompass, FiHome, FiMenu, FiSettings, FiStar, FiTrendingUp, } from 'react-icons/fi'
+import { FiChevronDown, FiMenu } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import { Footer } from "./Footer"
 
-interface LinkItemProps {
-  name: string
-  icon: IconType
-}
+// interface LinkItemProps {
+//   name: string
+//   icon: IconType
+// }
 
-const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome },
-  { name: 'Trending', icon: FiTrendingUp },
-  { name: 'Explore', icon: FiCompass },
-  { name: 'Favourites', icon: FiStar },
-  { name: 'Settings', icon: FiSettings },
-]
+// const LinkItems: Array<LinkItemProps> = [
+//   { name: 'Home', icon: FiHome },
+//   { name: 'Trending', icon: FiTrendingUp },
+//   { name: 'Explore', icon: FiCompass },
+//   { name: 'Favourites', icon: FiStar },
+//   { name: 'Settings', icon: FiSettings },
+// ]
 
 const Page: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -51,12 +55,12 @@ const Page: React.FC<React.PropsWithChildren> = ({ children }) => {
           </DrawerContent>
         </Drawer>
         {/* mobilenav */}
-        <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen}/>
+        <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} position="fixed" w="100%"/>
         <Box ml={{ base: 0, md: 60 }}>
-          <Box position="absolute" right="0" zIndex="9999" p="5" display={{ base: "none", md: "block" }}>
+          <Box position="fixed" right="0" zIndex="9999" p="5" display={{ base: "none", md: "block" }}>
             <ColorModeSwitcher/>
           </Box>
-          <Box p="15" pb="120">
+          <Box px="25" pb="120" pt={{ base: "100", md: "15"}}>
             {children}
           </Box>
           <Box position="fixed" bottom="0" left="0" right="0" ml={{ base: 0, md: 60 }}>
@@ -81,24 +85,77 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       w={{ base: 'full', md: 60 }}
       pos="fixed"
       h="full"
-      {...rest}>
+      {...rest}
+      overflowY="scroll">
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
           Zerrium Tools
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose}/>
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
-          {link.name}
+      <Box>
+        <NavItem key="aaaa">
+          Home
         </NavItem>
-      ))}
+        <Accordion allowMultiple width="100%" maxW="lg" rounded="lg">
+          <AccordionItem>
+            <AccordionButton
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              p={4}
+              _hover={{
+                bg: 'green.300',
+                color: 'white',
+              }}>
+              <Text fontSize="md">Security Tools</Text>
+              <Icon as={FiChevronDown}/>
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <NavItem key="aaaa">
+                Hash Calculator
+              </NavItem>
+              <NavItem key="aaaa">
+                UUID Generator
+              </NavItem>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionButton
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              p={4}
+              _hover={{
+                bg: 'green.300',
+                color: 'white',
+              }}>
+              <Text fontSize="md">Encoding Tools</Text>
+              <Icon as={FiChevronDown}/>
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <NavItem key="aaaa">
+                URL Encoder
+              </NavItem>
+              <NavItem key="aaaa">
+                Text Encoder
+              </NavItem>
+              <NavItem key="aaaa">
+                Image Encoder
+              </NavItem>
+              <NavItem key="aaaa">
+                File Encoder
+              </NavItem>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+      </Box>
     </Box>
   )
 }
 
 interface NavItemProps extends FlexProps {
-  icon: IconType
+  icon?: IconType
   children: string | number
 }
 
@@ -112,12 +169,10 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
       <Flex
         align="center"
         p="4"
-        mx="4"
-        borderRadius="lg"
         role="group"
         cursor="pointer"
         _hover={{
-          bg: 'cyan.400',
+          bg: 'green.300',
           color: 'white',
         }}
         {...rest}>
