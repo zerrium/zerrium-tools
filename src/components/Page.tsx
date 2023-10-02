@@ -38,7 +38,9 @@ const LinkItems: Array<LinkItemProps> = [
     name: 'Security Tools', icon: FiLock,
     child: [
       { name: "Hash Calculator", link: "hash-calculator" },
-      { name: "UUID Generator", link: "uuid-generator" }
+      { name: "UUID Generator", link: "uuid-generator" },
+      { name: "UUID Validator", link: "uuid-validator" },
+      { name: "Password Generator", link: "password-generator" }
     ]
   },
   {
@@ -48,6 +50,16 @@ const LinkItems: Array<LinkItemProps> = [
       { name: "Text Encoder", link: "text-encoder" },
       { name: "Image Encoder", link: "image-encoder" },
       { name: "File Encoder", link: "file-encoder" }
+    ]
+  },
+  {
+    name: 'Text Tools',
+    child: [
+      { name: "Text Comparator", link: "text-comparator" },
+      { name: "JSON Beautifier", link: "json-beautifier" },
+      { name: "XML Beautifier", link: "xml-beautifier" },
+      { name: "YAML Validator", link: "yaml-validator" },
+      { name: "Regex Checker", link: "regex-checker" },
     ]
   }
 ]
