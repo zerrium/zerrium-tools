@@ -7,7 +7,6 @@ import {
   AccordionPanel,
   Box,
   BoxProps,
-  ChakraProvider,
   CloseButton,
   Drawer,
   DrawerContent,
@@ -16,7 +15,6 @@ import {
   Icon,
   IconButton,
   Text,
-  theme,
   useColorModeValue,
   useDisclosure
 } from "@chakra-ui/react"
@@ -44,36 +42,34 @@ const Page: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
-    <ChakraProvider theme={theme}>
-      <Box>
-        <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }}/>
-        <Drawer
-          isOpen={isOpen}
-          placement="left"
-          onClose={onClose}
-          returnFocusOnClose={false}
-          onOverlayClick={onClose}
-          size="full">
-          <DrawerContent>
-            <SidebarContent onClose={onClose}/>
-          </DrawerContent>
-        </Drawer>
-        {/* mobilenav */}
-        <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} position="fixed" w="100%"/>
-        <Box ml={{ base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
-          <Box position="fixed" right="0" zIndex="9999" p="5" display={{ base: "none", md: "block" }}>
-            <ColorModeSwitcher/>
-          </Box>
-          <Box px="25" pb="120" pt={{ base: "100", md: "15" }}>
-            {children}
-          </Box>
-          <Box position="absolute" bottom="0" left="0" right="0"
-               ml={{ base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
-            <Footer/>
-          </Box>
+    <Box>
+      <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }}/>
+      <Drawer
+        isOpen={isOpen}
+        placement="left"
+        onClose={onClose}
+        returnFocusOnClose={false}
+        onOverlayClick={onClose}
+        size="full">
+        <DrawerContent>
+          <SidebarContent onClose={onClose}/>
+        </DrawerContent>
+      </Drawer>
+      {/* mobilenav */}
+      <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} position="fixed" w="100%"/>
+      <Box ml={{ base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
+        <Box position="fixed" right="0" zIndex="9999" p="5" display={{ base: "none", md: "block" }}>
+          <ColorModeSwitcher/>
+        </Box>
+        <Box px="25" pb="120" pt={{ base: "100", md: "15" }}>
+          {children}
+        </Box>
+        <Box position="absolute" bottom="0" left="0" right="0"
+             ml={{ base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
+          <Footer/>
         </Box>
       </Box>
-    </ChakraProvider>
+    </Box>
   )
 }
 
@@ -214,7 +210,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
       justifyContent="flex-start"
-      {...rest}>
+      {...rest}
+      zIndex={999}>
       <IconButton
         variant="outline"
         onClick={onOpen}
