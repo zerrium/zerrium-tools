@@ -2,6 +2,7 @@ import { IconType } from "react-icons";
 import { FiHome, FiLock } from "react-icons/fi";
 import { ReactElement } from "react";
 import { Home } from "./pages/Home";
+import { UuidGenerator } from "./pages/UuidGenerator";
 
 interface LinkItemProps {
   name: string
@@ -17,7 +18,7 @@ export const LinkItems: Array<LinkItemProps> = [
     name: 'Security Tools', icon: FiLock,
     child: [
       { name: "Hash Calculator", link: "hash-calculator", element: <Home/> },
-      { name: "UUID Generator", link: "uuid-generator", element: <Home/> },
+      { name: "UUID Generator", link: "uuid-generator", element: <UuidGenerator/> },
       { name: "UUID Validator", link: "uuid-validator", element: <Home/> },
       { name: "Password Generator", link: "password-generator", element: <Home/> }
     ]
