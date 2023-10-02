@@ -51,8 +51,8 @@ export function Footer() {
         align={{ base: 'center', md: 'center' }}>
         <Box>
           <Text fontSize="12">© 2023 Zerrium. All rights reserved.</Text>
-          <Text fontSize="12">Developed using <a href="https://react.dev/" target="_blank">ReactJS</a> and <a
-            href="https://chakra-ui.com/" target="_blank">ChakraUI</a></Text>
+          <Text fontSize="12">Developed using <a href="https://react.dev/" target="_blank" rel="noreferrer">ReactJS</a> and <a
+            href="https://chakra-ui.com/" target="_blank" rel="noreferrer">ChakraUI</a></Text>
         </Box>
         <Stack direction={'row'} spacing={6}>
           <SocialButton label={'GitHub'} href={'https://github.com/zerrium/zerrium-tools'}>

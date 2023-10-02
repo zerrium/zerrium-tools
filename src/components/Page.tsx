@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Accordion,
   AccordionButton,
+  AccordionIcon,
   AccordionItem,
   AccordionPanel,
   Box,
@@ -20,31 +21,52 @@ import {
   useDisclosure
 } from "@chakra-ui/react"
 import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { FiChevronDown, FiHome, FiLock, FiMenu } from 'react-icons/fi'
+import { FiHome, FiLock, FiMenu } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import { Footer } from "./Footer"
 
 interface LinkItemProps {
   name: string
   icon?: IconType
-  child?: string[]
+  child?: { name: string, link: string }[]
+  link?: string
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome },
+  { name: 'Home', icon: FiHome, link: "home" },
   {
     name: 'Security Tools', icon: FiLock,
-    child: ["Hash Calculator", "UUID Generator"]
+    child: [
+      { name: "Hash Calculator", link: "hash-calculator" },
+      { name: "UUID Generator", link: "uuid-generator" }
+    ]
   },
   {
     name: 'Encoding Tools',
-    child: ["URL Encoder", "Text Encoder", "Image Encoder", "File Encoder"]
+    child: [
+      { name: "URL Encoder", link: "url-encoder" },
+      { name: "Text Encoder", link: "text-encoder" },
+      { name: "Image Encoder", link: "image-encoder" },
+      { name: "File Encoder", link: "file-encoder" }
+    ]
   }
 ]
 
+const findAccordationIndex = (url: string) => {
+  // @ts-ignore
+  const a = LinkItems.filter((link) => link.child).map((i) => i.child.map((j) => j.link))
+  let temp = -1
+  a.forEach((i) => {
+    const j = i.indexOf(url)
+    if(j !== -1) {
+      temp = j
+    }
+  })
+  return temp
+}
+
 const Page: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const link = window.location.pathname.replace("/", "")
 
   return (
     <ChakraProvider theme={theme}>
@@ -70,7 +92,8 @@ const Page: React.FC<React.PropsWithChildren> = ({ children }) => {
           <Box px="25" pb="120" pt={{ base: "100", md: "15" }}>
             {children}
           </Box>
-          <Box position="absolute" bottom="0" left="0" right="0" ml={{ base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
+          <Box position="absolute" bottom="0" left="0" right="0"
+               ml={{ base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
             <Footer/>
           </Box>
         </Box>
@@ -84,6 +107,9 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const url = window.location.pathname.replace("/", "")
+  const activeColor = useColorModeValue("green.200", "green.800")
+
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -101,7 +127,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose}/>
       </Flex>
       <Box>
-        <Accordion allowMultiple width="100%" maxW="lg" rounded="lg">
+        <Accordion allowMultiple width="100%" maxW="lg" rounded="lg" defaultIndex={ [findAccordationIndex(url)] }>
           {LinkItems.map((link) => (
             <React.Fragment key={link.name}>
               {link.child ? (
@@ -133,18 +159,20 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                         <Text ml="8" fontSize="md">{link.name}</Text>
                       )}
                     </Box>
-                    <Icon as={FiChevronDown}/>
+                    <AccordionIcon/>
                   </AccordionButton>
                   <AccordionPanel pb={4}>
                     {link.child.map((child) => (
-                      <NavItem key={child}>
-                        {child}
+                      <NavItem key={child.name} href={child.link} fontWeight={ url===child.link ? "bold" : "none"} background={ url===child.link ? activeColor : "none"}>
+                        {child.name}
                       </NavItem>
                     ))}
                   </AccordionPanel>
                 </AccordionItem>
               ) : (
-                <NavItem key={link.name} icon={link?.icon} ps={link.icon ? "4" : "12"}>
+                <NavItem key={link.name} icon={link?.icon} ps={link.icon ? "4" : "12"} href={link.link || "#"}
+                         fontWeight={ url===link.link ? "bold" : "none"}
+                         background={ url===link.link ? activeColor : "none"}>
                   {link.name}
                 </NavItem>
               )}
@@ -158,14 +186,15 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
 interface NavItemProps extends FlexProps {
   icon?: IconType
+  href?: string
   children: string | number
 }
 
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
   return (
     <Box
       as="a"
-      href="#"
+      href={href || "#"}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}>
       <Flex
