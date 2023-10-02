@@ -4,6 +4,7 @@ import * as ReactDOM from "react-dom/client"
 import reportWebVitals from "./reportWebVitals"
 import * as serviceWorker from "./serviceWorker"
 import { Home } from "./pages/Home";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 
 const container = document.getElementById("root")
@@ -13,7 +14,12 @@ const root = ReactDOM.createRoot(container)
 root.render(
   <React.StrictMode>
     <ColorModeScript/>
-    <Home/>
+    <BrowserRouter>
+      <Routes>
+        <Route path="home" element={<Home/>}/>
+        <Route index element={<Navigate to="home"/>}/>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
 )
 
