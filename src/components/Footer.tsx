@@ -15,6 +15,7 @@ const SocialButton = ({
 }) => {
   return (
     <chakra.button
+      target="_blank"
       bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
       rounded={'full'}
       w={8}
@@ -48,9 +49,13 @@ export function Footer() {
         spacing={4}
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}>
-        <Text>© 2023 Zerrium. All rights reserved.</Text>
+        <Box>
+          <Text fontSize="12">© 2023 Zerrium. All rights reserved.</Text>
+          <Text fontSize="12">Developed using <a href="https://react.dev/" target="_blank">ReactJS</a> and <a
+            href="https://chakra-ui.com/" target="_blank">ChakraUI</a></Text>
+        </Box>
         <Stack direction={'row'} spacing={6}>
-          <SocialButton label={'Twitter'} href={'#'}>
+          <SocialButton label={'GitHub'} href={'https://github.com/zerrium/zerrium-tools'}>
             <FaGithub/>
           </SocialButton>
         </Stack>

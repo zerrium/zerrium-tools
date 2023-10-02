@@ -10,7 +10,7 @@ export function Home() {
           as={Box}
           textAlign={'center'}
           spacing={{ base: 8, md: 14 }}
-          py={{ base: 20, md: 36 }}>
+          py={{ base: "10%", md: "12%", lg: "15%", xl: "17%", "2xl": "35%" }}>
           <Heading
             fontWeight={700}
             fontSize={{ base: '5xl', md: '6xl' }}

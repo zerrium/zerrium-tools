@@ -44,6 +44,8 @@ const LinkItems: Array<LinkItemProps> = [
 
 const Page: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const link = window.location.pathname.replace("/", "")
+
   return (
     <ChakraProvider theme={theme}>
       <Box>
@@ -61,14 +63,14 @@ const Page: React.FC<React.PropsWithChildren> = ({ children }) => {
         </Drawer>
         {/* mobilenav */}
         <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} position="fixed" w="100%"/>
-        <Box ml={{ base: 0, md: 60 }}>
+        <Box ml={{ base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
           <Box position="fixed" right="0" zIndex="9999" p="5" display={{ base: "none", md: "block" }}>
             <ColorModeSwitcher/>
           </Box>
           <Box px="25" pb="120" pt={{ base: "100", md: "15" }}>
             {children}
           </Box>
-          <Box position="fixed" bottom="0" left="0" right="0" ml={{ base: 0, md: 60 }}>
+          <Box position="absolute" bottom="0" left="0" right="0" ml={{ base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
             <Footer/>
           </Box>
         </Box>
@@ -87,7 +89,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       bg={useColorModeValue('white', 'gray.900')}
       borderRight="1px"
       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-      w={{ base: 'full', md: 60 }}
+      w={{ base: 'full', md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}
       pos="fixed"
       h="full"
       {...rest}
@@ -101,9 +103,9 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       <Box>
         <Accordion allowMultiple width="100%" maxW="lg" rounded="lg">
           {LinkItems.map((link) => (
-            <>
+            <React.Fragment key={link.name}>
               {link.child ? (
-                <AccordionItem>
+                <AccordionItem key={link.name}>
                   <AccordionButton
                     display="flex"
                     alignItems="center"
@@ -146,7 +148,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                   {link.name}
                 </NavItem>
               )}
-            </>
+            </React.Fragment>
           ))}
         </Accordion>
       </Box>
@@ -199,7 +201,7 @@ interface MobileProps extends FlexProps {
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   return (
     <Flex
-      ml={{ base: 0, md: 60 }}
+      ml={{ base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}
       px={{ base: 4, md: 24 }}
       height="20"
       alignItems="center"
