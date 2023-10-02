@@ -21,48 +21,11 @@ import {
   useDisclosure
 } from "@chakra-ui/react"
 import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { FiHome, FiLock, FiMenu } from 'react-icons/fi'
+import { FiMenu } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import { Footer } from "./Footer"
+import { LinkItems } from "../routes";
 
-interface LinkItemProps {
-  name: string
-  icon?: IconType
-  child?: { name: string, link: string }[]
-  link?: string
-}
-
-const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome, link: "home" },
-  {
-    name: 'Security Tools', icon: FiLock,
-    child: [
-      { name: "Hash Calculator", link: "hash-calculator" },
-      { name: "UUID Generator", link: "uuid-generator" },
-      { name: "UUID Validator", link: "uuid-validator" },
-      { name: "Password Generator", link: "password-generator" }
-    ]
-  },
-  {
-    name: 'Encoding Tools',
-    child: [
-      { name: "URL Encoder", link: "url-encoder" },
-      { name: "Text Encoder", link: "text-encoder" },
-      { name: "Image Encoder", link: "image-encoder" },
-      { name: "File Encoder", link: "file-encoder" }
-    ]
-  },
-  {
-    name: 'Text Tools',
-    child: [
-      { name: "Text Comparator", link: "text-comparator" },
-      { name: "JSON Beautifier", link: "json-beautifier" },
-      { name: "XML Beautifier", link: "xml-beautifier" },
-      { name: "YAML Validator", link: "yaml-validator" },
-      { name: "Regex Checker", link: "regex-checker" },
-    ]
-  }
-]
 
 const findAccordationIndex = (url: string) => {
   // @ts-ignore
@@ -70,8 +33,8 @@ const findAccordationIndex = (url: string) => {
   let temp = -1
   a.forEach((i) => {
     const j = i.indexOf(url)
-    if(j !== -1) {
-      temp = j
+    if (j !== -1) {
+      temp = a.indexOf(i)
     }
   })
   return temp
@@ -139,7 +102,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose}/>
       </Flex>
       <Box>
-        <Accordion allowMultiple width="100%" maxW="lg" rounded="lg" defaultIndex={ [findAccordationIndex(url)] }>
+        <Accordion allowMultiple width="100%" maxW="lg" rounded="lg" defaultIndex={[findAccordationIndex(url)]}>
           {LinkItems.map((link) => (
             <React.Fragment key={link.name}>
               {link.child ? (
@@ -175,7 +138,8 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                   </AccordionButton>
                   <AccordionPanel pb={4}>
                     {link.child.map((child) => (
-                      <NavItem key={child.name} href={child.link} fontWeight={ url===child.link ? "bold" : "none"} background={ url===child.link ? activeColor : "none"}>
+                      <NavItem key={child.name} href={child.link} fontWeight={url === child.link ? "bold" : "none"}
+                               background={url === child.link ? activeColor : "none"}>
                         {child.name}
                       </NavItem>
                     ))}
@@ -183,8 +147,8 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 </AccordionItem>
               ) : (
                 <NavItem key={link.name} icon={link?.icon} ps={link.icon ? "4" : "12"} href={link.link || "#"}
-                         fontWeight={ url===link.link ? "bold" : "none"}
-                         background={ url===link.link ? activeColor : "none"}>
+                         fontWeight={url === link.link ? "bold" : "none"}
+                         background={url === link.link ? activeColor : "none"}>
                   {link.name}
                 </NavItem>
               )}
