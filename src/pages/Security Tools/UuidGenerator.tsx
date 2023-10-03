@@ -1,4 +1,4 @@
-import Page from "../components/Page";
+import Page from "../../components/Page";
 // @ts-ignore
 import { v4 as uuidv4 } from "uuid";
 import React, { useState } from "react";

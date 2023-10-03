@@ -2,9 +2,9 @@ import { IconType } from "react-icons";
 import { FiHome, FiLock } from "react-icons/fi";
 import { ReactElement } from "react";
 import { Home } from "./pages/Home";
-import { UuidGenerator } from "./pages/UuidGenerator";
-import { UuidValidator } from "./pages/UuidValidator";
-import { PasswordGenerator } from "./pages/PasswordGenerator";
+import { UuidGenerator } from "./pages/Security Tools/UuidGenerator";
+import { UuidValidator } from "./pages/Security Tools/UuidValidator";
+import { PasswordGenerator } from "./pages/Security Tools/PasswordGenerator";
 
 interface LinkItemProps {
   name: string

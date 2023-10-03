@@ -1,4 +1,4 @@
-import Page from "../components/Page";
+import Page from "../../components/Page";
 // @ts-ignore
 import { validate } from "uuid";
 import React, { ChangeEvent, useEffect, useState } from "react";
