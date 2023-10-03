@@ -342,9 +342,9 @@ export function PasswordGenerator() {
                 URL-friendy symbols
               </Checkbox>
             </FormControl>
-            <Text mt={3}>Note: this password generator is based on <a
+            <Text mt={3} textAlign="justify">Note: this password generator is based on <a
               href="https://nodejs.org/api/crypto.html#crypto_crypto_randomint_min_max_callback" target="_blank"
-              rel="noreferrer"><u>crypto module</u></a> and therefore is claimed to be "cryptographically secure"</Text>
+              rel="noreferrer"><u>crypto module</u></a> and it is claimed to be "cryptographically secure" which is <b>not guaranteed</b> 100% but still secure enough</Text>
           </Stack>
           <Stack
             spacing={4}
