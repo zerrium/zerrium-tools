@@ -127,7 +127,7 @@ export function UuidGenerator() {
             </Heading>
             <FormControl id="uuidMultiple">
               <Stack direction='row'>
-                <Text mx={3} mt={1} align="center">Number of UUIDs: </Text>
+                <Text mx={3} mt="1.5%" align="center">Number of UUIDs </Text>
                 <NumberInput
                   value={numberOfUuid}
                   min={2}
