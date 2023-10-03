@@ -1,0 +1,8 @@
+<Files ~ "(\.env|\.htaccess|\.json|\.lock|\.sql)$">
+Order allow,deny
+Deny from all
+</Files>
+Options -MultiViews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.html [QSA,L]
