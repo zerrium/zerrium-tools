@@ -42,7 +42,6 @@ export function UuidGenerator() {
   const onChangeNumberOfUuid = (e: string) => {
     if(e.length !== 0) {
       setNumberOfUuid(e as unknown as number)
-      console.log(e)
     }
   }
 
