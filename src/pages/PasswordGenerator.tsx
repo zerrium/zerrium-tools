@@ -81,13 +81,25 @@ export function PasswordGenerator() {
   }
 
   const generatePassword = async () => {
+    const noAlphabet = !isUppercase && !isLowercase
+
     const minNum: number = isNumber ? minimumNumbers : 0
-    const maxNum: number = isNumber ? (passwordLength - (isSpecial ? minimumSpecials : 0) - 3) : 0
-    const numLength: number = generateNumber(minNum, maxNum)
+    const maxNum: number = isNumber ? (
+      passwordLength - (isSpecial ? minimumSpecials : 0) - 3
+    ) : 0
+    const numLength: number = noAlphabet ? (
+      isNumber ? (
+        isSpecial ? generateNumber(minimumNumbers, passwordLength - minimumSpecials) : passwordLength
+      ) : 0
+    ) : generateNumber(minNum, maxNum)
 
     const minSpecial: number = isSpecial ? minimumSpecials : 0
-    const maxSpecial: number = isSpecial ? (passwordLength - (isNumber ? numLength : 0) - 3) : 0
-    const specialLength: number = generateNumber(minSpecial, maxSpecial)
+    const maxSpecial: number = isSpecial ? (
+      passwordLength - (isNumber ? numLength : 0) - 3
+    ) : 0
+    const specialLength: number = noAlphabet ? (
+      passwordLength - (isNumber ? numLength : 0)
+    ) : generateNumber(minSpecial, maxSpecial)
 
     const remainder = passwordLength - numLength - specialLength
     const upperLength = isUppercase ? (remainder - (isLowercase ? generateNumber(1, Math.min(remainder, (remainder - 2))) : 0)) : 0
@@ -122,7 +134,7 @@ export function PasswordGenerator() {
     }
 
     let results = [...lowerResults, ...upperResults, ...numberResults, ...specialResults]
-    for(let i=0; i<generateNumber(1,3); i++) {
+    for (let i = 0; i < generateNumber(1, 3); i++) {
       results = await secureShuffle(results)
     }
 
@@ -152,25 +164,25 @@ export function PasswordGenerator() {
   }
 
   const onChangeNumberOfPassword = (e: string) => {
-    if(e.length !== 0) {
+    if (e.length !== 0) {
       setNumberOfPassword(e as unknown as number)
     }
   }
 
   const onChangeOptionPasswordLength = (e: string) => {
-    if(e.length !== 0) {
+    if (e.length !== 0) {
       setPasswordLength(e as unknown as number)
     }
   }
 
   const onChangeOptionMinimumNumbers = (e: string) => {
-    if(e.length !== 0) {
+    if (e.length !== 0) {
       setMinimumNumbers(e as unknown as number)
     }
   }
 
   const onChangeOptionMinimumSpecials = (e: string) => {
-    if(e.length !== 0) {
+    if (e.length !== 0) {
       setMinimumSpecials(e as unknown as number)
     }
   }
@@ -246,8 +258,8 @@ export function PasswordGenerator() {
                     onChange={onChangeOptionPasswordLength}>
                     <NumberInputField/>
                     <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
+                      <NumberIncrementStepper/>
+                      <NumberDecrementStepper/>
                     </NumberInputStepper>
                   </NumberInput>
                 </Stack>
@@ -268,8 +280,8 @@ export function PasswordGenerator() {
                     isDisabled={!isNumber}>
                     <NumberInputField/>
                     <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
+                      <NumberIncrementStepper/>
+                      <NumberDecrementStepper/>
                     </NumberInputStepper>
                   </NumberInput>
                 </Stack>
@@ -290,8 +302,8 @@ export function PasswordGenerator() {
                     isDisabled={!isSpecial}>
                     <NumberInputField/>
                     <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
+                      <NumberIncrementStepper/>
+                      <NumberDecrementStepper/>
                     </NumberInputStepper>
                   </NumberInput>
                 </Stack>
@@ -330,7 +342,9 @@ export function PasswordGenerator() {
                 URL-friendy symbols
               </Checkbox>
             </FormControl>
-            <Text mt={3}>Note: this password generator is based on <a href="https://nodejs.org/api/crypto.html#crypto_crypto_randomint_min_max_callback" target="_blank" rel="noreferrer"><u>crypto module</u></a> and therefore is claimed to be "cryptographically secure"</Text>
+            <Text mt={3}>Note: this password generator is based on <a
+              href="https://nodejs.org/api/crypto.html#crypto_crypto_randomint_min_max_callback" target="_blank"
+              rel="noreferrer"><u>crypto module</u></a> and therefore is claimed to be "cryptographically secure"</Text>
           </Stack>
           <Stack
             spacing={4}
@@ -370,7 +384,7 @@ export function PasswordGenerator() {
                   bg: useColorModeValue("green.600", "green.400"),
                 }} w={{ base: "100%", md: "50%" }}
                 onClick={onClickCopy}
-                isDisabled={ textBox.length === 0 }
+                isDisabled={textBox.length === 0}
               >
                 Copy
               </Button>
@@ -402,8 +416,8 @@ export function PasswordGenerator() {
                   onChange={onChangeNumberOfPassword}>
                   <NumberInputField/>
                   <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
+                    <NumberIncrementStepper/>
+                    <NumberDecrementStepper/>
                   </NumberInputStepper>
                 </NumberInput>
               </Stack>
@@ -432,7 +446,7 @@ export function PasswordGenerator() {
                   bg: useColorModeValue("green.600", "green.400"),
                 }} w={{ base: "100%", md: "50%" }}
                 onClick={onClickCopyMultiple}
-                isDisabled={ areaTextBox.length === 0 }
+                isDisabled={areaTextBox.length === 0}
               >
                 Copy
               </Button>
