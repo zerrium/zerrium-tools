@@ -5,6 +5,7 @@ import { Home } from "./pages/Home";
 import { UuidGenerator } from "./pages/Security Tools/UuidGenerator";
 import { UuidValidator } from "./pages/Security Tools/UuidValidator";
 import { PasswordGenerator } from "./pages/Security Tools/PasswordGenerator";
+import { HashCalculator } from "./pages/Security Tools/HashCalculator";
 
 interface LinkItemProps {
   name: string
@@ -19,7 +20,7 @@ export const LinkItems: Array<LinkItemProps> = [
   {
     name: 'Security Tools', icon: FiLock,
     child: [
-      { name: "Hash Calculator", link: "hash-calculator", element: <Home/> },
+      { name: "Hash Calculator", link: "hash-calculator", element: <HashCalculator/> },
       { name: "UUID Generator", link: "uuid-generator", element: <UuidGenerator/> },
       { name: "UUID Validator", link: "uuid-validator", element: <UuidValidator/> },
       { name: "Password Generator", link: "password-generator", element: <PasswordGenerator/> },
