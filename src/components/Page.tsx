@@ -78,8 +78,9 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  const url = window.location.pathname.replace("/", "")
   const activeColor = useColorModeValue("green.200", "green.800")
+  const basename = (document.querySelector('base')?.getAttribute('href') ?? '') + '/'
+  const url = window.location.pathname.replace(basename, "")
 
   return (
     <Box
@@ -134,7 +135,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                   </AccordionButton>
                   <AccordionPanel pb={4}>
                     {link.child.map((child) => (
-                      <NavItem key={child.name} href={child.link} fontWeight={url === child.link ? "bold" : "none"}
+                      <NavItem key={child.name} href={basename + child.link} fontWeight={url === child.link ? "bold" : "none"}
                                background={url === child.link ? activeColor : "none"}>
                         {child.name}
                       </NavItem>
@@ -142,7 +143,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                   </AccordionPanel>
                 </AccordionItem>
               ) : (
-                <NavItem key={link.name} icon={link?.icon} ps={link.icon ? "4" : "12"} href={link.link || "#"}
+                <NavItem key={link.name} icon={link?.icon} ps={link.icon ? "4" : "12"} href={basename + (link.link || "#")}
                          fontWeight={url === link.link ? "bold" : "none"}
                          background={url === link.link ? activeColor : "none"}>
                   {link.name}

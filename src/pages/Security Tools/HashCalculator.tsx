@@ -1,6 +1,6 @@
 import Page from "../../components/Page";
 // @ts-ignore
-import crypto, { createHash } from "crypto";
+import { createHash } from "crypto";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,

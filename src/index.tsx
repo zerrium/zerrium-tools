@@ -7,7 +7,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { NotFound } from "./pages/NotFound";
 import { LinkItems } from "./routes";
 
-
+const basename = document.querySelector('base')?.getAttribute('href') ?? '/'
 const container = document.getElementById("root")
 if (!container) throw new Error('Failed to find the root element');
 const root = ReactDOM.createRoot(container)
@@ -16,7 +16,7 @@ root.render(
   <React.StrictMode>
     <ColorModeScript/>
     <ChakraProvider theme={theme}>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Routes>
           <Route index element={<Navigate to={LinkItems[0].link as string}/>}/>
           {LinkItems.map((route) => (
