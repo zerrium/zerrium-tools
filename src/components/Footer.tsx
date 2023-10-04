@@ -37,6 +37,8 @@ const SocialButton = ({
 }
 
 export function Footer() {
+  // @ts-ignore
+  // @ts-ignore
   return (
     <Box
       bg={useColorModeValue('gray.50', 'gray.900')}
@@ -50,7 +52,7 @@ export function Footer() {
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}>
         <Box>
-          <Text fontSize="12">© 2023 Zerrium. All rights reserved.</Text>
+          <Text fontSize="12">Version {process.env.REACT_APP_VERSION} © 2023 Zerrium. All rights reserved.</Text>
           <Text fontSize="12">Developed using <a href="https://react.dev/" target="_blank" rel="noreferrer">ReactJS</a> and <a
             href="https://chakra-ui.com/" target="_blank" rel="noreferrer">ChakraUI</a></Text>
         </Box>
