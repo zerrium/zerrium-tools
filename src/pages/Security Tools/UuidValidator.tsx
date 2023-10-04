@@ -78,6 +78,8 @@ export function UuidValidator() {
             bg={useColorModeValue('white', 'gray.700')}
             rounded={'lg'}
             boxShadow={'lg'}
+            borderWidth={1}
+            borderColor={useColorModeValue('gray.200', 'gray.700')}
             p={6}>
             <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
               UUID Validator

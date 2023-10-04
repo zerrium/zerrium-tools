@@ -72,6 +72,8 @@ export function UuidGenerator() {
             bg={useColorModeValue('white', 'gray.700')}
             rounded={'lg'}
             boxShadow={'lg'}
+            borderWidth={1}
+            borderColor={useColorModeValue('gray.200', 'gray.700')}
             p={6}
             mt={12}
             mb={2}>
@@ -118,6 +120,8 @@ export function UuidGenerator() {
             bg={useColorModeValue('white', 'gray.700')}
             rounded={'lg'}
             boxShadow={'lg'}
+            borderWidth={1}
+            borderColor={useColorModeValue('gray.200', 'gray.700')}
             p={6}
             mt={2}
             mb={12}>

@@ -66,13 +66,15 @@ export function UrlEncoder() {
           bg={useColorModeValue('white', 'gray.700')}
           rounded={'lg'}
           boxShadow={'lg'}
+          borderWidth={1}
+          borderColor={useColorModeValue('gray.200', 'gray.700')}
           p={6}
           mt={12}
           mb={2}>
           <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
             URL {decode ? "Decoder" : "Encoder"}
           </Heading>
-          <FormControl id="hash">
+          <FormControl id="url">
             <Stack direction="row" w="100%" mb={3}>
               <Switch colorScheme='green'
                       mx={1} mt="0.6%"

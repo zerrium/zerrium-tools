@@ -237,6 +237,8 @@ export function PasswordGenerator() {
             bg={useColorModeValue('white', 'gray.700')}
             rounded={'lg'}
             boxShadow={'lg'}
+            borderWidth={1}
+            borderColor={useColorModeValue('gray.200', 'gray.700')}
             p={6}
             mt={12}
             mb={2}>
@@ -353,6 +355,8 @@ export function PasswordGenerator() {
             bg={useColorModeValue('white', 'gray.700')}
             rounded={'lg'}
             boxShadow={'lg'}
+            borderWidth={1}
+            borderColor={useColorModeValue('gray.200', 'gray.700')}
             p={6}
             my={2}>
             <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
@@ -398,6 +402,8 @@ export function PasswordGenerator() {
             bg={useColorModeValue('white', 'gray.700')}
             rounded={'lg'}
             boxShadow={'lg'}
+            borderWidth={1}
+            borderColor={useColorModeValue('gray.200', 'gray.700')}
             p={6}
             mt={2}
             mb={12}>
