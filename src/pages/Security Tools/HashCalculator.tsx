@@ -10,6 +10,7 @@ import {
   Input,
   Select,
   Stack,
+  Switch,
   Text,
   Textarea,
   useColorModeValue,
@@ -42,6 +43,12 @@ export function HashCalculator() {
   const [textBoxInput, setTextBoxInput] = useState<string>("")
   const [textBoxOutput, setTextBoxOutput] = useState<string>("")
   const [hashAlgo, setHashAlgo] = useState<string>(hashAlgorithm[0].key)
+  const [fileInput, setFileInput] = useState<boolean>(false)
+  const [fileName, setFileName] = useState<string>("")
+  const [fileData, setFileData] = useState<string>("")
+  const [fileLoading, setFileLoading] = useState<boolean>(false)
+
+  let fileUpload: HTMLInputElement | null
 
   const toast = useToast({
     position: "top",
@@ -57,25 +64,56 @@ export function HashCalculator() {
     setHashAlgo(e.target.value)
   }
 
+  const onChangeSwitch = (e: ChangeEvent<HTMLInputElement>) => {
+    const toggle = e.target.checked
+    setFileInput(toggle)
+    if (!toggle) {
+      setFileLoading(false)
+      setFileName("")
+      setFileData("")
+    }
+  }
+
+  const onChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0]
+
+      setFileLoading(true)
+
+      const data = new FileReader()
+      setFileName(file.name)
+      data.readAsBinaryString(file)
+      data.onload = (event) => {
+        setFileData(event.target?.result?.toString() ?? "")
+      }
+    }
+  }
+
   const onClickCopy = () => {
     navigator.clipboard.writeText(textBoxOutput)
     toast({ description: 'Copied!' })
   }
 
   useEffect(() => {
+    if (fileInput) {
+      setFileLoading(true)
+    }
     const index = hashAlgorithm.map((i) => i.key).indexOf(hashAlgo)
     if(index !== -1) {
       if (hashAlgorithm[index].lib === "crypto-hash") {
         const hash = createHash(hashAlgo)
-        hash.update(textBoxInput)
+        hash.update(fileInput ? fileData : textBoxInput)
         setTextBoxOutput(hash.digest("hex"))
       } else if (hashAlgorithm[index].lib === "js-sha3" && hashAlgorithm[index].function) {
         // @ts-ignore
-        const hash = hashAlgorithm[index].function(textBoxInput)
+        const hash = hashAlgorithm[index].function(fileInput ? fileData : textBoxInput)
         setTextBoxOutput(hash)
       }
     }
-  }, [textBoxInput, hashAlgo])
+    if (fileInput) {
+      setFileLoading(false)
+    }
+  }, [textBoxInput, fileData, hashAlgo, fileInput])
 
   return (
     <Page>
@@ -110,6 +148,14 @@ export function HashCalculator() {
               </Stack>
             </Stack>
 
+            <Stack direction="row" w="100%" mb={3}>
+              <Switch colorScheme='green'
+                      mx={1} mt="0.6%"
+                      isChecked={fileInput}
+                      onChange={onChangeSwitch}/>
+              <Text mx={1}>File Input</Text>
+            </Stack>
+
             <Input
               placeholder="Input any text"
               _placeholder={{ color: 'gray.500' }}
@@ -117,7 +163,39 @@ export function HashCalculator() {
               onChange={onChangeInput}
               fontFamily="monospace"
               mb={4}
+              display={fileInput ? "none" : "initial"}
             />
+
+            <Stack direction="row" w="100%" mb={3} display={fileInput ? "flex" : "none"}>
+              <Stack direction="row" w="70%" me={"1%"}>
+                <Input
+                  placeholder="Uploaded file"
+                  _placeholder={{ color: 'gray.500' }}
+                  readOnly
+                  value={fileName}
+                  fontFamily="monospace"
+                  mb={4}
+                />
+              </Stack>
+              <Stack direction="row" w="30%">
+                <Input ref={input => fileUpload = input}
+                       type="file" display="none" onChange={onChangeFile} />
+                <Button
+                  bg={useColorModeValue("green.400", "green.600")}
+                  color={'white'}
+                  _hover={{
+                    bg: useColorModeValue("green.600", "green.400"),
+                  }}
+                  onClick={() => fileUpload?.click()}
+                  w="95%"
+                  h="72%"
+                  isLoading={fileLoading}
+                >
+                  Select File
+                </Button>
+              </Stack>
+            </Stack>
+
             <Text mb={3}>Output:</Text>
             <Textarea
               readOnly={true}
@@ -134,7 +212,9 @@ export function HashCalculator() {
               bg: useColorModeValue("green.600", "green.400"),
             }}
             onClick={onClickCopy}
-            isDisabled={ textBoxOutput.length === 0 }
+            isDisabled={textBoxOutput.length === 0}
+            isLoading={fileLoading}
+            loadingText="Calculating..."
           >
             Copy
           </Button>
