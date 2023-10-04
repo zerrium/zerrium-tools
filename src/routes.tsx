@@ -1,5 +1,5 @@
 import { IconType } from "react-icons";
-import { FiHome, FiLock } from "react-icons/fi";
+import { FiCode, FiHome, FiLock, FiFileText } from "react-icons/fi";
 import { ReactElement } from "react";
 import { Home } from "./pages/Home";
 import { UuidGenerator } from "./pages/Security Tools/UuidGenerator";
@@ -28,7 +28,7 @@ export const LinkItems: Array<LinkItemProps> = [
     ]
   },
   {
-    name: 'Encoding Tools',
+    name: 'Encoding Tools', icon: FiCode,
     child: [
       { name: "URL Encoder", link: "url-encoder", element: <Home/> },
       { name: "Text Encoder", link: "text-encoder", element: <Home/> },
@@ -37,7 +37,7 @@ export const LinkItems: Array<LinkItemProps> = [
     ]
   },
   {
-    name: 'Text Tools',
+    name: 'Text Tools', icon: FiFileText,
     child: [
       { name: "Text Comparator", link: "text-comparator", element: <Home/> },
       { name: "JSON Beautifier", link: "json-beautifier", element: <Home/> },
