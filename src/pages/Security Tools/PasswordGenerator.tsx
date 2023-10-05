@@ -165,25 +165,25 @@ export function PasswordGenerator() {
 
   const onChangeNumberOfPassword = (e: string) => {
     if (e.length !== 0) {
-      setNumberOfPassword(e as unknown as number)
+      setNumberOfPassword(Number(e))
     }
   }
 
   const onChangeOptionPasswordLength = (e: string) => {
     if (e.length !== 0) {
-      setPasswordLength(e as unknown as number)
+      setPasswordLength(Number(e))
     }
   }
 
   const onChangeOptionMinimumNumbers = (e: string) => {
     if (e.length !== 0) {
-      setMinimumNumbers(e as unknown as number)
+      setMinimumNumbers(Number(e))
     }
   }
 
   const onChangeOptionMinimumSpecials = (e: string) => {
     if (e.length !== 0) {
-      setMinimumSpecials(e as unknown as number)
+      setMinimumSpecials(Number(e))
     }
   }
 
