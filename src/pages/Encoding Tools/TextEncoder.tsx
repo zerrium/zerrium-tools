@@ -16,7 +16,7 @@ import {
 const encodings: { label: string, key: number | string }[] = [
   { label: "Binary", key: 2 },
   { label: "Octal", key: 8 },
-  { label: "Decimal", key: 10},
+  { label: "Decimal", key: 10 },
   { label: "Hexadecimal", key: 16 },
   { label: "Base64", key: "Base64" }
 ]

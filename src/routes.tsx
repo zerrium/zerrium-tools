@@ -8,6 +8,7 @@ import { PasswordGenerator } from "./pages/Security Tools/PasswordGenerator";
 import { HashCalculator } from "./pages/Security Tools/HashCalculator";
 import { UrlEncoder } from "./pages/Encoding Tools/UrlEncoder";
 import { TextEncoder } from "./pages/Encoding Tools/TextEncoder";
+import { FileEncoder } from "./pages/Encoding Tools/FileEncoder";
 
 interface LinkItemProps {
   name: string
@@ -35,7 +36,7 @@ export const LinkItems: Array<LinkItemProps> = [
       { name: "URL Encoder", link: "url-encoder", element: <UrlEncoder/> },
       { name: "Text Encoder", link: "text-encoder", element: <TextEncoder/> },
       { name: "Image Encoder", link: "image-encoder", element: <Home/> },
-      { name: "File Encoder", link: "file-encoder", element: <Home/> }
+      { name: "File Encoder", link: "file-encoder", element: <FileEncoder/> }
     ]
   },
   {
@@ -43,6 +44,8 @@ export const LinkItems: Array<LinkItemProps> = [
     child: [
       { name: "Text Comparator", link: "text-comparator", element: <Home/> },
       { name: "JSON Beautifier", link: "json-beautifier", element: <Home/> },
+      { name: "CSS Beautifier", link: "css-beautifier", element: <Home/> },
+      { name: "JavaScript Beautifier", link: "js-beautifier", element: <Home/> },
       { name: "XML Beautifier", link: "xml-beautifier", element: <Home/> },
       { name: "YAML Validator", link: "yaml-validator", element: <Home/> },
       { name: "Regex Checker", link: "regex-checker", element: <Home/> },
