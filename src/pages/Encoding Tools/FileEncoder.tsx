@@ -282,7 +282,7 @@ export function FileEncoder() {
             File type detection may not be accurate. It is determined based on&nbsp;
             <a
               href="https://en.wikipedia.org/wiki/List_of_file_signatures" target="_blank"
-              rel="noreferrer"><u>magic number using</u>
+              rel="noreferrer"><u>magic number</u>
             </a>
             &nbsp;using&nbsp;
             <a
