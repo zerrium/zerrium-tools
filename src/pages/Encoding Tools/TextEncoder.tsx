@@ -18,7 +18,8 @@ const encodings: { label: string, key: number | string }[] = [
   { label: "Octal", key: 8 },
   { label: "Decimal", key: 10 },
   { label: "Hexadecimal", key: 16 },
-  { label: "Base64", key: "Base64" }
+  { label: "Base64", key: "Base64" },
+  { label: "Base64 URL", key: "Base64Url" }
 ]
 
 export function TextEncoder() {
@@ -47,7 +48,8 @@ export function TextEncoder() {
   }
 
   const onChangeSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-    setEncoding(e.target.value)
+    const value = e.target.value
+    setEncoding(!isNaN(Number(value)) ? Number(value) : value)
   }
 
   const onClickCopy = () => {
@@ -57,13 +59,19 @@ export function TextEncoder() {
 
   useEffect(() => {
     try {
-      const result = encoding === "Base64" ? (
-        decode ? atob(textBoxInput) : btoa(textBoxInput)
-      ) : (
-        decode ?
-          textBoxInput.split(' ').map((c) => parseInt(c, encoding as number)).map((c) => String.fromCharCode(c)).join('') :
-          textBoxInput.split('').map((c) => c.charCodeAt(0).toString(encoding as number)).join(' ')
-      )
+      let result: string = ""
+      if(typeof encoding === "number") {
+        result = decode ?
+          textBoxInput.split(' ').map((c) => parseInt(c, Number(encoding))).map((c) => String.fromCharCode(c)).join('') :
+          textBoxInput.split('').map((c) => c.charCodeAt(0).toString(Number(encoding))).join(' ')
+      } else {
+        if (encoding === "Base64") {
+          result = decode ? atob(textBoxInput) : btoa(textBoxInput)
+        } else if (encoding === "Base64Url") {
+          result = decode ? atob(decodeURIComponent(textBoxInput)) : encodeURIComponent(btoa(textBoxInput))
+        }
+      }
+
       setTextBoxOutput(result)
       setError(false)
     } catch (e) {

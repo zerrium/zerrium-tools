@@ -19,7 +19,8 @@ const encodings: { label: string, key: number | string }[] = [
   { label: "Octal", key: 8 },
   { label: "Decimal", key: 10 },
   { label: "Hexadecimal", key: 16 },
-  { label: "Base64", key: "Base64" }
+  { label: "Base64", key: "Base64" },
+  { label: "Base64 URL", key: "Base64Url" }
 ]
 
 export function FileEncoder() {
@@ -58,7 +59,8 @@ export function FileEncoder() {
   }
 
   const onChangeSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-    setEncoding(e.target.value)
+    const value = e.target.value
+    setEncoding(!isNaN(Number(value)) ? Number(value) : value)
   }
 
   const onChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -96,9 +98,16 @@ export function FileEncoder() {
       setFileLoading(true)
 
       if (decode) {
-        const result = encoding === "Base64" ?
-          atob(textBoxInput) :
-          textBoxInput.split(' ').map((c) => parseInt(c, encoding as number)).map((c) => String.fromCharCode(c)).join('')
+        let result: string = ""
+        if (typeof encoding === "number") {
+          result = textBoxInput.split(' ').map((c) => parseInt(c, Number(encoding))).map((c) => String.fromCharCode(c)).join('')
+        } else {
+          if (encoding === "Base64") {
+            result = atob(textBoxInput)
+          } else if (encoding === "Base64Url") {
+            result = atob(decodeURIComponent(textBoxInput))
+          }
+        }
 
         const bytes = new Array(result.length)
         for (let i = 0; i < result.length; i++) {
@@ -110,19 +119,27 @@ export function FileEncoder() {
         setFileData(Uint8Bytes)
       } else {
         const pad = (() => {
-          switch(encoding as string) {
-            case "2": return 8;
-            case "8": return 3;
-            case "10": return 3;
-            case "16": return 2;
+          switch(encoding) {
+            case 2: return 8;
+            case 8: return 3;
+            case 10: return 3;
+            case 16: return 2;
             default: return 0;
           }
         })()
 
-        const result = encoding === "Base64" ?
-          btoa(fileData as string) :
-          (fileData as string).split('').map((c) => c.charCodeAt(0).toString(encoding as number)
+        let result: string = ""
+        if (typeof encoding === "number") {
+          result = (fileData as string).split('').map((c) => c.charCodeAt(0).toString(Number(encoding))
             .padStart(pad, '0')).join(' ')
+        } else {
+          if (encoding === "Base64") {
+            result = btoa(fileData as string)
+          } else if (encoding === "Base64Url") {
+            result = encodeURIComponent(btoa(fileData as string))
+          }
+        }
+
         setTextBoxOutput(result)
       }
 
