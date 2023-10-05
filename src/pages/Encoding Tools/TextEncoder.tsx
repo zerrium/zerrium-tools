@@ -96,7 +96,7 @@ export function TextEncoder() {
           <FormControl id="url">
             <Stack direction="row" w="100%" my={3}>
               <Stack direction="row" w="28%" px={"1%"}>
-                <Text mx={1} mt="5%">{decode ? "Decode to" : "Encode to"}</Text>
+                <Text mx={1} mt="5%">{decode ? "Decode from" : "Encode to"}</Text>
               </Stack>
               <Stack direction="row" w="72%" px={"1%"}>
                 <Select placeholder={decode ? "Select decoder..." : "Select encoder..."} value={encoding} onChange={onChangeSelect}>
