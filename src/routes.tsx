@@ -7,6 +7,7 @@ import { UuidValidator } from "./pages/Security Tools/UuidValidator";
 import { PasswordGenerator } from "./pages/Security Tools/PasswordGenerator";
 import { HashCalculator } from "./pages/Security Tools/HashCalculator";
 import { UrlEncoder } from "./pages/Encoding Tools/UrlEncoder";
+import { TextEncoder } from "./pages/Encoding Tools/TextEncoder";
 
 interface LinkItemProps {
   name: string
@@ -32,7 +33,7 @@ export const LinkItems: Array<LinkItemProps> = [
     name: 'Encoding Tools', icon: FiCode,
     child: [
       { name: "URL Encoder", link: "url-encoder", element: <UrlEncoder/> },
-      { name: "Text Encoder", link: "text-encoder", element: <Home/> },
+      { name: "Text Encoder", link: "text-encoder", element: <TextEncoder/> },
       { name: "Image Encoder", link: "image-encoder", element: <Home/> },
       { name: "File Encoder", link: "file-encoder", element: <Home/> }
     ]
