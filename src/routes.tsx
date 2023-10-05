@@ -35,7 +35,6 @@ export const LinkItems: Array<LinkItemProps> = [
     child: [
       { name: "URL Encoder", link: "url-encoder", element: <UrlEncoder/> },
       { name: "Text Encoder", link: "text-encoder", element: <TextEncoder/> },
-      { name: "Image Encoder", link: "image-encoder", element: <Home/> },
       { name: "File Encoder", link: "file-encoder", element: <FileEncoder/> }
     ]
   },

@@ -34,6 +34,7 @@ export function FileEncoder() {
   const [fileExt, setFileExt] = useState<string>("")
 
   let fileUpload: HTMLInputElement | null
+  const data = new FileReader()
 
   const toast = useToast({
     position: "top",
@@ -66,12 +67,12 @@ export function FileEncoder() {
 
       setFileLoading(true)
 
-      const data = new FileReader()
       setFileName(file.name)
       data.readAsBinaryString(file)
       data.onload = (event) => {
         setFileData(event.target?.result?.toString() ?? "")
       }
+
     }
   }
 

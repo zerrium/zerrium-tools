@@ -49,6 +49,7 @@ export function HashCalculator() {
   const [fileLoading, setFileLoading] = useState<boolean>(false)
 
   let fileUpload: HTMLInputElement | null
+  const data = new FileReader()
 
   const toast = useToast({
     position: "top",
@@ -80,7 +81,6 @@ export function HashCalculator() {
 
       setFileLoading(true)
 
-      const data = new FileReader()
       setFileName(file.name)
       data.readAsBinaryString(file)
       data.onload = (event) => {
