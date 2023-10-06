@@ -1,16 +1,19 @@
 const webpack = require("webpack");
 
+// Override to /node_modules/react-scripts/config/webpack.config.js
+
 module.exports = function override(config) {
   const fallback = config.resolve.fallback || {};
   Object.assign(fallback, {
     crypto: require.resolve("crypto-browserify"),
     stream: require.resolve("stream-browserify"),
     buffer: require.resolve("buffer/"),
-    assert: false, // require.resolve("assert") can be polyfilled here if needed
-    http: false, // require.resolve("stream-http") can be polyfilled here if needed
-    https: false, // require.resolve("https-browserify") can be polyfilled here if needed
-    os: false, // require.resolve("os-browserify") can be polyfilled here if needed
-    url: false, // require.resolve("url") can be polyfilled here if needed
+    assert: false, // require.resolve("assert"),
+    http: require.resolve("stream-http"),
+    https: require.resolve("https-browserify"),
+    path: require.resolve("path-browserify"),
+    os: require.resolve("os-browserify/browser"),
+    url: require.resolve("url/"),
     zlib: false, // require.resolve("browserify-zlib") can be polyfilled here if needed
   });
   config.resolve.fallback = fallback;
