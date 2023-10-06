@@ -13,6 +13,9 @@ import {
   useToast
 } from "@chakra-ui/react";
 import prettify from "html-prettify";
+// @ts-ignore
+import terser from "terser-sync";
+import { pd } from "../../utils/pretty-data"
 
 const processJson = (text: string, isMinify: boolean, numberOfSpace?: number): string => {
   return JSON.stringify(JSON.parse(text), null, isMinify ? 0 : (numberOfSpace || 2)).toString()
@@ -28,17 +31,25 @@ const processHtml = (text: string, isMinify: boolean, numberOfSpace?: number): s
 }
 
 const processCss = (text: string, isMinify: boolean, numberOfSpace?: number): string => {
-  // const CleanCSS = require('clean-css')
-  // return new CleanCSS().minify(text)
-  return ""
+  pd.setStep(numberOfSpace || 2)
+  return isMinify ? pd.cssmin(text, false) : pd.css(text)
 }
 
 const processJs = (text: string, isMinify: boolean, numberOfSpace?: number): string => {
+  if (isMinify) {
+    return terser.minifySync(text).code
+  }
   return ""
 }
 
 const processXml = (text: string, isMinify: boolean, numberOfSpace?: number): string => {
-  return ""
+  pd.setStep(numberOfSpace || 2)
+  return isMinify ? pd.xmlmin(text, false) : pd.xml(text)
+}
+
+const processSql = (text: string, isMinify: boolean, numberOfSpace?: number): string => {
+  pd.setStep(numberOfSpace || 2)
+  return isMinify ? pd.sqlmin(text) : pd.sql(text)
 }
 
 const codes: { label: string, key: string, function: (text: string, isMinify: boolean, numberOfSpace?: number) => string }[] = [
@@ -46,7 +57,8 @@ const codes: { label: string, key: string, function: (text: string, isMinify: bo
   { label: "HTML", key: "html", function: processHtml },
   { label: "CSS", key: "css", function: processCss },
   { label: "Javascript", key: "js", function: processJs },
-  { label: "XML", key: "xml", function: processXml }
+  { label: "XML", key: "xml", function: processXml },
+  { label: "SQL", key: "sql", function: processSql }
 ]
 
 export function Beautifier() {
