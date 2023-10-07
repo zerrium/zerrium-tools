@@ -317,7 +317,7 @@ PP.prototype.sqlmin = function (text) {
 
 // HTML simple minifier by Zerrium
 PP.prototype.htmlmin = function (text) {
-  return text.replace(/(<!--|<--)((.|\S|\r|\n)*?)(-->|--!>)|(\/\*)((.|\S|\r|\n)*?)(\*\/)|^\/\/.*|\s\B/gm, "");
+  return text.replace(/(<!--|<--)((.|\s)*?)(-->|--!>)|(\/\*)((.|\s)*?)(\*\/)|^\/\/.*|\s\B/gm, "");
 }
 
 // --------------------------------------------------------------------------------------------
