@@ -17,29 +17,31 @@ import prettify from "html-prettify";
 import terser from "terser-sync";
 import { pd } from "../../utils/pretty-data"
 
+
+const beautifyJs = require("js-beautify/js").js
+const beautifyCss = require("js-beautify/js").css
+// const beautifyHtml = require("js-beautify/js").html
+
 const processJson = (text: string, isMinify: boolean, numberOfSpace?: number): string => {
   return JSON.stringify(JSON.parse(text), null, isMinify ? 0 : (numberOfSpace || 2)).toString()
 }
 
 const processHtml = (text: string, isMinify: boolean, numberOfSpace?: number): string => {
   if (isMinify) {
-    return ""
+    return pd.htmlmin(text)
   } else {
+    // return beautifyHtml(text, { indent_size: numberOfSpace || 2 })
     // @ts-ignore
     return prettify(text, { count: numberOfSpace || 2 })
   }
 }
 
 const processCss = (text: string, isMinify: boolean, numberOfSpace?: number): string => {
-  pd.setStep(numberOfSpace || 2)
-  return isMinify ? pd.cssmin(text, false) : pd.css(text)
+  return isMinify ? pd.cssmin(text, false) : beautifyCss(text, { indent_size: numberOfSpace || 2 })
 }
 
 const processJs = (text: string, isMinify: boolean, numberOfSpace?: number): string => {
-  if (isMinify) {
-    return terser.minifySync(text).code
-  }
-  return ""
+  return isMinify ? terser.minifySync(text).code : beautifyJs(text, { indent_size: numberOfSpace || 2 })
 }
 
 const processXml = (text: string, isMinify: boolean, numberOfSpace?: number): string => {
@@ -122,7 +124,7 @@ export function Beautifier() {
         <Stack
           spacing={4}
           w={'full'}
-          maxW={'lg'}
+          maxW={'2xl'}
           bg={useColorModeValue('white', 'gray.700')}
           rounded={'lg'}
           boxShadow={'lg'}
@@ -181,6 +183,7 @@ export function Beautifier() {
               onChange={onChangeInput}
               fontFamily="monospace"
               mb={4}
+              rows={5}
             />
 
             <Text mb={3}>Output:</Text>
@@ -191,6 +194,7 @@ export function Beautifier() {
               value={textBoxOutput}
               fontFamily="monospace"
               fontWeight={error ? "bold" : "none"}
+              rows={5}
               textColor={
                 useColorModeValue(
                   error ? "#f01818" : "current",
