@@ -11,6 +11,7 @@ import { TextEncoder } from "./pages/Encoding Tools/TextEncoder";
 import { FileEncoder } from "./pages/Encoding Tools/FileEncoder";
 import { Beautifier } from "./pages/Text Tools/Beautifier";
 import { YamlValidator } from "./pages/Text Tools/YamlValidator";
+import { JsonViewer } from "./pages/Text Tools/JsonViewer";
 
 interface LinkItemProps {
   name: string
@@ -46,6 +47,7 @@ export const LinkItems: Array<LinkItemProps> = [
       { name: "Text Comparator", link: "text-comparator", element: <Home/> },
       { name: "Regex Checker", link: "regex-checker", element: <Home/> },
       { name: "Beautifier/Minifier", link: "beautifier-minifier", element: <Beautifier/> },
+      { name: "JSON Viewer", link: "json-viewer", element: <JsonViewer/> },
       { name: "YAML Validator", link: "yaml-validator", element: <YamlValidator/> }
     ]
   }
