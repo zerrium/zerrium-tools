@@ -13,6 +13,7 @@ import { Beautifier } from "./pages/Text Tools/Beautifier";
 import { YamlValidator } from "./pages/Text Tools/YamlValidator";
 import { JsonViewer } from "./pages/Text Tools/JsonViewer";
 import { TextComparator } from "./pages/Text Tools/TextComparator";
+import { Regex } from "./pages/Text Tools/Regex";
 
 interface LinkItemProps {
   name: string
@@ -30,8 +31,7 @@ export const LinkItems: Array<LinkItemProps> = [
       { name: "Hash Calculator", link: "hash-calculator", element: <HashCalculator/> },
       { name: "UUID Generator", link: "uuid-generator", element: <UuidGenerator/> },
       { name: "UUID Validator", link: "uuid-validator", element: <UuidValidator/> },
-      { name: "Password Generator", link: "password-generator", element: <PasswordGenerator/> },
-      { name: "JWT Encoder/Decoder", link: "jwt", element: <Home/> }
+      { name: "Password Generator", link: "password-generator", element: <PasswordGenerator/> }
     ]
   },
   {
@@ -46,7 +46,7 @@ export const LinkItems: Array<LinkItemProps> = [
     name: 'Text Tools', icon: FiFileText,
     child: [
       { name: "Text Comparator", link: "text-comparator", element: <TextComparator/> },
-      { name: "Regex Checker", link: "regex-checker", element: <Home/> },
+      { name: "Regex Templates", link: "regex", element: <Regex/> },
       { name: "Beautifier/Minifier", link: "beautifier-minifier", element: <Beautifier/> },
       { name: "JSON Viewer", link: "json-viewer", element: <JsonViewer/> },
       { name: "YAML Validator", link: "yaml-validator", element: <YamlValidator/> }
