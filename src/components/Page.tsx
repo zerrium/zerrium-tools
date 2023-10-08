@@ -23,6 +23,8 @@ import { FiMenu } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import { Footer } from "./Footer"
 import { LinkItems } from "../routes";
+// @ts-ignore
+import { isDesktop } from "react-device-detect";
 
 
 const findAccordationIndex = (url: string) => {
@@ -40,6 +42,14 @@ const findAccordationIndex = (url: string) => {
 
 const Page: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  // const isTouchScreenDevice = () => {
+  //   try{
+  //     document.createEvent('TouchEvent');
+  //     return true;
+  //   }catch(e){
+  //     return false;
+  //   }
+  // }
 
   return (
     <Box>
@@ -154,6 +164,9 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           ))}
         </Accordion>
       </Box>
+      { !isDesktop && (
+        <Box h="25%"></Box>
+      )}
     </Box>
   )
 }
