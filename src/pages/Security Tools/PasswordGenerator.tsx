@@ -256,7 +256,7 @@ export function PasswordGenerator() {
                     min={8}
                     max={511}
                     mb={3}
-                    maxW="42%"
+                    maxW="70%"
                     onChange={onChangeOptionPasswordLength}>
                     <NumberInputField/>
                     <NumberInputStepper>
@@ -277,7 +277,7 @@ export function PasswordGenerator() {
                     min={1}
                     max={passwordLength - (isSpecial ? minimumSpecials : 0) - 3}
                     mb={3}
-                    maxW="42%"
+                    maxW="70%"
                     onChange={onChangeOptionMinimumNumbers}
                     isDisabled={!isNumber}>
                     <NumberInputField/>
@@ -299,7 +299,7 @@ export function PasswordGenerator() {
                     min={1}
                     max={passwordLength - (isNumber ? minimumNumbers : 0) - 3}
                     mb={3}
-                    maxW="42%"
+                    maxW="70%"
                     onChange={onChangeOptionMinimumSpecials}
                     isDisabled={!isSpecial}>
                     <NumberInputField/>
