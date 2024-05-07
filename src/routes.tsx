@@ -1,5 +1,5 @@
 import { IconType } from "react-icons";
-import { FiCode, FiHome, FiLock, FiFileText } from "react-icons/fi";
+import { FiCode, FiHome, FiLock, FiFileText, FiClock } from "react-icons/fi";
 import { ReactElement } from "react";
 import { Home } from "./pages/Home";
 import { UuidGenerator } from "./pages/Security Tools/UuidGenerator";
@@ -14,6 +14,7 @@ import { YamlValidator } from "./pages/Text Tools/YamlValidator";
 import { JsonViewer } from "./pages/Text Tools/JsonViewer";
 import { TextComparator } from "./pages/Text Tools/TextComparator";
 import { Regex } from "./pages/Text Tools/Regex";
+import { DateTimeConverter } from "./pages/DateTime Tools/DateTimeConverter";
 
 interface LinkItemProps {
   name: string
@@ -50,6 +51,12 @@ export const LinkItems: Array<LinkItemProps> = [
       { name: "Beautifier/Minifier", link: "beautifier-minifier", element: <Beautifier/> },
       { name: "JSON Viewer", link: "json-viewer", element: <JsonViewer/> },
       { name: "YAML Validator", link: "yaml-validator", element: <YamlValidator/> }
+    ]
+  },
+  {
+    name: 'Date Time Tools', icon: FiClock,
+    child: [
+      { name: "Date Time Converter", link: "date-time-converter", element: <DateTimeConverter/> }
     ]
   }
 ]
