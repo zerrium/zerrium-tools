@@ -15,10 +15,10 @@ const root = ReactDOM.createRoot(container)
 
 root.render(
   <React.StrictMode>
-    <ColorModeScript/>
-    <ChakraProvider theme={theme}>
-      <Page>
-        <BrowserRouter>
+    <BrowserRouter>
+      <ColorModeScript/>
+      <ChakraProvider theme={theme}>
+        <Page>
           <Routes>
             <Route index element={<Navigate to={LinkItems[0].link as string}/>}/>
             {LinkItems.map((route) => (
@@ -36,9 +36,9 @@ root.render(
             ))}
             <Route path="*" element={<NotFound/>}/>
           </Routes>
-        </BrowserRouter>
-      </Page>
-    </ChakraProvider>
+        </Page>
+      </ChakraProvider>
+    </BrowserRouter>
   </React.StrictMode>,
 )
 
