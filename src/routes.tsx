@@ -15,6 +15,7 @@ import { JsonViewer } from "./pages/Text Tools/JsonViewer";
 import { TextComparator } from "./pages/Text Tools/TextComparator";
 import { Regex } from "./pages/Text Tools/Regex";
 import { DateTimeConverter } from "./pages/DateTime Tools/DateTimeConverter";
+import { HtmlEncoder } from "./pages/Encoding Tools/HtmlEncoder";
 
 interface LinkItemProps {
   name: string
@@ -38,6 +39,7 @@ export const LinkItems: Array<LinkItemProps> = [
   {
     name: 'Encoding Tools', icon: FiCode,
     child: [
+      { name: "HTML Encoder", link: "html-encoder", element: <HtmlEncoder/> },
       { name: "URL Encoder", link: "url-encoder", element: <UrlEncoder/> },
       { name: "Text Encoder", link: "text-encoder", element: <TextEncoder/> },
       { name: "File Encoder", link: "file-encoder", element: <FileEncoder/> }
