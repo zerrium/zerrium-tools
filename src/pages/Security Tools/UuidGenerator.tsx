@@ -1,4 +1,3 @@
-import Page from "../../components/Page";
 // @ts-ignore
 import { v4 as uuidv4 } from "uuid";
 import React, { useState } from "react";
@@ -59,125 +58,123 @@ export function UuidGenerator() {
   }
 
   return (
-    <Page>
-      <Flex
-        minH={'100vh'}
-        align={'center'}
-        justify={'center'}>
-        <Stack w={'full'} maxW={'md'}>
-          <Stack
-            spacing={4}
-            w={'full'}
-            maxW={'md'}
-            bg={useColorModeValue('white', 'gray.700')}
-            rounded={'lg'}
-            boxShadow={'lg'}
-            borderWidth={1}
-            borderColor={useColorModeValue('gray.200', 'gray.700')}
-            p={6}
-            mt={12}
-            mb={2}>
-            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-              Random UUID Generator
-            </Heading>
-            <FormControl id="uuid">
-              <Input
-                readOnly={true}
-                placeholder="Generated Random UUID"
-                _placeholder={{ color: 'gray.500' }}
-                value={textBox}
-                fontFamily="monospace"
-              />
-            </FormControl>
-            <Stack spacing={5} direction={['column', 'row']}>
-              <Button
-                bg={useColorModeValue("green.400", "green.600")}
-                color={'white'}
-                _hover={{
-                  bg: useColorModeValue("green.600", "green.400"),
-                }} w={{ base: "100%", md: "50%" }}
-                onClick={onClickGenerate}>
-                Generate
-              </Button>
-              <Button
-                bg={useColorModeValue("green.400", "green.600")}
-                color={'white'}
-                _hover={{
-                  bg: useColorModeValue("green.600", "green.400"),
-                }} w={{ base: "100%", md: "50%" }}
-                onClick={onClickCopy}
-                isDisabled={ textBox.length === 0 }
-              >
-                Copy
-              </Button>
-            </Stack>
-          </Stack>
-
-          <Stack
-            spacing={4}
-            w={'full'}
-            maxW={'md'}
-            bg={useColorModeValue('white', 'gray.700')}
-            rounded={'lg'}
-            boxShadow={'lg'}
-            borderWidth={1}
-            borderColor={useColorModeValue('gray.200', 'gray.700')}
-            p={6}
-            mt={2}
-            mb={12}>
-            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-              Multiple UUID Generator
-            </Heading>
-            <FormControl id="uuidMultiple">
-              <Stack direction='row'>
-                <Text mx={3} mt="1.5%" align="center">Number of UUIDs </Text>
-                <NumberInput
-                  value={numberOfUuid}
-                  min={2}
-                  max={32767}
-                  mb={3}
-                  maxW="50%"
-                  onChange={onChangeNumberOfUuid}>
-                  <NumberInputField/>
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </Stack>
-              <Textarea
-                readOnly={true}
-                placeholder="Generated Random UUIDs"
-                _placeholder={{ color: 'gray.500' }}
-                value={areaTextBox}
-                fontFamily="monospace"
-              />
-            </FormControl>
-            <Stack spacing={5} direction={['column', 'row']}>
-              <Button
-                bg={useColorModeValue("green.400", "green.600")}
-                color={'white'}
-                _hover={{
-                  bg: useColorModeValue("green.600", "green.400"),
-                }} w={{ base: "100%", md: "50%" }}
-                onClick={onClickGenerateMultiple}>
-                Generate
-              </Button>
-              <Button
-                bg={useColorModeValue("green.400", "green.600")}
-                color={'white'}
-                _hover={{
-                  bg: useColorModeValue("green.600", "green.400"),
-                }} w={{ base: "100%", md: "50%" }}
-                onClick={onClickCopyMultiple}
-                isDisabled={ areaTextBox.length === 0 }
-              >
-                Copy
-              </Button>
-            </Stack>
+    <Flex
+      minH={'100vh'}
+      align={'center'}
+      justify={'center'}>
+      <Stack w={'full'} maxW={'md'}>
+        <Stack
+          spacing={4}
+          w={'full'}
+          maxW={'md'}
+          bg={useColorModeValue('white', 'gray.700')}
+          rounded={'lg'}
+          boxShadow={'lg'}
+          borderWidth={1}
+          borderColor={useColorModeValue('gray.200', 'gray.700')}
+          p={6}
+          mt={12}
+          mb={2}>
+          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+            Random UUID Generator
+          </Heading>
+          <FormControl id="uuid">
+            <Input
+              readOnly={true}
+              placeholder="Generated Random UUID"
+              _placeholder={{ color: 'gray.500' }}
+              value={textBox}
+              fontFamily="monospace"
+            />
+          </FormControl>
+          <Stack spacing={5} direction={['column', 'row']}>
+            <Button
+              bg={useColorModeValue("green.400", "green.600")}
+              color={'white'}
+              _hover={{
+                bg: useColorModeValue("green.600", "green.400"),
+              }} w={{ base: "100%", md: "50%" }}
+              onClick={onClickGenerate}>
+              Generate
+            </Button>
+            <Button
+              bg={useColorModeValue("green.400", "green.600")}
+              color={'white'}
+              _hover={{
+                bg: useColorModeValue("green.600", "green.400"),
+              }} w={{ base: "100%", md: "50%" }}
+              onClick={onClickCopy}
+              isDisabled={ textBox.length === 0 }
+            >
+              Copy
+            </Button>
           </Stack>
         </Stack>
-      </Flex>
-    </Page>
+
+        <Stack
+          spacing={4}
+          w={'full'}
+          maxW={'md'}
+          bg={useColorModeValue('white', 'gray.700')}
+          rounded={'lg'}
+          boxShadow={'lg'}
+          borderWidth={1}
+          borderColor={useColorModeValue('gray.200', 'gray.700')}
+          p={6}
+          mt={2}
+          mb={12}>
+          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+            Multiple UUID Generator
+          </Heading>
+          <FormControl id="uuidMultiple">
+            <Stack direction='row'>
+              <Text mx={3} mt="1.5%" align="center">Number of UUIDs </Text>
+              <NumberInput
+                value={numberOfUuid}
+                min={2}
+                max={32767}
+                mb={3}
+                maxW="50%"
+                onChange={onChangeNumberOfUuid}>
+                <NumberInputField/>
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </Stack>
+            <Textarea
+              readOnly={true}
+              placeholder="Generated Random UUIDs"
+              _placeholder={{ color: 'gray.500' }}
+              value={areaTextBox}
+              fontFamily="monospace"
+            />
+          </FormControl>
+          <Stack spacing={5} direction={['column', 'row']}>
+            <Button
+              bg={useColorModeValue("green.400", "green.600")}
+              color={'white'}
+              _hover={{
+                bg: useColorModeValue("green.600", "green.400"),
+              }} w={{ base: "100%", md: "50%" }}
+              onClick={onClickGenerateMultiple}>
+              Generate
+            </Button>
+            <Button
+              bg={useColorModeValue("green.400", "green.600")}
+              color={'white'}
+              _hover={{
+                bg: useColorModeValue("green.600", "green.400"),
+              }} w={{ base: "100%", md: "50%" }}
+              onClick={onClickCopyMultiple}
+              isDisabled={ areaTextBox.length === 0 }
+            >
+              Copy
+            </Button>
+          </Stack>
+        </Stack>
+      </Stack>
+    </Flex>
   )
 }

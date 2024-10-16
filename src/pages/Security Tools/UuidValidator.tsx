@@ -1,4 +1,3 @@
-import Page from "../../components/Page";
 // @ts-ignore
 import { validate } from "uuid";
 import React, { ChangeEvent, useEffect, useState } from "react";
@@ -66,82 +65,80 @@ export function UuidValidator() {
   }, [textBox])
 
   return (
-    <Page>
-      <Flex
-        minH={'100vh'}
-        align={'center'}
-        justify={'center'}>
-          <Stack
-            spacing={4}
-            w={'full'}
-            maxW={'md'}
-            bg={useColorModeValue('white', 'gray.700')}
-            rounded={'lg'}
-            boxShadow={'lg'}
-            borderWidth={1}
-            borderColor={useColorModeValue('gray.200', 'gray.700')}
-            p={6}>
-            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-              UUID Validator
-            </Heading>
-            <FormControl id="uuid">
-              <Text
-                my={2}
-                fontSize={18}
-                w="100%"
-                textAlign="center"
-                textColor={
-                  useColorModeValue(
-                    status === "Valid" ? "#30c030" : "#f01818",
-                    status === "Valid" ? "#18f018" : "#fa3232")
-                }
-              fontWeight={"bold"}>
-                {status}
-              </Text>
-              <Textarea
-                placeholder="Input UUID(s)"
-                _placeholder={{ color: 'gray.500' }}
-                value={textBox}
-                onChange={onChangeInput}
-                fontFamily="monospace"
-              />
-              <Textarea id="result" value={textBoxResult} display="none" disabled readOnly/>
-            </FormControl>
-            <Stack spacing={5} direction={['column', 'row']}>
-              <Button
-                bg={useColorModeValue("green.400", "green.600")}
-                color={'white'}
-                _hover={{
-                  bg: useColorModeValue("green.600", "green.400"),
-                }}
-                w={{ base: "100%", md: "50%" }}
-                onClick={onClickCopy}
-                isDisabled={ textBox.length === 0 }>
-                Copy Results
-              </Button>
-              <Button
-                bg={useColorModeValue("green.400", "green.600")}
-                color={'white'}
-                _hover={{
-                  bg: useColorModeValue("green.600", "green.400"),
-                }}
-                w={{ base: "100%", md: "50%" }}
-                onClick={onClickDownload}
-                isDisabled={ textBox.length === 0 }>
-                Download Results
-              </Button>
-            </Stack>
-            {/*<Button*/}
-            {/*  bg={useColorModeValue("green.400", "green.600")}*/}
-            {/*  color={'white'}*/}
-            {/*  _hover={{*/}
-            {/*    bg: useColorModeValue("green.600", "green.400"),*/}
-            {/*  }}*/}
-            {/*  onClick={onClickPaste}>*/}
-            {/*  Paste*/}
-            {/*</Button>*/}
+    <Flex
+      minH={'100vh'}
+      align={'center'}
+      justify={'center'}>
+        <Stack
+          spacing={4}
+          w={'full'}
+          maxW={'md'}
+          bg={useColorModeValue('white', 'gray.700')}
+          rounded={'lg'}
+          boxShadow={'lg'}
+          borderWidth={1}
+          borderColor={useColorModeValue('gray.200', 'gray.700')}
+          p={6}>
+          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+            UUID Validator
+          </Heading>
+          <FormControl id="uuid">
+            <Text
+              my={2}
+              fontSize={18}
+              w="100%"
+              textAlign="center"
+              textColor={
+                useColorModeValue(
+                  status === "Valid" ? "#30c030" : "#f01818",
+                  status === "Valid" ? "#18f018" : "#fa3232")
+              }
+            fontWeight={"bold"}>
+              {status}
+            </Text>
+            <Textarea
+              placeholder="Input UUID(s)"
+              _placeholder={{ color: 'gray.500' }}
+              value={textBox}
+              onChange={onChangeInput}
+              fontFamily="monospace"
+            />
+            <Textarea id="result" value={textBoxResult} display="none" disabled readOnly/>
+          </FormControl>
+          <Stack spacing={5} direction={['column', 'row']}>
+            <Button
+              bg={useColorModeValue("green.400", "green.600")}
+              color={'white'}
+              _hover={{
+                bg: useColorModeValue("green.600", "green.400"),
+              }}
+              w={{ base: "100%", md: "50%" }}
+              onClick={onClickCopy}
+              isDisabled={ textBox.length === 0 }>
+              Copy Results
+            </Button>
+            <Button
+              bg={useColorModeValue("green.400", "green.600")}
+              color={'white'}
+              _hover={{
+                bg: useColorModeValue("green.600", "green.400"),
+              }}
+              w={{ base: "100%", md: "50%" }}
+              onClick={onClickDownload}
+              isDisabled={ textBox.length === 0 }>
+              Download Results
+            </Button>
           </Stack>
-      </Flex>
-    </Page>
+          {/*<Button*/}
+          {/*  bg={useColorModeValue("green.400", "green.600")}*/}
+          {/*  color={'white'}*/}
+          {/*  _hover={{*/}
+          {/*    bg: useColorModeValue("green.600", "green.400"),*/}
+          {/*  }}*/}
+          {/*  onClick={onClickPaste}>*/}
+          {/*  Paste*/}
+          {/*</Button>*/}
+        </Stack>
+    </Flex>
   )
 }

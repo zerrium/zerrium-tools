@@ -1,4 +1,3 @@
-import Page from "../../components/Page";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
@@ -80,16 +79,75 @@ export function TextComparator() {
   }, [colorMode])
 
   return (
-    <Page>
-      <Flex
-        minH={'100vh'}
-        align={'center'}
-        justify={'center'}>
-        <Stack direction="column" w="full">
+    <Flex
+      minH={'100vh'}
+      align={'center'}
+      justify={'center'}>
+      <Stack direction="column" w="full">
+        <Stack
+          spacing={4}
+          w={'full'}
+          maxW={'1920px'}
+          bg={useColorModeValue('white', 'gray.700')}
+          rounded={'lg'}
+          boxShadow={'lg'}
+          borderWidth={1}
+          borderColor={useColorModeValue('gray.200', 'gray.700')}
+          p={6}>
+          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+            Text Comparator
+          </Heading>
+          <Stack direction="row" w="100%">
+            <Switch colorScheme='green'
+                    mx={1} mt="0.2%"
+                    isChecked={isLive}
+                    onChange={onChangeSwitch}/>
+            <Text mx={1}>Enable live compare</Text>
+          </Stack>
+          <Text>Disable for large text to improve performance</Text>
+          <Stack direction={["column", "column", "column", "column", "row", "row"]} spacing={'20px'}>
+            <Stack w={{ base: "100%", xl: "50%" }}>
+              <Textarea
+                placeholder="Input first text version"
+                _placeholder={{ color: 'gray.500' }}
+                value={textBox1}
+                onChange={onChangeInput1}
+                rows={15}
+                fontFamily="monospace"
+              />
+            </Stack>
+            <Stack w={{ base: "100%", xl: "50%" }}>
+              <Textarea
+                placeholder="Input second text version"
+                _placeholder={{ color: 'gray.500' }}
+                value={textBox2}
+                onChange={onChangeInput2}
+                rows={15}
+                fontFamily="monospace"
+              />
+            </Stack>
+          </Stack>
+          <Stack justifyContent="center" direction="row" display={isLive ? "none" : "flex"}>
+            <Button
+              bg={useColorModeValue("green.400", "green.600")}
+              color={'white'}
+              _hover={{
+                bg: useColorModeValue("green.600", "green.400"),
+              }}
+              w={{ base: "100%", lg: "50%" }}
+              onClick={onClickCompare}
+              isDisabled={ textBox1.length === 0 || textBox2.length === 0 }>
+              Compare
+            </Button>
+          </Stack>
+        </Stack>
+
+        <Stack justifyContent="center" direction="row" display={hasResult ? "flex" : "none"}>
           <Stack
+            mt={6}
             spacing={4}
             w={'full'}
-            maxW={'1920px'}
+            maxW={'960px'}
             bg={useColorModeValue('white', 'gray.700')}
             rounded={'lg'}
             boxShadow={'lg'}
@@ -97,75 +155,14 @@ export function TextComparator() {
             borderColor={useColorModeValue('gray.200', 'gray.700')}
             p={6}>
             <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-              Text Comparator
+              Result
             </Heading>
-            <Stack direction="row" w="100%">
-              <Switch colorScheme='green'
-                      mx={1} mt="0.2%"
-                      isChecked={isLive}
-                      onChange={onChangeSwitch}/>
-              <Text mx={1}>Enable live compare</Text>
-            </Stack>
-            <Text>Disable for large text to improve performance</Text>
-            <Stack direction={["column", "column", "column", "column", "row", "row"]} spacing={'20px'}>
-              <Stack w={{ base: "100%", xl: "50%" }}>
-                <Textarea
-                  placeholder="Input first text version"
-                  _placeholder={{ color: 'gray.500' }}
-                  value={textBox1}
-                  onChange={onChangeInput1}
-                  rows={15}
-                  fontFamily="monospace"
-                />
-              </Stack>
-              <Stack w={{ base: "100%", xl: "50%" }}>
-                <Textarea
-                  placeholder="Input second text version"
-                  _placeholder={{ color: 'gray.500' }}
-                  value={textBox2}
-                  onChange={onChangeInput2}
-                  rows={15}
-                  fontFamily="monospace"
-                />
-              </Stack>
-            </Stack>
-            <Stack justifyContent="center" direction="row" display={isLive ? "none" : "flex"}>
-              <Button
-                bg={useColorModeValue("green.400", "green.600")}
-                color={'white'}
-                _hover={{
-                  bg: useColorModeValue("green.600", "green.400"),
-                }}
-                w={{ base: "100%", lg: "50%" }}
-                onClick={onClickCompare}
-                isDisabled={ textBox1.length === 0 || textBox2.length === 0 }>
-                Compare
-              </Button>
-            </Stack>
-          </Stack>
-
-          <Stack justifyContent="center" direction="row" display={hasResult ? "flex" : "none"}>
-            <Stack
-              mt={6}
-              spacing={4}
-              w={'full'}
-              maxW={'960px'}
-              bg={useColorModeValue('white', 'gray.700')}
-              rounded={'lg'}
-              boxShadow={'lg'}
-              borderWidth={1}
-              borderColor={useColorModeValue('gray.200', 'gray.700')}
-              p={6}>
-              <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-                Result
-              </Heading>
-              <Stack>
-                <div id="divResult"></div>
-              </Stack>
+            <Stack>
+              <div id="divResult"></div>
             </Stack>
           </Stack>
         </Stack>
-      </Flex>
-    </Page>
+      </Stack>
+    </Flex>
   )
 }

@@ -1,4 +1,3 @@
-import Page from "../../components/Page";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
@@ -158,139 +157,137 @@ export function FileEncoder() {
   }, [textBoxInput, fileData, encoding, decode])
 
   return (
-    <Page>
-      <Flex
-        minH={'100vh'}
-        align={'center'}
-        justify={'center'}>
-        <Stack
-          spacing={4}
-          w={'full'}
-          maxW={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
-          rounded={'lg'}
-          boxShadow={'lg'}
-          borderWidth={1}
-          borderColor={useColorModeValue('gray.200', 'gray.700')}
-          p={6}
-          mt={12}
-          mb={2}>
-          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-            File {decode ? "Decoder" : "Encoder"}
-          </Heading>
-          <FormControl id="url">
-            <Stack direction="row" w="100%" my={3}>
-              <Stack direction="row" w="28%" px={"1%"}>
-                <Text mx={1} mt="5%">{decode ? "Decode from" : "Encode to"}</Text>
-              </Stack>
-              <Stack direction="row" w="72%" px={"1%"}>
-                <Select placeholder={decode ? "Select decoder..." : "Select encoder..."} value={encoding} onChange={onChangeSelect}>
-                  {encodings.map((en) => (
-                    <option value={en.key} key={en.key}>{en.label}</option>
-                  ))}
-                </Select>
-              </Stack>
+    <Flex
+      minH={'100vh'}
+      align={'center'}
+      justify={'center'}>
+      <Stack
+        spacing={4}
+        w={'full'}
+        maxW={'lg'}
+        bg={useColorModeValue('white', 'gray.700')}
+        rounded={'lg'}
+        boxShadow={'lg'}
+        borderWidth={1}
+        borderColor={useColorModeValue('gray.200', 'gray.700')}
+        p={6}
+        mt={12}
+        mb={2}>
+        <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+          File {decode ? "Decoder" : "Encoder"}
+        </Heading>
+        <FormControl id="url">
+          <Stack direction="row" w="100%" my={3}>
+            <Stack direction="row" w="28%" px={"1%"}>
+              <Text mx={1} mt="5%">{decode ? "Decode from" : "Encode to"}</Text>
             </Stack>
-
-            <Stack direction="row" w="100%" mb={3}>
-              <Switch colorScheme='green'
-                      mx={1} mt="0.6%"
-                      isChecked={decode}
-                      onChange={onChangeSwitch}/>
-              <Text mx={1}>Decode File</Text>
+            <Stack direction="row" w="72%" px={"1%"}>
+              <Select placeholder={decode ? "Select decoder..." : "Select encoder..."} value={encoding} onChange={onChangeSelect}>
+                {encodings.map((en) => (
+                  <option value={en.key} key={en.key}>{en.label}</option>
+                ))}
+              </Select>
             </Stack>
+          </Stack>
 
-            <Stack direction="row" w="100%" mb={3} display={decode ? "none" : "flex"}>
-              <Stack direction="row" w="70%" me={"1%"}>
-                <Input
-                  placeholder="Uploaded file"
-                  _placeholder={{ color: 'gray.500' }}
-                  readOnly
-                  value={fileName}
-                  fontFamily="monospace"
-                  mb={4}
-                />
-              </Stack>
-              <Stack direction="row" w="30%">
-                <Input ref={input => fileUpload = input}
-                       type="file" display="none" onChange={onChangeFile} />
-                <Button
-                  bg={useColorModeValue("green.400", "green.600")}
-                  color={'white'}
-                  _hover={{
-                    bg: useColorModeValue("green.600", "green.400"),
-                  }}
-                  onClick={() => fileUpload?.click()}
-                  w="95%"
-                  h="72%"
-                  isLoading={fileLoading}
-                >
-                  Select File
-                </Button>
-              </Stack>
+          <Stack direction="row" w="100%" mb={3}>
+            <Switch colorScheme='green'
+                    mx={1} mt="0.6%"
+                    isChecked={decode}
+                    onChange={onChangeSwitch}/>
+            <Text mx={1}>Decode File</Text>
+          </Stack>
+
+          <Stack direction="row" w="100%" mb={3} display={decode ? "none" : "flex"}>
+            <Stack direction="row" w="70%" me={"1%"}>
+              <Input
+                placeholder="Uploaded file"
+                _placeholder={{ color: 'gray.500' }}
+                readOnly
+                value={fileName}
+                fontFamily="monospace"
+                mb={4}
+              />
             </Stack>
+            <Stack direction="row" w="30%">
+              <Input ref={input => fileUpload = input}
+                      type="file" display="none" onChange={onChangeFile} />
+              <Button
+                bg={useColorModeValue("green.400", "green.600")}
+                color={'white'}
+                _hover={{
+                  bg: useColorModeValue("green.600", "green.400"),
+                }}
+                onClick={() => fileUpload?.click()}
+                w="95%"
+                h="72%"
+                isLoading={fileLoading}
+              >
+                Select File
+              </Button>
+            </Stack>
+          </Stack>
 
-            <Textarea
-              placeholder={"Input any text to decode into a file"}
-              _placeholder={{ color: 'gray.500' }}
-              value={textBoxInput}
-              onChange={onChangeInput}
-              fontFamily="monospace"
-              mb={4}
-              isDisabled={!decode}
-              display={decode ? "current" : "none"}
-            />
+          <Textarea
+            placeholder={"Input any text to decode into a file"}
+            _placeholder={{ color: 'gray.500' }}
+            value={textBoxInput}
+            onChange={onChangeInput}
+            fontFamily="monospace"
+            mb={4}
+            isDisabled={!decode}
+            display={decode ? "current" : "none"}
+          />
 
-            <Text whiteSpace={"pre"} mb={3}>{"Output: " +
-              (decode && !error && textBoxInput.length !== 0 ? "detected as a " + fileExt + " file." +
-                  (fileExt === "bin" ? "\nFile type can't be determined. File result is set as .bin file instead." : "")
-                : ""
-              )
-            }</Text>
+          <Text whiteSpace={"pre"} mb={3}>{"Output: " +
+            (decode && !error && textBoxInput.length !== 0 ? "detected as a " + fileExt + " file." +
+                (fileExt === "bin" ? "\nFile type can't be determined. File result is set as .bin file instead." : "")
+              : ""
+            )
+          }</Text>
 
-            <Textarea
-              readOnly={true}
-              placeholder="Output"
-              _placeholder={{ color: 'gray.500' }}
-              value={textBoxOutput}
-              fontFamily="monospace"
-              fontWeight={error ? "bold" : "none"}
-              display={decode ? "none" : "current"}
-              textColor={
-                useColorModeValue(
-                  error ? "#f01818" : "current",
-                  error ? "#fa3232" : "current")
-              }
-            />
-          </FormControl>
-          <Button
-            bg={useColorModeValue(
-              error && decode ? "#f01818" : "green.400",
-              error && decode ? "#fa3232" : "green.600")}
-            color={'white'}
-            _hover={{
-              bg: useColorModeValue("green.600", "green.400"),
-            }}
-            onClick={onClickCopy}
-            isDisabled={(decode ? fileData.length === 0 : textBoxOutput.length === 0) || error}
-            isLoading={fileLoading}
-            loadingText="Calculating..."
-          >
-            {decode ? (error ? "Invalid input!" : "Download Result File") : "Copy"}
-          </Button>
-          <Text mt={3} display={decode ? "current" : "none"}>Disclaimer:<br/>
-            File type detection may not be accurate. It is determined based on&nbsp;
-            <a
-              href="https://en.wikipedia.org/wiki/List_of_file_signatures" target="_blank"
-              rel="noreferrer"><u>magic number</u>
-            </a>
-            &nbsp;using&nbsp;
-            <a
-              href="https://github.com/LarsKoelpin/magic-bytes" target="_blank"
-              rel="noreferrer"><u>magic-bytes library</u></a>
-          </Text>
-        </Stack>
-      </Flex>
-    </Page>
+          <Textarea
+            readOnly={true}
+            placeholder="Output"
+            _placeholder={{ color: 'gray.500' }}
+            value={textBoxOutput}
+            fontFamily="monospace"
+            fontWeight={error ? "bold" : "none"}
+            display={decode ? "none" : "current"}
+            textColor={
+              useColorModeValue(
+                error ? "#f01818" : "current",
+                error ? "#fa3232" : "current")
+            }
+          />
+        </FormControl>
+        <Button
+          bg={useColorModeValue(
+            error && decode ? "#f01818" : "green.400",
+            error && decode ? "#fa3232" : "green.600")}
+          color={'white'}
+          _hover={{
+            bg: useColorModeValue("green.600", "green.400"),
+          }}
+          onClick={onClickCopy}
+          isDisabled={(decode ? fileData.length === 0 : textBoxOutput.length === 0) || error}
+          isLoading={fileLoading}
+          loadingText="Calculating..."
+        >
+          {decode ? (error ? "Invalid input!" : "Download Result File") : "Copy"}
+        </Button>
+        <Text mt={3} display={decode ? "current" : "none"}>Disclaimer:<br/>
+          File type detection may not be accurate. It is determined based on&nbsp;
+          <a
+            href="https://en.wikipedia.org/wiki/List_of_file_signatures" target="_blank"
+            rel="noreferrer"><u>magic number</u>
+          </a>
+          &nbsp;using&nbsp;
+          <a
+            href="https://github.com/LarsKoelpin/magic-bytes" target="_blank"
+            rel="noreferrer"><u>magic-bytes library</u></a>
+        </Text>
+      </Stack>
+    </Flex>
   )
 }

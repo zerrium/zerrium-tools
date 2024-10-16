@@ -1,4 +1,3 @@
-import Page from "../../components/Page";
 import React, { useState } from "react";
 import {
   Button,
@@ -13,7 +12,7 @@ import {
   useToast, Checkbox
 } from "@chakra-ui/react";
 // @ts-ignore
-import crypto from "crypto";
+import crypto from "crypto-browserify";  // windows use crypto
 
 const lowerAlphabets = "abcdefghijklmnopqrstuvwxyz"
 const upperAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -224,202 +223,39 @@ export function PasswordGenerator() {
   }
 
   return (
-    <Page>
-      <Flex
-        minH={'100vh'}
-        align={'center'}
-        justify={'center'}>
-        <Stack w={'full'} maxW={'lg'}>
-          <Stack
-            spacing={4}
-            w={'full'}
-            maxW={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
-            rounded={'lg'}
-            boxShadow={'lg'}
-            borderWidth={1}
-            borderColor={useColorModeValue('gray.200', 'gray.700')}
-            p={6}
-            mt={12}
-            mb={2}>
-            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-              Password Generator Options
-            </Heading>
-            <FormControl id="optionPassword">
-              <Stack direction="row" w="100%">
-                <Stack direction="row" w="50%" px={"1%"} justifyContent="right">
-                  <Text mx={1} mt="1.5%">Password Length</Text>
-                </Stack>
-                <Stack direction="row" w="50%" px={"1%"}>
-                  <NumberInput
-                    value={passwordLength}
-                    min={8}
-                    max={511}
-                    mb={3}
-                    maxW="70%"
-                    onChange={onChangeOptionPasswordLength}>
-                    <NumberInputField/>
-                    <NumberInputStepper>
-                      <NumberIncrementStepper/>
-                      <NumberDecrementStepper/>
-                    </NumberInputStepper>
-                  </NumberInput>
-                </Stack>
+    <Flex
+      minH={'100vh'}
+      align={'center'}
+      justify={'center'}>
+      <Stack w={'full'} maxW={'lg'}>
+        <Stack
+          spacing={4}
+          w={'full'}
+          maxW={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          rounded={'lg'}
+          boxShadow={'lg'}
+          borderWidth={1}
+          borderColor={useColorModeValue('gray.200', 'gray.700')}
+          p={6}
+          mt={12}
+          mb={2}>
+          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+            Password Generator Options
+          </Heading>
+          <FormControl id="optionPassword">
+            <Stack direction="row" w="100%">
+              <Stack direction="row" w="50%" px={"1%"} justifyContent="right">
+                <Text mx={1} mt="1.5%">Password Length</Text>
               </Stack>
-
-              <Stack direction="row" w="100%">
-                <Stack direction="row" w="50%" px={"1%"} justifyContent="right">
-                  <Text mx={1} mt="1.5%">Minimum Numbers</Text>
-                </Stack>
-                <Stack direction="row" w="50%" px={"1%"}>
-                  <NumberInput
-                    value={minimumNumbers}
-                    min={1}
-                    max={passwordLength - (isSpecial ? minimumSpecials : 0) - 3}
-                    mb={3}
-                    maxW="70%"
-                    onChange={onChangeOptionMinimumNumbers}
-                    isDisabled={!isNumber}>
-                    <NumberInputField/>
-                    <NumberInputStepper>
-                      <NumberIncrementStepper/>
-                      <NumberDecrementStepper/>
-                    </NumberInputStepper>
-                  </NumberInput>
-                </Stack>
-              </Stack>
-
-              <Stack direction="row" w="100%">
-                <Stack direction="row" w="50%" px={"1%"} justifyContent="right">
-                  <Text mx={1} mt="1.5%">Minimum Symbols</Text>
-                </Stack>
-                <Stack direction="row" w="50%" px={"1%"}>
-                  <NumberInput
-                    value={minimumSpecials}
-                    min={1}
-                    max={passwordLength - (isNumber ? minimumNumbers : 0) - 3}
-                    mb={3}
-                    maxW="70%"
-                    onChange={onChangeOptionMinimumSpecials}
-                    isDisabled={!isSpecial}>
-                    <NumberInputField/>
-                    <NumberInputStepper>
-                      <NumberIncrementStepper/>
-                      <NumberDecrementStepper/>
-                    </NumberInputStepper>
-                  </NumberInput>
-                </Stack>
-              </Stack>
-
-              <Checkbox colorScheme="green" me="5%"
-                        isChecked={isUppercase}
-                        onChange={onChangeIsUppercase}>
-                A-Z
-              </Checkbox>
-              <Checkbox colorScheme="green" me="5%"
-                        isChecked={isLowercase}
-                        isDisabled={!isUppercase && !isNumber && !isSpecial}
-                        onChange={onChangeIsLowercase}>
-                a-z
-              </Checkbox>
-              <Checkbox colorScheme="green" me="5%"
-                        isChecked={isNumber}
-                        onChange={onChangeIsNumber}>
-                0-9
-              </Checkbox>
-              <Checkbox colorScheme="green" me="5%"
-                        isChecked={isSpecial}
-                        onChange={onChangeIsSpecial}>
-                Symbols
-              </Checkbox>
-              <Checkbox colorScheme="green" me="5%"
-                        isChecked={avoidAmbiguous}
-                        onChange={onChangeAvoidAmbiguous}>
-                Avoid ambiguous characters
-              </Checkbox>
-              <Checkbox colorScheme="green" me="5%"
-                        isChecked={isSpecialURL}
-                        isDisabled={!isSpecial}
-                        onChange={onChangeIsSpecialURL}>
-                URL-friendy symbols
-              </Checkbox>
-            </FormControl>
-            <Text mt={3} textAlign="justify">Note: this password generator is based on <a
-              href="https://nodejs.org/api/crypto.html#crypto_crypto_randomint_min_max_callback" target="_blank"
-              rel="noreferrer"><u>crypto module</u></a> and it is claimed to be "cryptographically secure" which is <b>not guaranteed</b> 100% but still secure enough</Text>
-          </Stack>
-          <Stack
-            spacing={4}
-            w={'full'}
-            maxW={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
-            rounded={'lg'}
-            boxShadow={'lg'}
-            borderWidth={1}
-            borderColor={useColorModeValue('gray.200', 'gray.700')}
-            p={6}
-            my={2}>
-            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-              Random Password Generator
-            </Heading>
-            <FormControl id="password">
-              <Input
-                readOnly={true}
-                placeholder="Generated Password"
-                _placeholder={{ color: 'gray.500' }}
-                value={textBox}
-                fontFamily="monospace"
-              />
-            </FormControl>
-            <Stack spacing={5} direction={['column', 'row']}>
-              <Button
-                bg={useColorModeValue("green.400", "green.600")}
-                color={'white'}
-                _hover={{
-                  bg: useColorModeValue("green.600", "green.400"),
-                }} w={{ base: "100%", md: "50%" }}
-                onClick={onClickGenerate}>
-                Generate
-              </Button>
-              <Button
-                bg={useColorModeValue("green.400", "green.600")}
-                color={'white'}
-                _hover={{
-                  bg: useColorModeValue("green.600", "green.400"),
-                }} w={{ base: "100%", md: "50%" }}
-                onClick={onClickCopy}
-                isDisabled={textBox.length === 0}
-              >
-                Copy
-              </Button>
-            </Stack>
-          </Stack>
-
-          <Stack
-            spacing={4}
-            w={'full'}
-            maxW={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
-            rounded={'lg'}
-            boxShadow={'lg'}
-            borderWidth={1}
-            borderColor={useColorModeValue('gray.200', 'gray.700')}
-            p={6}
-            mt={2}
-            mb={12}>
-            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-              Multiple Password Generator
-            </Heading>
-            <FormControl id="passwordMultiple">
-              <Stack direction='row'>
-                <Text mx={3} mt="1.5%" align="center">Number of Passwords </Text>
+              <Stack direction="row" w="50%" px={"1%"}>
                 <NumberInput
-                  value={numberOfPassword}
-                  min={2}
-                  max={32767}
+                  value={passwordLength}
+                  min={8}
+                  max={511}
                   mb={3}
-                  maxW="50%"
-                  onChange={onChangeNumberOfPassword}>
+                  maxW="70%"
+                  onChange={onChangeOptionPasswordLength}>
                   <NumberInputField/>
                   <NumberInputStepper>
                     <NumberIncrementStepper/>
@@ -427,39 +263,200 @@ export function PasswordGenerator() {
                   </NumberInputStepper>
                 </NumberInput>
               </Stack>
-              <Textarea
-                readOnly={true}
-                placeholder="Generated Random Passwords"
-                _placeholder={{ color: 'gray.500' }}
-                value={areaTextBox}
-                fontFamily="monospace"
-              />
-            </FormControl>
-            <Stack spacing={5} direction={['column', 'row']}>
-              <Button
-                bg={useColorModeValue("green.400", "green.600")}
-                color={'white'}
-                _hover={{
-                  bg: useColorModeValue("green.600", "green.400"),
-                }} w={{ base: "100%", md: "50%" }}
-                onClick={onClickGenerateMultiple}>
-                Generate
-              </Button>
-              <Button
-                bg={useColorModeValue("green.400", "green.600")}
-                color={'white'}
-                _hover={{
-                  bg: useColorModeValue("green.600", "green.400"),
-                }} w={{ base: "100%", md: "50%" }}
-                onClick={onClickCopyMultiple}
-                isDisabled={areaTextBox.length === 0}
-              >
-                Copy
-              </Button>
             </Stack>
+
+            <Stack direction="row" w="100%">
+              <Stack direction="row" w="50%" px={"1%"} justifyContent="right">
+                <Text mx={1} mt="1.5%">Minimum Numbers</Text>
+              </Stack>
+              <Stack direction="row" w="50%" px={"1%"}>
+                <NumberInput
+                  value={minimumNumbers}
+                  min={1}
+                  max={passwordLength - (isSpecial ? minimumSpecials : 0) - 3}
+                  mb={3}
+                  maxW="70%"
+                  onChange={onChangeOptionMinimumNumbers}
+                  isDisabled={!isNumber}>
+                  <NumberInputField/>
+                  <NumberInputStepper>
+                    <NumberIncrementStepper/>
+                    <NumberDecrementStepper/>
+                  </NumberInputStepper>
+                </NumberInput>
+              </Stack>
+            </Stack>
+
+            <Stack direction="row" w="100%">
+              <Stack direction="row" w="50%" px={"1%"} justifyContent="right">
+                <Text mx={1} mt="1.5%">Minimum Symbols</Text>
+              </Stack>
+              <Stack direction="row" w="50%" px={"1%"}>
+                <NumberInput
+                  value={minimumSpecials}
+                  min={1}
+                  max={passwordLength - (isNumber ? minimumNumbers : 0) - 3}
+                  mb={3}
+                  maxW="70%"
+                  onChange={onChangeOptionMinimumSpecials}
+                  isDisabled={!isSpecial}>
+                  <NumberInputField/>
+                  <NumberInputStepper>
+                    <NumberIncrementStepper/>
+                    <NumberDecrementStepper/>
+                  </NumberInputStepper>
+                </NumberInput>
+              </Stack>
+            </Stack>
+
+            <Checkbox colorScheme="green" me="5%"
+                      isChecked={isUppercase}
+                      onChange={onChangeIsUppercase}>
+              A-Z
+            </Checkbox>
+            <Checkbox colorScheme="green" me="5%"
+                      isChecked={isLowercase}
+                      isDisabled={!isUppercase && !isNumber && !isSpecial}
+                      onChange={onChangeIsLowercase}>
+              a-z
+            </Checkbox>
+            <Checkbox colorScheme="green" me="5%"
+                      isChecked={isNumber}
+                      onChange={onChangeIsNumber}>
+              0-9
+            </Checkbox>
+            <Checkbox colorScheme="green" me="5%"
+                      isChecked={isSpecial}
+                      onChange={onChangeIsSpecial}>
+              Symbols
+            </Checkbox>
+            <Checkbox colorScheme="green" me="5%"
+                      isChecked={avoidAmbiguous}
+                      onChange={onChangeAvoidAmbiguous}>
+              Avoid ambiguous characters
+            </Checkbox>
+            <Checkbox colorScheme="green" me="5%"
+                      isChecked={isSpecialURL}
+                      isDisabled={!isSpecial}
+                      onChange={onChangeIsSpecialURL}>
+              URL-friendy symbols
+            </Checkbox>
+          </FormControl>
+          <Text mt={3} textAlign="justify">Note: this password generator is based on <a
+            href="https://nodejs.org/api/crypto.html#crypto_crypto_randomint_min_max_callback" target="_blank"
+            rel="noreferrer"><u>crypto module</u></a> and it is claimed to be "cryptographically secure" which is <b>not guaranteed</b> 100% but still secure enough</Text>
+        </Stack>
+        <Stack
+          spacing={4}
+          w={'full'}
+          maxW={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          rounded={'lg'}
+          boxShadow={'lg'}
+          borderWidth={1}
+          borderColor={useColorModeValue('gray.200', 'gray.700')}
+          p={6}
+          my={2}>
+          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+            Random Password Generator
+          </Heading>
+          <FormControl id="password">
+            <Input
+              readOnly={true}
+              placeholder="Generated Password"
+              _placeholder={{ color: 'gray.500' }}
+              value={textBox}
+              fontFamily="monospace"
+            />
+          </FormControl>
+          <Stack spacing={5} direction={['column', 'row']}>
+            <Button
+              bg={useColorModeValue("green.400", "green.600")}
+              color={'white'}
+              _hover={{
+                bg: useColorModeValue("green.600", "green.400"),
+              }} w={{ base: "100%", md: "50%" }}
+              onClick={onClickGenerate}>
+              Generate
+            </Button>
+            <Button
+              bg={useColorModeValue("green.400", "green.600")}
+              color={'white'}
+              _hover={{
+                bg: useColorModeValue("green.600", "green.400"),
+              }} w={{ base: "100%", md: "50%" }}
+              onClick={onClickCopy}
+              isDisabled={textBox.length === 0}
+            >
+              Copy
+            </Button>
           </Stack>
         </Stack>
-      </Flex>
-    </Page>
+
+        <Stack
+          spacing={4}
+          w={'full'}
+          maxW={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          rounded={'lg'}
+          boxShadow={'lg'}
+          borderWidth={1}
+          borderColor={useColorModeValue('gray.200', 'gray.700')}
+          p={6}
+          mt={2}
+          mb={12}>
+          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+            Multiple Password Generator
+          </Heading>
+          <FormControl id="passwordMultiple">
+            <Stack direction='row'>
+              <Text mx={3} mt="1.5%" align="center">Number of Passwords </Text>
+              <NumberInput
+                value={numberOfPassword}
+                min={2}
+                max={32767}
+                mb={3}
+                maxW="50%"
+                onChange={onChangeNumberOfPassword}>
+                <NumberInputField/>
+                <NumberInputStepper>
+                  <NumberIncrementStepper/>
+                  <NumberDecrementStepper/>
+                </NumberInputStepper>
+              </NumberInput>
+            </Stack>
+            <Textarea
+              readOnly={true}
+              placeholder="Generated Random Passwords"
+              _placeholder={{ color: 'gray.500' }}
+              value={areaTextBox}
+              fontFamily="monospace"
+            />
+          </FormControl>
+          <Stack spacing={5} direction={['column', 'row']}>
+            <Button
+              bg={useColorModeValue("green.400", "green.600")}
+              color={'white'}
+              _hover={{
+                bg: useColorModeValue("green.600", "green.400"),
+              }} w={{ base: "100%", md: "50%" }}
+              onClick={onClickGenerateMultiple}>
+              Generate
+            </Button>
+            <Button
+              bg={useColorModeValue("green.400", "green.600")}
+              color={'white'}
+              _hover={{
+                bg: useColorModeValue("green.600", "green.400"),
+              }} w={{ base: "100%", md: "50%" }}
+              onClick={onClickCopyMultiple}
+              isDisabled={areaTextBox.length === 0}
+            >
+              Copy
+            </Button>
+          </Stack>
+        </Stack>
+      </Stack>
+    </Flex>
   )
 }

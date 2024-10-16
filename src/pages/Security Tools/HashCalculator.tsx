@@ -1,6 +1,5 @@
-import Page from "../../components/Page";
 // @ts-ignore
-import { createHash } from "crypto";
+import { createHash } from "crypto-browserify";  // windows use crypto
 import React, { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
@@ -116,112 +115,110 @@ export function HashCalculator() {
   }, [textBoxInput, fileData, hashAlgo, fileInput])
 
   return (
-    <Page>
-      <Flex
-        minH={'100vh'}
-        align={'center'}
-        justify={'center'}>
-        <Stack
-          spacing={4}
-          w={'full'}
-          maxW={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
-          rounded={'lg'}
-          boxShadow={'lg'}
-          borderWidth={1}
-          borderColor={useColorModeValue('gray.200', 'gray.700')}
-          p={6}
-          mt={12}
-          mb={2}>
-          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-            Hash Calculator
-          </Heading>
-          <FormControl id="hash">
-            <Stack direction="row" w="100%" my={3}>
-              <Stack direction="row" w="28%" px={"1%"}>
-                <Text mx={1} mt="5%">Hash Algorithm</Text>
-              </Stack>
-              <Stack direction="row" w="72%" px={"1%"}>
-                <Select placeholder="Select Hash Algorithm..." value={hashAlgo} onChange={onChangeSelect}>
-                  {hashAlgorithm.map((ha) => (
-                    <option value={ha.key} key={ha.key}>{ha.label}</option>
-                  ))}
-                </Select>
-              </Stack>
+    <Flex
+      minH={'100vh'}
+      align={'center'}
+      justify={'center'}>
+      <Stack
+        spacing={4}
+        w={'full'}
+        maxW={'lg'}
+        bg={useColorModeValue('white', 'gray.700')}
+        rounded={'lg'}
+        boxShadow={'lg'}
+        borderWidth={1}
+        borderColor={useColorModeValue('gray.200', 'gray.700')}
+        p={6}
+        mt={12}
+        mb={2}>
+        <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+          Hash Calculator
+        </Heading>
+        <FormControl id="hash">
+          <Stack direction="row" w="100%" my={3}>
+            <Stack direction="row" w="28%" px={"1%"}>
+              <Text mx={1} mt="5%">Hash Algorithm</Text>
             </Stack>
-
-            <Stack direction="row" w="100%" mb={3}>
-              <Switch colorScheme='green'
-                      mx={1} mt="0.6%"
-                      isChecked={fileInput}
-                      onChange={onChangeSwitch}/>
-              <Text mx={1}>File Input</Text>
+            <Stack direction="row" w="72%" px={"1%"}>
+              <Select placeholder="Select Hash Algorithm..." value={hashAlgo} onChange={onChangeSelect}>
+                {hashAlgorithm.map((ha) => (
+                  <option value={ha.key} key={ha.key}>{ha.label}</option>
+                ))}
+              </Select>
             </Stack>
+          </Stack>
 
-            <Input
-              placeholder="Input any text"
-              _placeholder={{ color: 'gray.500' }}
-              value={textBoxInput}
-              onChange={onChangeInput}
-              fontFamily="monospace"
-              mb={4}
-              display={fileInput ? "none" : "initial"}
-            />
+          <Stack direction="row" w="100%" mb={3}>
+            <Switch colorScheme='green'
+                    mx={1} mt="0.6%"
+                    isChecked={fileInput}
+                    onChange={onChangeSwitch}/>
+            <Text mx={1}>File Input</Text>
+          </Stack>
 
-            <Stack direction="row" w="100%" mb={3} display={fileInput ? "flex" : "none"}>
-              <Stack direction="row" w="70%" me={"1%"}>
-                <Input
-                  placeholder="Uploaded file"
-                  _placeholder={{ color: 'gray.500' }}
-                  readOnly
-                  value={fileName}
-                  fontFamily="monospace"
-                  mb={4}
-                />
-              </Stack>
-              <Stack direction="row" w="30%">
-                <Input ref={input => fileUpload = input}
-                       type="file" display="none" onChange={onChangeFile} />
-                <Button
-                  bg={useColorModeValue("green.400", "green.600")}
-                  color={'white'}
-                  _hover={{
-                    bg: useColorModeValue("green.600", "green.400"),
-                  }}
-                  onClick={() => fileUpload?.click()}
-                  w="95%"
-                  h="72%"
-                  isLoading={fileLoading}
-                >
-                  Select File
-                </Button>
-              </Stack>
+          <Input
+            placeholder="Input any text"
+            _placeholder={{ color: 'gray.500' }}
+            value={textBoxInput}
+            onChange={onChangeInput}
+            fontFamily="monospace"
+            mb={4}
+            display={fileInput ? "none" : "initial"}
+          />
+
+          <Stack direction="row" w="100%" mb={3} display={fileInput ? "flex" : "none"}>
+            <Stack direction="row" w="70%" me={"1%"}>
+              <Input
+                placeholder="Uploaded file"
+                _placeholder={{ color: 'gray.500' }}
+                readOnly
+                value={fileName}
+                fontFamily="monospace"
+                mb={4}
+              />
             </Stack>
+            <Stack direction="row" w="30%">
+              <Input ref={input => fileUpload = input}
+                      type="file" display="none" onChange={onChangeFile} />
+              <Button
+                bg={useColorModeValue("green.400", "green.600")}
+                color={'white'}
+                _hover={{
+                  bg: useColorModeValue("green.600", "green.400"),
+                }}
+                onClick={() => fileUpload?.click()}
+                w="95%"
+                h="72%"
+                isLoading={fileLoading}
+              >
+                Select File
+              </Button>
+            </Stack>
+          </Stack>
 
-            <Text mb={3}>Output:</Text>
-            <Textarea
-              readOnly={true}
-              placeholder="Output"
-              _placeholder={{ color: 'gray.500' }}
-              value={textBoxOutput}
-              fontFamily="monospace"
-            />
-          </FormControl>
-          <Button
-            bg={useColorModeValue("green.400", "green.600")}
-            color={'white'}
-            _hover={{
-              bg: useColorModeValue("green.600", "green.400"),
-            }}
-            onClick={onClickCopy}
-            isDisabled={textBoxOutput.length === 0}
-            isLoading={fileLoading}
-            loadingText="Calculating..."
-          >
-            Copy
-          </Button>
-        </Stack>
-      </Flex>
-    </Page>
+          <Text mb={3}>Output:</Text>
+          <Textarea
+            readOnly={true}
+            placeholder="Output"
+            _placeholder={{ color: 'gray.500' }}
+            value={textBoxOutput}
+            fontFamily="monospace"
+          />
+        </FormControl>
+        <Button
+          bg={useColorModeValue("green.400", "green.600")}
+          color={'white'}
+          _hover={{
+            bg: useColorModeValue("green.600", "green.400"),
+          }}
+          onClick={onClickCopy}
+          isDisabled={textBoxOutput.length === 0}
+          isLoading={fileLoading}
+          loadingText="Calculating..."
+        >
+          Copy
+        </Button>
+      </Stack>
+    </Flex>
   )
 }

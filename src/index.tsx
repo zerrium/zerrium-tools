@@ -6,6 +6,7 @@ import * as serviceWorker from "./serviceWorkerRegistration"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { NotFound } from "./pages/NotFound";
 import { LinkItems } from "./routes";
+import Page from "./components/Page"
 
 // const basename = document.querySelector('base')?.getAttribute('href') ?? '/'
 const container = document.getElementById("root")
@@ -16,25 +17,27 @@ root.render(
   <React.StrictMode>
     <ColorModeScript/>
     <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Navigate to={LinkItems[0].link as string}/>}/>
-          {LinkItems.map((route) => (
-            <React.Fragment key={route.name}>
-              {route.child ? (
-                <React.Fragment key={route.name}>
-                  {route.child.map((subroute) => (
-                    <Route path={subroute.link} element={subroute.element} key={subroute.name}/>
-                  ))}
-                </React.Fragment>
-              ) : (
-                <Route path={route.link} element={route.element}/>
-              )}
-            </React.Fragment>
-          ))}
-          <Route path="*" element={<NotFound/>}/>
-        </Routes>
-      </BrowserRouter>
+      <Page>
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<Navigate to={LinkItems[0].link as string}/>}/>
+            {LinkItems.map((route) => (
+              <React.Fragment key={route.name}>
+                {route.child ? (
+                  <React.Fragment key={route.name}>
+                    {route.child.map((subroute) => (
+                      <Route path={subroute.link} element={subroute.element} key={subroute.name}/>
+                    ))}
+                  </React.Fragment>
+                ) : (
+                  <Route path={route.link} element={route.element}/>
+                )}
+              </React.Fragment>
+            ))}
+            <Route path="*" element={<NotFound/>}/>
+          </Routes>
+        </BrowserRouter>
+      </Page>
     </ChakraProvider>
   </React.StrictMode>,
 )

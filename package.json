@@ -1,6 +1,6 @@
 {
   "name": "tools",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^2.8.1",
@@ -55,7 +55,7 @@
     "react-scripts": "5.0.1"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "PORT=21000 node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
