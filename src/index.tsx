@@ -2,7 +2,7 @@ import { ChakraProvider, ColorModeScript, theme } from "@chakra-ui/react"
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import reportWebVitals from "./reportWebVitals"
-import { register } from "./serviceWorkerRegistration"
+import { unregister } from "./serviceWorkerRegistration"
 import { RouterProvider } from "react-router-dom"
 import { router } from "./components/Router"
 
@@ -23,7 +23,7 @@ root.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
-register()
+unregister()
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
