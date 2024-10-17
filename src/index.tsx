@@ -15,28 +15,30 @@ const root = ReactDOM.createRoot(container)
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ColorModeScript/>
-      <ChakraProvider theme={theme}>
-        <Routes>
-          <Route index element={<Navigate to={LinkItems[0].link as string}/>}/>
-          {LinkItems.map((route) => (
-            <React.Fragment key={route.name}>
-              {route.child ? (
-                <React.Fragment key={route.name}>
-                  {route.child.map((subroute) => (
-                    <Route path={subroute.link} element={<Page>{subroute.element}</Page>} key={subroute.name}/>
-                  ))}
-                </React.Fragment>
-              ) : (
-                <Route path={route.link} element={<Page>{route.element}</Page>}/>
-              )}
-            </React.Fragment>
-          ))}
-          <Route path="*" element={<NotFound/>}/>
-        </Routes>
-      </ChakraProvider>
-    </BrowserRouter>
+    <ColorModeScript/>
+    <ChakraProvider theme={theme}>
+      <Page>
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<Navigate to={LinkItems[0].link as string}/>}/>
+            {LinkItems.map((route) => (
+              <React.Fragment key={route.name}>
+                {route.child ? (
+                  <React.Fragment key={route.name}>
+                    {route.child.map((subroute) => (
+                      <Route path={subroute.link} element={subroute.element} key={subroute.name}/>
+                    ))}
+                  </React.Fragment>
+                ) : (
+                  <Route path={route.link} element={route.element}/>
+                )}
+              </React.Fragment>
+            ))}
+            <Route path="*" element={<NotFound/>}/>
+          </Routes>
+        </BrowserRouter>
+      </Page>
+    </ChakraProvider>
   </React.StrictMode>,
 )
 
