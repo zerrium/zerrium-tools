@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import moment from 'moment/moment.js';
 
-export function DateTimeConverter() {
+const DateTimeConverter = () => {
   const [textBoxInput, setTextBoxInput] = useState<string>("")
   const [textBoxOutput, setTextBoxOutput] = useState<string>("")
   const [decode, setDecode] = useState<boolean>(false)
@@ -68,6 +68,7 @@ export function DateTimeConverter() {
         setError(true)
       }
     }
+    // eslint-disable-next-line
   }, [textBoxInput])
 
   useEffect(() => {
@@ -75,6 +76,7 @@ export function DateTimeConverter() {
       setTextBoxInput(now.format(decode ? "x" : "YYYY-MM-DD HH:mm:ss"))
       setTextBoxOutput(now.format(decode ? "YYYY-MM-DD HH:mm:ss" : "x"))
     }
+    // eslint-disable-next-line
   }, [now])
 
   return (
@@ -154,3 +156,5 @@ export function DateTimeConverter() {
     </Flex>
   )
 }
+
+export default DateTimeConverter

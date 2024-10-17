@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import {
   Button,
   Flex,
@@ -24,7 +24,7 @@ const lowerAlphabetsNoAmbiguous = lowerAlphabets.replace("l", "");
 const upperAlphabetsNoAmbiguous = upperAlphabets.replace("I", "").replace("O", "");
 const numericNoAmbiguous = numbers.replace("0", "").replace("1", "")
 
-export function PasswordGenerator() {
+const PasswordGenerator = () => {
   const [textBox, setTextBox] = useState<string>("")
   const [numberOfPassword, setNumberOfPassword] = useState<number>(2)
   const [areaTextBox, setAreaTextBox] = useState<string>("")
@@ -186,39 +186,39 @@ export function PasswordGenerator() {
     }
   }
 
-  const onChangeIsUppercase = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeIsUppercase = (e: ChangeEvent<HTMLInputElement>) => {
     setIsUppercase(e.target.checked)
     if (!e.target.checked && !isNumber && !isSpecial && !isLowercase) {
       setIsLowercase(true)
     }
   }
 
-  const onChangeIsLowercase = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeIsLowercase = (e: ChangeEvent<HTMLInputElement>) => {
     setIsLowercase(e.target.checked)
     if (!e.target.checked && !isNumber && !isSpecial && !isUppercase) {
       setIsLowercase(true)
     }
   }
 
-  const onChangeIsNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeIsNumber = (e: ChangeEvent<HTMLInputElement>) => {
     setIsNumber(e.target.checked)
     if (!e.target.checked && !isUppercase && !isSpecial && !isLowercase) {
       setIsLowercase(true)
     }
   }
 
-  const onChangeIsSpecial = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeIsSpecial = (e: ChangeEvent<HTMLInputElement>) => {
     setIsSpecial(e.target.checked)
     if (!e.target.checked && !isNumber && !isUppercase && !isLowercase) {
       setIsLowercase(true)
     }
   }
 
-  const onChangeIsSpecialURL = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeIsSpecialURL = (e: ChangeEvent<HTMLInputElement>) => {
     setIsSpecialURL(e.target.checked)
   }
 
-  const onChangeAvoidAmbiguous = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeAvoidAmbiguous = (e: ChangeEvent<HTMLInputElement>) => {
     setAvoidAmbiguous(e.target.checked)
   }
 
@@ -460,3 +460,5 @@ export function PasswordGenerator() {
     </Flex>
   )
 }
+
+export default PasswordGenerator

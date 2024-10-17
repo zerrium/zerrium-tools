@@ -1,6 +1,6 @@
 // @ts-ignore
 import { v4 as uuidv4 } from "uuid";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Flex,
@@ -18,7 +18,7 @@ const generateUuid = () => {
   return uuidv4()
 }
 
-export function UuidGenerator() {
+const UuidGenerator = () => {
   const [textBox, setTextBox] = useState<string>("")
   const [numberOfUuid, setNumberOfUuid] = useState<number>(2)
   const [areaTextBox, setAreaTextBox] = useState<string>("")
@@ -178,3 +178,5 @@ export function UuidGenerator() {
     </Flex>
   )
 }
+
+export default UuidGenerator

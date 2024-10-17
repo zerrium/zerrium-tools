@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Flex,
   FormControl,
@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { JsonViewer as JV } from "@textea/json-viewer";
 
-export function JsonViewer() {
+const JsonViewer = () => {
   const [textBox, setTextBox] = useState<string>("")
   const [status, setStatus] = useState<"Invalid" | "Valid">("Invalid")
   const [jsonObj, setJsonObj] = useState()
@@ -84,3 +84,5 @@ export function JsonViewer() {
     </Flex>
   )
 }
+
+export default JsonViewer

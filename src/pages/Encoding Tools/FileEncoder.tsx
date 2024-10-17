@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
@@ -22,7 +22,7 @@ const encodings: { label: string, key: number | string }[] = [
   { label: "Base64 URL", key: "Base64Url" }
 ]
 
-export function FileEncoder() {
+const FileEncoder = () => {
   const [textBoxInput, setTextBoxInput] = useState<string>("")
   const [textBoxOutput, setTextBoxOutput] = useState<string>("")
   const [decode, setDecode] = useState<boolean>(false)
@@ -291,3 +291,5 @@ export function FileEncoder() {
     </Flex>
   )
 }
+
+export default FileEncoder

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
@@ -21,7 +21,7 @@ const validateYaml = (text: string) => {
   }
 }
 
-export function YamlValidator() {
+const YamlValidator = () => {
   const [textBox, setTextBox] = useState<string>("")
   const [status, setStatus] = useState<"Invalid" | "Valid">("Invalid")
 
@@ -102,3 +102,5 @@ export function YamlValidator() {
     </Flex>
   )
 }
+
+export default YamlValidator

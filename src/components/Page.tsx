@@ -1,4 +1,4 @@
-import React from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import {
   Accordion,
   AccordionButton,
@@ -22,9 +22,10 @@ import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { FiMenu } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import { Footer } from "./Footer"
-import { LinkItems } from "../routes";
+import { LinkItems } from "./Router";
 // @ts-ignore
 import { isDesktop } from "react-device-detect";
+import { Outlet, useLocation } from 'react-router-dom'
 
 
 const findAccordationIndex = (url: string) => {
@@ -40,7 +41,7 @@ const findAccordationIndex = (url: string) => {
   return temp
 }
 
-const Page: React.FC<React.PropsWithChildren> = ({ children }) => {
+const Page = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   // const isTouchScreenDevice = () => {
   //   try{
@@ -72,7 +73,7 @@ const Page: React.FC<React.PropsWithChildren> = ({ children }) => {
           <ColorModeSwitcher/>
         </Box>
         <Box px="25" pb="120" pt={{ base: "100", md: "15" }}>
-          {children}
+          <Outlet />
         </Box>
         <Box position="absolute" bottom="0" left="0" right="0"
              ml={{ base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
@@ -89,9 +90,12 @@ interface SidebarProps extends BoxProps {
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const activeColor = useColorModeValue("green.200", "green.800")
-  // const basename = (document.querySelector('base')?.getAttribute('href') ?? '') + '/'
-  // const url = window.location.pathname.replace(basename, "")
-  const url = window.location.pathname.replace("/", "")
+  const { pathname } = useLocation()
+  const [url, setUrl] = useState<string>(pathname.replace("/", ""))
+
+  useEffect(() => {
+    setUrl(pathname.replace("/", ""))
+  }, [pathname]);
 
   return (
     <Box
@@ -111,8 +115,8 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       </Flex>
       <Box>
         <Accordion allowMultiple width="100%" maxW="lg" rounded="lg" defaultIndex={[findAccordationIndex(url)]}>
-          {LinkItems.map((link) => (
-            <React.Fragment key={link.name}>
+          {LinkItems.map((link, index) => (
+            <Fragment key={link.name}>
               {link.child ? (
                 <AccordionItem key={link.name}>
                   <AccordionButton
@@ -155,12 +159,12 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 </AccordionItem>
               ) : (
                 <NavItem key={link.name} icon={link?.icon} ps={link.icon ? "4" : "12"} href={/*basename + */(link.link || "#")}
-                         fontWeight={url === link.link ? "bold" : "none"}
-                         background={url === link.link ? activeColor : "none"}>
+                         fontWeight={url === link.link || (index === 0 && url.length === 0) ? "bold" : "none"}
+                         background={url === link.link || (index === 0 && url.length === 0) ? activeColor : "none"}>
                   {link.name}
                 </NavItem>
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
         </Accordion>
       </Box>

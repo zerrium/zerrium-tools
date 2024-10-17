@@ -1,51 +1,29 @@
 import { ChakraProvider, ColorModeScript, theme } from "@chakra-ui/react"
-import * as React from "react"
-import * as ReactDOM from "react-dom/client"
+import { StrictMode } from "react"
+import { createRoot } from "react-dom/client"
 import reportWebVitals from "./reportWebVitals"
-import * as serviceWorker from "./serviceWorkerRegistration"
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { NotFound } from "./pages/NotFound";
-import { LinkItems } from "./routes";
-import Page from "./components/Page"
+import { register } from "./serviceWorkerRegistration"
+import { RouterProvider } from "react-router-dom"
+import { router } from "./components/Router"
 
 // const basename = document.querySelector('base')?.getAttribute('href') ?? '/'
 const container = document.getElementById("root")
 if (!container) throw new Error('Failed to find the root element');
-const root = ReactDOM.createRoot(container)
+const root = createRoot(container)
 
 root.render(
-  <React.StrictMode>
-    <ColorModeScript/>
+  <StrictMode>
+    <ColorModeScript />
     <ChakraProvider theme={theme}>
-      <Page>
-        <BrowserRouter>
-          <Routes>
-            <Route index element={<Navigate to={LinkItems[0].link as string}/>}/>
-            {LinkItems.map((route) => (
-              <React.Fragment key={route.name}>
-                {route.child ? (
-                  <React.Fragment key={route.name}>
-                    {route.child.map((subroute) => (
-                      <Route path={subroute.link} element={subroute.element} key={subroute.name}/>
-                    ))}
-                  </React.Fragment>
-                ) : (
-                  <Route path={route.link} element={route.element}/>
-                )}
-              </React.Fragment>
-            ))}
-            <Route path="*" element={<NotFound/>}/>
-          </Routes>
-        </BrowserRouter>
-      </Page>
+      <RouterProvider router={router}/>
     </ChakraProvider>
-  </React.StrictMode>,
+  </StrictMode>,
 )
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
-serviceWorker.register()
+register()
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

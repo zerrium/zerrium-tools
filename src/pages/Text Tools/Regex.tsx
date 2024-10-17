@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
@@ -26,7 +26,7 @@ const templates: { label: string, key: string, value: RegExp }[] = [
   { label: "GPS Long Lat", key: "gps", value: /^((-?|\+?)?\d+(\.\d+)?),\s*((-?|\+?)?\d+(\.\d+)?)$/g },
 ]
 
-export function Regex() {
+const Regex = () => {
   const [textBox, setTextBox] = useState<string>("")
   const [template, setTemplate] = useState<string>("")
 
@@ -112,3 +112,5 @@ export function Regex() {
     </Flex>
   )
 }
+
+export default Regex

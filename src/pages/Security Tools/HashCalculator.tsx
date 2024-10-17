@@ -1,6 +1,6 @@
 // @ts-ignore
 import { createHash } from "crypto-browserify";  // windows use crypto
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
@@ -38,7 +38,7 @@ const hashAlgorithm: { label: string, key: string, lib?: string, function?:Hash 
   { label: "MD5", key: "md5", lib: "crypto-hash" }
 ]
 
-export function HashCalculator() {
+const HashCalculator = () => {
   const [textBoxInput, setTextBoxInput] = useState<string>("")
   const [textBoxOutput, setTextBoxOutput] = useState<string>("")
   const [hashAlgo, setHashAlgo] = useState<string>(hashAlgorithm[0].key)
@@ -222,3 +222,5 @@ export function HashCalculator() {
     </Flex>
   )
 }
+
+export default HashCalculator

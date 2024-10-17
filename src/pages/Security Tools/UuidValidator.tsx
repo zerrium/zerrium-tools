@@ -1,6 +1,6 @@
 // @ts-ignore
 import { validate } from "uuid";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
@@ -17,7 +17,7 @@ const validateUuid = (uuid: string) => {
   return validate(uuid)
 }
 
-export function UuidValidator() {
+const UuidValidator = () => {
   const [textBox, setTextBox] = useState<string>("")
   const [textBoxResult, setTextBoxResult] = useState<string>("")
   const [status, setStatus] = useState<"Invalid" | "Valid">("Invalid")
@@ -142,3 +142,5 @@ export function UuidValidator() {
     </Flex>
   )
 }
+
+export default UuidValidator

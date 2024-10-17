@@ -9,7 +9,7 @@ const features: {id: string, title: string, text: string}[] = [
   { id: "5", title: "Open Source", text: "Source code is available on GitHub by clicking the icon at the footer of this page. Feel free to report issue and submit PR to the repository!" }
 ]
 
-export function Home() {
+const Home = () => {
   return (
     <Container maxW={'4xl'}>
       <Stack
@@ -49,3 +49,5 @@ export function Home() {
     </Container>
   )
 }
+
+export default Home

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
@@ -12,7 +12,7 @@ import {
   useToast
 } from "@chakra-ui/react";
 
-export function UrlEncoder() {
+const UrlEncoder = () => {
   const [textBoxInput, setTextBoxInput] = useState<string>("")
   const [textBoxOutput, setTextBoxOutput] = useState<string>("")
   const [decode, setDecode] = useState<boolean>(false)
@@ -120,3 +120,5 @@ export function UrlEncoder() {
     </Flex>
   )
 }
+
+export default UrlEncoder

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
@@ -62,7 +62,7 @@ const codes: { label: string, key: string, function: (text: string, isMinify: bo
   { label: "SQL", key: "sql", function: processSql }
 ]
 
-export function Beautifier() {
+const Beautifier = () => {
   const [textBoxInput, setTextBoxInput] = useState<string>("")
   const [textBoxOutput, setTextBoxOutput] = useState<string>("")
   const [numberOfSpaces, setNumberOfSpaces] = useState<number>(2)
@@ -218,3 +218,5 @@ export function Beautifier() {
     </Flex>
   )
 }
+
+export default Beautifier

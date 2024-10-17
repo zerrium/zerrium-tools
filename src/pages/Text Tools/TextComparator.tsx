@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
@@ -13,7 +13,7 @@ import {
 // @ts-ignore
 import DiffMatchPatch from 'diff-match-patch';
 
-export function TextComparator() {
+const TextComparator = () => {
   const [textBox1, setTextBox1] = useState<string>("")
   const [textBox2, setTextBox2] = useState<string>("")
   const [isLive, setIsLive] = useState<boolean>(false)
@@ -166,3 +166,5 @@ export function TextComparator() {
     </Flex>
   )
 }
+
+export default TextComparator

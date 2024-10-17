@@ -1,8 +1,7 @@
 import { Box, Container, Heading, Stack, Text } from "@chakra-ui/react";
-import React from "react";
 
 
-export function NotFound() {
+const NotFound = () => {
   return (
     <Container maxW={'3xl'}>
       <Stack
@@ -25,3 +24,5 @@ export function NotFound() {
     </Container>
   )
 }
+
+export default NotFound

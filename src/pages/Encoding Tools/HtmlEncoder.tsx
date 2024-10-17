@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { encode as encodeHtml, decode as decodeHtml, Level, EncodeMode } from 'html-entities';
 
-export function HtmlEncoder() {
+const HtmlEncoder = () => {
   const [textBoxInput, setTextBoxInput] = useState<string>("")
   const [textBoxOutput, setTextBoxOutput] = useState<string>("")
   const [decode, setDecode] = useState<boolean>(false)
@@ -117,3 +117,5 @@ export function HtmlEncoder() {
     </Flex>
   )
 }
+
+export default HtmlEncoder
