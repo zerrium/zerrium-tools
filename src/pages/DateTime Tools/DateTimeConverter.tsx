@@ -69,6 +69,7 @@ export function DateTimeConverter() {
         setError(true)
       }
     }
+    // eslint-disable-next-line
   }, [textBoxInput])
 
   useEffect(() => {
@@ -76,6 +77,7 @@ export function DateTimeConverter() {
       setTextBoxInput(now.format(decode ? "x" : "YYYY-MM-DD HH:mm:ss"))
       setTextBoxOutput(now.format(decode ? "YYYY-MM-DD HH:mm:ss" : "x"))
     }
+    // eslint-disable-next-line
   }, [now])
 
   return (

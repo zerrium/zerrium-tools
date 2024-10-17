@@ -11,6 +11,7 @@ config.resolve.fallback = {
   buffer: require.resolve('buffer'),
   process: require.resolve('process/browser'),
   stream: require.resolve('stream-browserify'),
+  vm: require.resolve('vm-browserify'),
 };
 
 config.module.rules = [

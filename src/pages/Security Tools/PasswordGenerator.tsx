@@ -13,7 +13,7 @@ import {
   useToast, Checkbox
 } from "@chakra-ui/react";
 // @ts-ignore
-import crypto from "crypto";
+import crypto from "crypto-browserify";
 
 const lowerAlphabets = "abcdefghijklmnopqrstuvwxyz"
 const upperAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"

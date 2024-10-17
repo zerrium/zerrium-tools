@@ -1,6 +1,6 @@
 import Page from "../../components/Page";
 // @ts-ignore
-import { createHash } from "crypto";
+import { createHash } from "crypto-browserify";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
