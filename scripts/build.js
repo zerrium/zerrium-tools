@@ -7,6 +7,7 @@ const config = defaults.__get__('config');
 //Customize the webpack configuration here.
 config.resolve.fallback = {
   ...config.resolve.fallback,
+  assert: require.resolve("assert/"),
   crypto: require.resolve("crypto-browserify"),
   buffer: require.resolve('buffer'),
   process: require.resolve('process/browser'),

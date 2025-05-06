@@ -23,6 +23,7 @@ const FileEncoder = lazy(() => import("./../pages/Encoding Tools/FileEncoder"));
 const Beautifier = lazy(() => import("./../pages/Text Tools/Beautifier"));
 const YamlValidator = lazy(() => import("./../pages/Text Tools/YamlValidator"));
 const JsonViewer = lazy(() => import("./../pages/Text Tools/JsonViewer"));
+const JsonComparator = lazy(() => import("./../pages/Text Tools/JsonComparator"));
 const TextComparator = lazy(() => import("./../pages/Text Tools/TextComparator"));
 const Regex = lazy(() => import("./../pages/Text Tools/Regex"));
 
@@ -65,6 +66,7 @@ export const LinkItems: Array<LinkItemProps> = [
       { name: "Regex Templates", link: "regex", element: <Regex /> },
       { name: "Beautifier/Minifier", link: "beautifier-minifier", element: <Beautifier /> },
       { name: "JSON Viewer", link: "json-viewer", element: <JsonViewer /> },
+      { name: "JSON Comparator", link: "json-comparator", element: <JsonComparator /> },
       { name: "YAML Validator", link: "yaml-validator", element: <YamlValidator /> }
     ]
   },
