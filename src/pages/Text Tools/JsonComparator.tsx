@@ -54,7 +54,7 @@ const JsonComparator = () => {
     } else {
       setIsEqual(false)
     }
-  }, [jsonObj1, jsonObj2])
+  }, [jsonObj1, jsonObj2, status1, status2])
 
   return (
     <Flex
