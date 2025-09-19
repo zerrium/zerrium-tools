@@ -46,16 +46,19 @@ const PasswordGenerator = () => {
   })
 
   const generateNumber = (min: number, max: number) => {
-    // eslint-disable-next-line
-    if (min == max) {
-      return min
-    }
+    if (min === max) return min;
 
-    const randomNumber = crypto.randomBytes(4).readUInt32LE() / (0xffffffff + 1);
+    const range = max - min + 1;
+    if (range <= 0) throw new Error("Invalid range");
 
-    min = Math.ceil(min);
-    max = Math.floor(max - 1);
-    return Math.floor(randomNumber * (max - min + 1)) + min;
+    const maxUnbiased = Math.floor(0x100000000 / range) * range;
+
+    let rnd: number;
+    do {
+      rnd = crypto.randomBytes(4).readUInt32LE();
+    } while (rnd >= maxUnbiased);
+
+    return min + (rnd % range);
   }
 
   const secureShuffle = async (array: string[]) => {
