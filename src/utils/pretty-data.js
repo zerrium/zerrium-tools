@@ -48,286 +48,271 @@
  */
 
 
-function PP() {
-  this.shift = ['\n']; // array of shifts
-  this.step = '  '; // 2 spaces
-  let maxdeep = 100; // nesting level
-  let ix;
+class PP {
+    constructor() {
+        this.shift = ['\n']; // array of shifts
+        this.step = '  '; // 2 spaces
+        let maxdeep = 100; // nesting level
+        let ix;
 
-  // initialize array with shifts //
-  for (ix = 0; ix < maxdeep; ix++) {
-    this.shift.push(this.shift[ix] + this.step);
-  }
+        // initialize array with shifts //
+        for (ix = 0; ix < maxdeep; ix++) {
+            this.shift.push(this.shift[ix] + this.step);
+        }
 
-}
-
-PP.prototype.setStep = function (step) {
-  this.shift = ['\n']; // array of shifts
-  this.step = ' '.repeat(Number(step)); // 2 spaces
-  let maxdeep = 100; // nesting level
-  let ix;
-
-  // initialize array with shifts //
-  for (ix = 0; ix < maxdeep; ix++) {
-    this.shift.push(this.shift[ix] + this.step);
-  }
-}
-
-// ----------------------- XML section ----------------------------------------------------
-
-PP.prototype.xml = function (text) {
-
-  let ar = text.replace(/>\s*</g, "><")
-      .replace(/></g,">~::~<")
-      .replace(/xmlns:/g, "~::~xmlns:")
-      .replace(/xmlns=/g, "~::~xmlns=")
-      .split('~::~'),
-    len = ar.length,
-    inComment = false,
-    deep = 0,
-    str = '',
-    ix;
-
-  for (ix = 0; ix < len; ix++) {
-    // start comment or <![CDATA[...]]> or <!DOCTYPE //
-    if (ar[ix].search(/<!/) > -1) {
-      str += this.shift[deep] + ar[ix];
-      inComment = true;
-      // end comment  or <![CDATA[...]]> //
-      if (ar[ix].search(/-->/) > -1 || ar[ix].search(/]>/) > -1 || ar[ix].search(/!DOCTYPE/) > -1) {
-        inComment = false;
-      }
-    } else
-      // end comment  or <![CDATA[...]]> //
-    if (ar[ix].search(/-->/) > -1 || ar[ix].search(/]>/) > -1) {
-      str += ar[ix];
-      inComment = false;
-    } else
-      // <elm></elm> //
-    if (/^<\w/.exec(ar[ix - 1]) && /^<\/\w/.exec(ar[ix]) &&
-      // eslint-disable-next-line
-      /^<[\w:\-.,]+/.exec(ar[ix - 1]) === /^<\/[\w:\-.,]+/.exec(ar[ix])[0].replace('/', '')) {
-      str += ar[ix];
-      if (!inComment) deep--;
-    } else
-      // <elm> //
-    if (ar[ix].search(/<\w/) > -1 && ar[ix].search(/<\//) === -1 && ar[ix].search(/\/>/) === -1) {
-      str = !inComment ? str += this.shift[deep++] + ar[ix] : str += ar[ix];
-    } else
-      // <elm>...</elm> //
-    if (ar[ix].search(/<\w/) > -1 && ar[ix].search(/<\//) > -1) {
-      str = !inComment ? str += this.shift[deep] + ar[ix] : str += ar[ix];
-    } else
-      // </elm> //
-    if(ar[ix].search(/<\//) > -1) {
-      let shift = (ar[ix].search(/xmlns:/) > -1  || ar[ix].search(/xmlns=/) > -1) ? deep-- : --deep;
-      str = !inComment ? str += this.shift[shift]+ar[ix] : str += ar[ix];
-    } else
-      // <elm/> //
-    if (ar[ix].search(/\/>/) > -1) {
-      str = !inComment ? str += this.shift[deep] + ar[ix] : str += ar[ix];
-      if( ar[ix].search(/xmlns:/) > -1  || ar[ix].search(/xmlns=/) > -1) {
-        deep--;
-      }
-    } else
-      // <? xml ... ?> //
-    if (ar[ix].search(/<\?/) > -1) {
-      str += this.shift[deep] + ar[ix];
-    } else
-      // xmlns //
-    if (ar[ix].search(/xmlns:/) > -1 || ar[ix].search(/xmlns=/) > -1) {
-      str += this.shift[deep] + ar[ix];
-    } else {
-      str += ar[ix];
     }
-    // remove excessive spaces
-    if (!inComment) {
-      str = str.replace(/\s+$/, '');
-    }
-  }
 
-  return (str[0] === '\n') ? str.slice(1) : str;
+    setStep(step) {
+        this.shift = ['\n']; // array of shifts
+        this.step = ' '.repeat(Number(step)); // 2 spaces
+        let maxdeep = 100; // nesting level
+        let ix;
+
+        // initialize array with shifts //
+        for (ix = 0; ix < maxdeep; ix++) {
+            this.shift.push(this.shift[ix] + this.step);
+        }
+    }
+
+    // ----------------------- XML section ----------------------------------------------------
+    xml(text) {
+
+        let ar = text.replace(/>\s*</g, "><")
+            .replace(/></g, ">~::~<")
+            .replace(/xmlns:/g, "~::~xmlns:")
+            .replace(/xmlns=/g, "~::~xmlns=")
+            .split('~::~'), len = ar.length, inComment = false, deep = 0, str = '', ix;
+
+        for (ix = 0; ix < len; ix++) {
+            // start comment or <![CDATA[...]]> or <!DOCTYPE //
+            if (ar[ix].search(/<!/) > -1) {
+                str += this.shift[deep] + ar[ix];
+                inComment = true;
+                // end comment  or <![CDATA[...]]> //
+                if (ar[ix].search(/-->/) > -1 || ar[ix].search(/]>/) > -1 || ar[ix].search(/!DOCTYPE/) > -1) {
+                    inComment = false;
+                }
+            } else
+                // end comment  or <![CDATA[...]]> //
+            if (ar[ix].search(/-->/) > -1 || ar[ix].search(/]>/) > -1) {
+                str += ar[ix];
+                inComment = false;
+            } else
+                // <elm></elm> //
+            if (/^<\w/.exec(ar[ix - 1]) && /^<\/\w/.exec(ar[ix]) &&
+                // eslint-disable-next-line
+                /^<[\w:\-.,]+/.exec(ar[ix - 1]) === /^<\/[\w:\-.,]+/.exec(ar[ix])[0].replace('/', '')) {
+                str += ar[ix];
+                if (!inComment) deep--;
+            } else
+                // <elm> //
+            if (ar[ix].search(/<\w/) > -1 && ar[ix].search(/<\//) === -1 && ar[ix].search(/\/>/) === -1) {
+                str = !inComment ? str += this.shift[deep++] + ar[ix] : str += ar[ix];
+            } else
+                // <elm>...</elm> //
+            if (ar[ix].search(/<\w/) > -1 && ar[ix].search(/<\//) > -1) {
+                str = !inComment ? str += this.shift[deep] + ar[ix] : str += ar[ix];
+            } else
+                // </elm> //
+            if (ar[ix].search(/<\//) > -1) {
+                let shift = (ar[ix].search(/xmlns:/) > -1 || ar[ix].search(/xmlns=/) > -1) ? deep-- : --deep;
+                str = !inComment ? str += this.shift[shift] + ar[ix] : str += ar[ix];
+            } else
+                // <elm/> //
+            if (ar[ix].search(/\/>/) > -1) {
+                str = !inComment ? str += this.shift[deep] + ar[ix] : str += ar[ix];
+                if (ar[ix].search(/xmlns:/) > -1 || ar[ix].search(/xmlns=/) > -1) {
+                    deep--;
+                }
+            } else
+                // <? xml ... ?> //
+            if (ar[ix].search(/<\?/) > -1) {
+                str += this.shift[deep] + ar[ix];
+            } else
+                // xmlns //
+            if (ar[ix].search(/xmlns:/) > -1 || ar[ix].search(/xmlns=/) > -1) {
+                str += this.shift[deep] + ar[ix];
+            } else {
+                str += ar[ix];
+            }
+            // remove excessive spaces
+            if (!inComment) {
+                str = str.replace(/\s+$/, '');
+            }
+        }
+
+        return (str[0] === '\n') ? str.slice(1) : str;
+    }
+
+    // ----------------------- CSS section ----------------------------------------------------
+    css(text) {
+
+        let ar = text.replace(/\s+/g, ' ')
+            .replace(/\{/g, "{~::~")
+            .replace(/}/g, "~::~}~::~")
+            .replace(/;/g, ";~::~")
+            .replace(/\/\*/g, "~::~/*")
+            .replace(/\*\//g, "*/~::~")
+            .replace(/~::~\s*~::~/g, "~::~")
+            .split('~::~'), len = ar.length, deep = 0, str = '', ix;
+
+        for (ix = 0; ix < len; ix++) {
+
+            if (/\{/.exec(ar[ix])) {
+                str += this.shift[deep++] + ar[ix];
+            } else if (/}/.exec(ar[ix])) {
+                str += this.shift[--deep] + ar[ix];
+            } else if (/\*\\/.exec(ar[ix])) {
+                str += this.shift[deep] + ar[ix];
+            } else {
+                str += this.shift[deep] + ar[ix];
+            }
+        }
+        return str.replace(/^\n+/, '');
+    }
+
+    sql(text) {
+
+        let ar_by_quote = text.replace(/\s+/g, " ")
+                .replace(/'/ig, "~::~'")
+                .split('~::~'), len = ar_by_quote.length, ar = [], deep = 0, tab = this.step, //+this.step,
+            // inComment = true,
+            // inQuote = false,
+            parenthesisLevel = 0, str = '', ix;
+
+        for (ix = 0; ix < len; ix++) {
+
+            if (ix % 2) {
+                ar = ar.concat(ar_by_quote[ix]);
+            } else {
+                ar = ar.concat(split_sql(ar_by_quote[ix], tab));
+            }
+        }
+
+        len = ar.length;
+        for (ix = 0; ix < len; ix++) {
+
+            parenthesisLevel = isSubquery(ar[ix], parenthesisLevel);
+
+            if (/\s*\s*SELECT\s*/.exec(ar[ix])) {
+                ar[ix] = ar[ix].replace(/,/g, ",\n" + tab + tab + "");
+            }
+
+            if (/\s*\(\s*SELECT\s*/.exec(ar[ix])) {
+                deep++;
+                str += this.shift[deep] + ar[ix];
+            } else if (/'/.exec(ar[ix])) {
+                if (parenthesisLevel < 1 && deep) {
+                    deep--;
+                }
+                str += ar[ix];
+            } else {
+                str += this.shift[deep] + ar[ix];
+                if (parenthesisLevel < 1 && deep) {
+                    deep--;
+                }
+            }
+        }
+
+        // eslint-disable-next-line
+        str = str.replace(/^\n+/, '').replace(/\n+/g, "\n").replace(/;(?=([^"'\\]*(\\.|(["'])([^"'\\]*\\.)*[^"'\\]*(["'])))*[^"']*$)/g, ";\n\n");
+        // old regex: /;(?=([^"\\]*(\\.|"([^"\\]*\\.)*[^"\\]*"))*[^"]*$)/g
+        return str;
+    }
+
+    // ----------------------- min section ----------------------------------------------------
+    xmlmin(text, preserveComments) {
+
+        let str = preserveComments ? text
+            : text.replace(/<![ \r\n\t]*(--([^-]|[\r\n]|-[^-])*--[ \r\n\t]*)>/g, "");
+        return str.replace(/>\s*</g, "><");
+    }
+
+    cssmin(text, preserveComments) {
+        return text
+            .replace(/\/\*[\s\S]*?\*\//g, "")
+            .replace(/\s+/g, " ")
+            .replace(/\s*([{}:;,])\s*/g, "$1")
+            .replace(/;}/g, "}")
+            .replace(/(:|\s)0(?:px|em|rem|%|in|cm|mm|pc|pt|ex|ch|vh|vw|vmin|vmax)/g, "$10")
+            .replace(/(:|\s)0+\.(\d+)/g, "$1.$2")
+            .replace(/#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3\b/g, "#$1$2$3")
+            .trim();
+    }
+
+    sqlmin(text) {
+        return text.replace(/\s+/g, " ").replace(/\s+\(/, "(").replace(/\s+\)/, ")");
+    }
+
+    // HTML simple minifier by Zerrium
+    htmlmin(text) {
+        return text
+            .replace(/(<!--[\s\S]*?-->|\/\*[\s\S]*?\*\/|\/\/.*)/g, "")
+            .replace(/\s+/g, " ")
+            .replace(/>\s+</g, "><")
+            .trim();
+    }
 }
 
-// ----------------------- CSS section ----------------------------------------------------
-
-PP.prototype.css = function (text) {
-
-  let ar = text.replace(/\s+/g, ' ')
-      .replace(/\{/g, "{~::~")
-      .replace(/}/g, "~::~}~::~")
-      .replace(/;/g, ";~::~")
-      .replace(/\/\*/g, "~::~/*")
-      .replace(/\*\//g, "*/~::~")
-      .replace(/~::~\s*~::~/g, "~::~")
-      .split('~::~'),
-    len = ar.length,
-    deep = 0,
-    str = '',
-    ix;
-
-  for (ix = 0; ix < len; ix++) {
-
-    if (/\{/.exec(ar[ix])) {
-      str += this.shift[deep++] + ar[ix];
-    } else if (/}/.exec(ar[ix])) {
-      str += this.shift[--deep] + ar[ix];
-    } else if (/\*\\/.exec(ar[ix])) {
-      str += this.shift[deep] + ar[ix];
-    } else {
-      str += this.shift[deep] + ar[ix];
-    }
-  }
-  return str.replace(/^\n+/, '');
-}
 
 // ----------------------- SQL section ----------------------------------------------------
 
 function isSubquery(str, parenthesisLevel) {
-  return parenthesisLevel - (str.replace(/\(/g, '').length - str.replace(/\)/g, '').length)
+    return parenthesisLevel - (str.replace(/\(/g, '').length - str.replace(/\)/g, '').length)
 }
 
 function split_sql(str, tab) {
 
-  return str.replace(/\s+/g, " ")
+    return str.replace(/\s+/g, " ")
 
-    .replace(/ AND /ig, "~::~" + tab + tab + "AND ")
-    .replace(/ BETWEEN /ig, "~::~" + tab + "BETWEEN ")
-    .replace(/ CASE /ig, "~::~" + tab + "CASE ")
-    .replace(/ ELSE /ig, "~::~" + tab + "ELSE ")
-    .replace(/ END /ig, "~::~" + tab + "END ")
-    .replace(/ FROM /ig, "~::~FROM ")
-    .replace(/ GROUP\s+BY/ig, "~::~GROUP BY ")
-    .replace(/ HAVING /ig, "~::~HAVING ")
-    //.replace(/ IN /ig,"~::~"+tab+"IN ")
-    .replace(/ IN /ig, " IN ")
-    .replace(/ JOIN /ig, "~::~JOIN ")
-    .replace(/ CROSS~::~+JOIN /ig, "~::~CROSS JOIN ")
-    .replace(/ INNER~::~+JOIN /ig, "~::~INNER JOIN ")
-    .replace(/ LEFT~::~+JOIN /ig, "~::~LEFT JOIN ")
-    .replace(/ RIGHT~::~+JOIN /ig, "~::~RIGHT JOIN ")
-    .replace(/ ON /ig, "~::~" + tab + "ON ")
-    .replace(/ OR /ig, "~::~" + tab + tab + "OR ")
-    .replace(/ ORDER\s+BY/ig, "~::~ORDER BY ")
-    .replace(/ OVER /ig, "~::~" + tab + "OVER ")
-    .replace(/\(\s*SELECT /ig, "~::~(SELECT ")
-    .replace(/\)\s*SELECT /ig, ")~::~SELECT ")
-    .replace(/ THEN /ig, " THEN~::~" + tab + "")
-    .replace(/ UNION /ig, "~::~UNION~::~")
-    .replace(/ USING /ig, "~::~USING ")
-    .replace(/ WHEN /ig, "~::~" + tab + "WHEN ")
-    .replace(/ WHERE /ig, "~::~WHERE ")
-    .replace(/ WITH /ig, "~::~WITH ")
-    //.replace(/\,\s{0,}\(/ig,",~::~( ")
-    //.replace(/\,/ig,",~::~"+tab+tab+"")
-    .replace(/ ALL /ig, " ALL ")
-    .replace(/ AS /ig, " AS ")
-    .replace(/ ASC /ig, " ASC ")
-    .replace(/ DESC /ig, " DESC ")
-    .replace(/ DISTINCT /ig, " DISTINCT ")
-    .replace(/ EXISTS /ig, " EXISTS ")
-    .replace(/ NOT /ig, " NOT ")
-    .replace(/ NULL /ig, " NULL ")
-    .replace(/ LIKE /ig, " LIKE ")
-    .replace(/\s*SELECT /ig, "SELECT ")
-    .replace(/~::~+/g, "~::~")
-    .split('~::~');
+        .replace(/ AND /ig, "~::~" + tab + tab + "AND ")
+        .replace(/ BETWEEN /ig, "~::~" + tab + "BETWEEN ")
+        .replace(/ CASE /ig, "~::~" + tab + "CASE ")
+        .replace(/ ELSE /ig, "~::~" + tab + "ELSE ")
+        .replace(/ END /ig, "~::~" + tab + "END ")
+        .replace(/ FROM /ig, "~::~FROM ")
+        .replace(/ GROUP\s+BY/ig, "~::~GROUP BY ")
+        .replace(/ HAVING /ig, "~::~HAVING ")
+        //.replace(/ IN /ig,"~::~"+tab+"IN ")
+        .replace(/ IN /ig, " IN ")
+        .replace(/ JOIN /ig, "~::~JOIN ")
+        .replace(/ CROSS~::~+JOIN /ig, "~::~CROSS JOIN ")
+        .replace(/ INNER~::~+JOIN /ig, "~::~INNER JOIN ")
+        .replace(/ LEFT~::~+JOIN /ig, "~::~LEFT JOIN ")
+        .replace(/ RIGHT~::~+JOIN /ig, "~::~RIGHT JOIN ")
+        .replace(/ ON /ig, "~::~" + tab + "ON ")
+        .replace(/ OR /ig, "~::~" + tab + tab + "OR ")
+        .replace(/ ORDER\s+BY/ig, "~::~ORDER BY ")
+        .replace(/ OVER /ig, "~::~" + tab + "OVER ")
+        .replace(/\(\s*SELECT /ig, "~::~(SELECT ")
+        .replace(/\)\s*SELECT /ig, ")~::~SELECT ")
+        .replace(/ THEN /ig, " THEN~::~" + tab + "")
+        .replace(/ UNION /ig, "~::~UNION~::~")
+        .replace(/ USING /ig, "~::~USING ")
+        .replace(/ WHEN /ig, "~::~" + tab + "WHEN ")
+        .replace(/ WHERE /ig, "~::~WHERE ")
+        .replace(/ WITH /ig, "~::~WITH ")
+        //.replace(/\,\s{0,}\(/ig,",~::~( ")
+        //.replace(/\,/ig,",~::~"+tab+tab+"")
+        .replace(/ ALL /ig, " ALL ")
+        .replace(/ AS /ig, " AS ")
+        .replace(/ ASC /ig, " ASC ")
+        .replace(/ DESC /ig, " DESC ")
+        .replace(/ DISTINCT /ig, " DISTINCT ")
+        .replace(/ EXISTS /ig, " EXISTS ")
+        .replace(/ NOT /ig, " NOT ")
+        .replace(/ NULL /ig, " NULL ")
+        .replace(/ LIKE /ig, " LIKE ")
+        .replace(/\s*SELECT /ig, "SELECT ")
+        .replace(/~::~+/g, "~::~")
+        .split('~::~');
 }
 
-PP.prototype.sql = function (text) {
-
-  let ar_by_quote = text.replace(/\s+/g, " ")
-      .replace(/'/ig, "~::~'")
-      .split('~::~'),
-    len = ar_by_quote.length,
-    ar = [],
-    deep = 0,
-    tab = this.step,//+this.step,
-    // inComment = true,
-    // inQuote = false,
-    parenthesisLevel = 0,
-    str = '',
-    ix;
-
-  for (ix = 0; ix < len; ix++) {
-
-    if (ix % 2) {
-      ar = ar.concat(ar_by_quote[ix]);
-    } else {
-      ar = ar.concat(split_sql(ar_by_quote[ix], tab));
-    }
-  }
-
-  len = ar.length;
-  for (ix = 0; ix < len; ix++) {
-
-    parenthesisLevel = isSubquery(ar[ix], parenthesisLevel);
-
-    if (/\s*\s*SELECT\s*/.exec(ar[ix])) {
-      ar[ix] = ar[ix].replace(/,/g, ",\n" + tab + tab + "")
-    }
-
-    if (/\s*\(\s*SELECT\s*/.exec(ar[ix])) {
-      deep++;
-      str += this.shift[deep] + ar[ix];
-    } else if (/'/.exec(ar[ix])) {
-      if (parenthesisLevel < 1 && deep) {
-        deep--;
-      }
-      str += ar[ix];
-    } else {
-      str += this.shift[deep] + ar[ix];
-      if (parenthesisLevel < 1 && deep) {
-        deep--;
-      }
-    }
-  }
-
-  // eslint-disable-next-line
-  str = str.replace(/^\n+/, '').replace(/\n+/g, "\n").replace(/;(?=([^"'\\]*(\\.|(["'])([^"'\\]*\\.)*[^"'\\]*(["'])))*[^"']*$)/g, ";\n\n");
-  // old regex: /;(?=([^"\\]*(\\.|"([^"\\]*\\.)*[^"\\]*"))*[^"]*$)/g
-
-  return str;
-}
-
-// ----------------------- min section ----------------------------------------------------
-
-PP.prototype.xmlmin = function (text, preserveComments) {
-
-  let str = preserveComments ? text
-    : text.replace(/<![ \r\n\t]*(--([^-]|[\r\n]|-[^-])*--[ \r\n\t]*)>/g, "");
-  return str.replace(/>\s*</g, "><");
-}
-
-PP.prototype.cssmin = function (text, preserveComments) {
-  return text
-    .replace(/\/\*[\s\S]*?\*\//g, "")
-    .replace(/\s+/g, " ")
-    .replace(/\s*([{}:;,])\s*/g, "$1")
-    .replace(/;}/g, "}")
-    .replace(/(:|\s)0(?:px|em|rem|%|in|cm|mm|pc|pt|ex|ch|vh|vw|vmin|vmax)/g, "$10")
-    .replace(/(:|\s)0+\.(\d+)/g, "$1.$2")
-    .replace(/#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3\b/g, "#$1$2$3")
-    .trim();
-}
-
-PP.prototype.sqlmin = function (text) {
-  return text.replace(/\s+/g, " ").replace(/\s+\(/, "(").replace(/\s+\)/, ")");
-}
-
-// HTML simple minifier by Zerrium
-PP.prototype.htmlmin = function (text) {
-  return text
-    .replace(/(<!--[\s\S]*?-->|\/\*[\s\S]*?\*\/|\/\/.*)/g, "")
-    .replace(/\s+/g, " ")
-    .replace(/>\s+</g, "><")
-    .trim();
-}
 
 // --------------------------------------------------------------------------------------------
 
 // exports.pd= new pp;
-export const pd = new PP()
+export const pd = new PP();
 
 
 

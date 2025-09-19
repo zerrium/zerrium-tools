@@ -2,7 +2,7 @@
 
 import { Box, chakra, Container, Stack, Text, useColorModeValue, VisuallyHidden, } from '@chakra-ui/react'
 import { FaGithub } from 'react-icons/fa'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 const SocialButton = ({
                         children,
@@ -50,7 +50,7 @@ export const Footer = () => {
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}>
         <Box>
-          <Text fontSize="12">Version {process.env.REACT_APP_VERSION} © 2025 Zerrium. All rights reserved.</Text>
+          <Text fontSize="12">Version {import.meta.env.VITE_REACT_APP_VERSION} © 2025 Zerrium. All rights reserved.</Text>
           <Text fontSize="12">Developed using <a href="https://react.dev/" target="_blank" rel="noreferrer">ReactJS</a> and <a
             href="https://chakra-ui.com/" target="_blank" rel="noreferrer">ChakraUI</a></Text>
         </Box>

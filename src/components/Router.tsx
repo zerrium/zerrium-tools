@@ -1,8 +1,8 @@
 import { lazy } from "react"
-import { RouteObject } from "react-router-dom";
-import { IconType } from "react-icons";
+import type { RouteObject } from "react-router-dom";
+import type { IconType } from "react-icons";
 import { FiCode, FiHome, FiLock, FiFileText, FiClock } from "react-icons/fi";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 import { createBrowserRouter } from "react-router-dom"
 import Page from "./Page";
 

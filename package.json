@@ -1,23 +1,14 @@
 {
   "name": "tools",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "homepage": "https://tools.zerrium.com",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^14.5.1",
     "@textea/json-viewer": "^3.1.1",
-    "@types/jest": "^28.1.8",
-    "@types/node": "^16.18.54",
-    "@types/react": "^18.2.23",
-    "@types/react-dom": "^18.2.8",
-    "assert": "^2.1.0",
-    "buffer": "^6.0.3",
-    "crypto-browserify": "^3.12.0",
     "diff-match-patch": "^1.0.5",
     "framer-motion": "^6.5.1",
     "html-entities": "^2.5.2",
@@ -28,60 +19,40 @@
     "magic-bytes.js": "^1.5.0",
     "moment": "^2.30.1",
     "process": "^0.11.10",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "react-device-detect": "^2.2.3",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.3.1",
     "react-icons": "^3.11.0",
-    "rewire": "^7.0.0",
-    "stream-browserify": "^3.0.0",
-    "terser-sync": "^0.1.1",
-    "typescript": "^4.9.5",
-    "uuid": "^9.0.1",
-    "vm-browserify": "^1.1.2",
-    "web-vitals": "^2.1.4",
-    "webpack": "^5.88.2",
-    "workbox-background-sync": "^7.0.0",
-    "workbox-broadcast-update": "^7.0.0",
-    "workbox-cacheable-response": "^7.0.0",
-    "workbox-core": "^7.0.0",
-    "workbox-expiration": "^7.0.0",
-    "workbox-navigation-preload": "^7.0.0",
-    "workbox-precaching": "^7.0.0",
-    "workbox-range-requests": "^7.0.0",
-    "workbox-routing": "^7.0.0",
-    "workbox-strategies": "^7.0.0",
-    "workbox-streams": "^7.0.0",
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "terser": "^5.44.0",
+    "uuid": "^13.0.0",
+    "workbox-window": "^7.3.0",
     "yaml": "^2.3.2"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "7.21.0-placeholder-for-preset-env.2",
+    "@eslint/js": "^9.33.0",
+    "@types/jest": "^28.1.8",
+    "@types/react": "^18.3.24",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^5.0.3",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
     "react-router-dom": "^6.16.0",
-    "react-scripts": "5.0.1"
+    "typescript": "~5.9.2",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.6",
+    "vite-plugin-pwa": "^1.0.3"
   },
   "scripts": {
-    "start": "PORT=21000 node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "browser": {
     "fs": false,
     "path": false,
     "os": false
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }
