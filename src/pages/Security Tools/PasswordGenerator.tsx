@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { type ChangeEvent, useState } from "react";
 import {
   Button,
   Flex,
@@ -11,8 +11,6 @@ import {
   useColorModeValue,
   useToast, Checkbox
 } from "@chakra-ui/react";
-// @ts-ignore
-import crypto from "crypto-browserify";  // windows use crypto
 
 const lowerAlphabets = "abcdefghijklmnopqrstuvwxyz"
 const upperAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -46,16 +44,22 @@ const PasswordGenerator = () => {
   })
 
   const generateNumber = (min: number, max: number) => {
-    // eslint-disable-next-line
-    if (min == max) {
-      return min
-    }
+    if (min === max) return min;
 
-    const randomNumber = crypto.randomBytes(4).readUInt32LE() / (0xffffffff + 1);
+    const range = max - min + 1;
+    if (range <= 0) throw new Error("Invalid range");
 
-    min = Math.ceil(min);
-    max = Math.floor(max - 1);
-    return Math.floor(randomNumber * (max - min + 1)) + min;
+    const maxUnbiased = Math.floor(0x100000000 / range) * range;
+
+      const b = new Uint32Array(1);
+    let rnd: number;
+    do {
+      // As of Sep 2025, migrated from old crypto-browserify to Web Crypto API
+      crypto.getRandomValues(b);
+      rnd = b[0];
+    } while (rnd >= maxUnbiased);
+
+    return min + (rnd % range);
   }
 
   const secureShuffle = async (array: string[]) => {
@@ -342,9 +346,9 @@ const PasswordGenerator = () => {
               URL-friendy symbols
             </Checkbox>
           </FormControl>
-          <Text mt={3} textAlign="justify">Note: this password generator is based on <a
-            href="https://nodejs.org/api/crypto.html#crypto_crypto_randomint_min_max_callback" target="_blank"
-            rel="noreferrer"><u>crypto module</u></a> and it is claimed to be "cryptographically secure" which is <b>not guaranteed</b> 100% but still secure enough</Text>
+          <Text mt={3} textAlign="justify">Note: this password generator relies on <a
+            href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API" target="_blank"
+            rel="noreferrer"><u>Web Crypto API</u></a> and it is claimed to be "cryptographically secure" which <b>cannot be guaranteed</b> 100% but still secure enough</Text>
         </Stack>
         <Stack
           spacing={4}

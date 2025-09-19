@@ -6,12 +6,12 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  BoxProps,
+  type BoxProps,
   CloseButton,
   Drawer,
   DrawerContent,
   Flex,
-  FlexProps,
+  type FlexProps,
   Icon,
   IconButton,
   Input,
@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/react"
 import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { FiMenu } from 'react-icons/fi'
-import { IconType } from 'react-icons'
+import type { IconType } from 'react-icons'
 import { Footer } from "./Footer"
 import { LinkItems } from "./Router"
 // @ts-ignore

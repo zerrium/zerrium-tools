@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
@@ -11,7 +11,7 @@ import {
   useColorModeValue,
   useToast
 } from "@chakra-ui/react";
-import { encode as encodeHtml, decode as decodeHtml, Level, EncodeMode } from 'html-entities';
+import { encode as encodeHtml, decode as decodeHtml, type Level, type EncodeMode } from 'html-entities';
 
 const HtmlEncoder = () => {
   const [textBoxInput, setTextBoxInput] = useState<string>("")

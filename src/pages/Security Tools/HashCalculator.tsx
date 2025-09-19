@@ -1,6 +1,4 @@
-// @ts-ignore
-import { createHash } from "crypto-browserify";  // windows use crypto
-import { ChangeEvent, useEffect, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
@@ -15,7 +13,7 @@ import {
   useColorModeValue,
   useToast
 } from "@chakra-ui/react";
-import { Hash, keccak224, keccak256, keccak384, keccak512, sha3_224, sha3_256, sha3_384, sha3_512 } from 'js-sha3';
+import { type Hash, keccak224, keccak256, keccak384, keccak512, sha3_224, sha3_256, sha3_384, sha3_512 } from 'js-sha3';
 
 const hashAlgorithm: { label: string, key: string, lib?: string, function?:Hash | void }[] = [
   { label: "SHA3-256", key: "sha3_256", lib: "js-sha3", function: sha3_256 },
@@ -23,19 +21,19 @@ const hashAlgorithm: { label: string, key: string, lib?: string, function?:Hash 
   { label: "SHA3-512", key: "sha3_512", lib: "js-sha3", function: sha3_512 },
   { label: "SHA3-224", key: "sha3_224", lib: "js-sha3", function: sha3_224 },
 
-  { label: "SHA256", key: "sha256", lib: "crypto-hash" },
-  { label: "SHA384", key: "sha384", lib: "crypto-hash" },
-  { label: "SHA512", key: "sha512", lib: "crypto-hash" },
-  { label: "SHA224", key: "sha224", lib: "crypto-hash" },
-  { label: "SHA1", key: "sha1", lib: "crypto-hash" },
+  { label: "SHA256", key: "SHA-256", lib: "crypto-hash" },
+  { label: "SHA384", key: "SHA-384", lib: "crypto-hash" },
+  { label: "SHA512", key: "SHA-512", lib: "crypto-hash" },
+  // { label: "SHA224", key: "SHA-224", lib: "crypto-hash" },       Somehow the Web Crypto API doesn't support it
+  { label: "SHA1", key: "SHA-1", lib: "crypto-hash" },
 
   { label: "Keccak-256", key: "keccak256", lib: "js-sha3", function: keccak256 },
   { label: "Keccak-384", key: "keccak384", lib: "js-sha3", function: keccak384 },
   { label: "Keccak-512", key: "keccak512", lib: "js-sha3", function: keccak512 },
   { label: "Keccak-224", key: "keccak224", lib: "js-sha3", function: keccak224 },
 
-  { label: "RIPEMD-160", key: "rmd160", lib: "crypto-hash" },
-  { label: "MD5", key: "md5", lib: "crypto-hash" }
+  // { label: "RIPEMD-160", key: "rmd160", lib: "crypto-hash" },    Removed. No longer supported
+  // { label: "MD5", key: "md5", lib: "crypto-hash" }               Removed. No longer supported
 ]
 
 const HashCalculator = () => {
@@ -44,7 +42,7 @@ const HashCalculator = () => {
   const [hashAlgo, setHashAlgo] = useState<string>(hashAlgorithm[0].key)
   const [fileInput, setFileInput] = useState<boolean>(false)
   const [fileName, setFileName] = useState<string>("")
-  const [fileData, setFileData] = useState<string>("")
+  const [fileData, setFileData] = useState<ArrayBuffer>(new ArrayBuffer())
   const [fileLoading, setFileLoading] = useState<boolean>(false)
 
   let fileUpload: HTMLInputElement | null
@@ -70,7 +68,7 @@ const HashCalculator = () => {
     if (!toggle) {
       setFileLoading(false)
       setFileName("")
-      setFileData("")
+      setFileData(new ArrayBuffer())
     }
   }
 
@@ -81,9 +79,9 @@ const HashCalculator = () => {
       setFileLoading(true)
 
       setFileName(file.name)
-      data.readAsBinaryString(file)
-      data.onload = (event) => {
-        setFileData(event.target?.result?.toString() ?? "")
+      data.readAsArrayBuffer(file)
+      data.onloadend = (event) => {
+        setFileData(event?.target?.result as ArrayBuffer ?? new ArrayBuffer())
       }
     }
   }
@@ -100,9 +98,16 @@ const HashCalculator = () => {
     const index = hashAlgorithm.map((i) => i.key).indexOf(hashAlgo)
     if(index !== -1) {
       if (hashAlgorithm[index].lib === "crypto-hash") {
-        const hash = createHash(hashAlgo)
-        hash.update(fileInput ? fileData : textBoxInput)
-        setTextBoxOutput(hash.digest("hex"))
+        // As of Sep 2025, migrated from old crypto-browserify to Web Crypto API
+        (async () => {
+          const encoder = new TextEncoder()
+          const data = fileInput ? fileData : encoder.encode(textBoxInput)
+          const hashBuffer = await crypto.subtle.digest(hashAlgo, data)
+          const hashArray = Array.from(new Uint8Array(hashBuffer))
+          const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+
+          setTextBoxOutput(hashHex)
+        })()
       } else if (hashAlgorithm[index].lib === "js-sha3" && hashAlgorithm[index].function) {
         // @ts-ignore
         const hash = hashAlgorithm[index].function(fileInput ? fileData : textBoxInput)

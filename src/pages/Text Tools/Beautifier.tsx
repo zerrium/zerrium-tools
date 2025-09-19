@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
@@ -13,13 +13,11 @@ import {
 } from "@chakra-ui/react";
 import prettify from "html-prettify";
 // @ts-ignore
-import terser from "terser-sync";
-import { pd } from "../../utils/pretty-data"
-
-
-const beautifyJs = require("js-beautify/js").js
-const beautifyCss = require("js-beautify/js").css
-// const beautifyHtml = require("js-beautify/js").html
+import { minify_sync } from "terser";
+// @ts-ignore
+import { pd } from "../../utils/pretty-data";
+// @ts-ignore
+import { js as beautifyJs, css as beautifyCss } from "js-beautify";
 
 const processJson = (text: string, isMinify: boolean, numberOfSpace?: number): string => {
   return JSON.stringify(JSON.parse(text), null, isMinify ? 0 : (numberOfSpace || 2)).toString()
@@ -40,7 +38,7 @@ const processCss = (text: string, isMinify: boolean, numberOfSpace?: number): st
 }
 
 const processJs = (text: string, isMinify: boolean, numberOfSpace?: number): string => {
-  return isMinify ? terser.minifySync(text).code : beautifyJs(text, { indent_size: numberOfSpace || 2 })
+  return isMinify ? minify_sync(text).code! : beautifyJs(text, { indent_size: numberOfSpace || 2 })
 }
 
 const processXml = (text: string, isMinify: boolean, numberOfSpace?: number): string => {

@@ -1,6 +1,6 @@
 // @ts-ignore
 import { validate } from "uuid";
-import { ChangeEvent, useEffect, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
