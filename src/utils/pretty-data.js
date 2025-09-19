@@ -106,7 +106,7 @@ PP.prototype.xml = function (text) {
       // <elm></elm> //
     if (/^<\w/.exec(ar[ix - 1]) && /^<\/\w/.exec(ar[ix]) &&
       // eslint-disable-next-line
-      /^<[\w:\-.,]+/.exec(ar[ix - 1]) == /^<\/[\w:\-.,]+/.exec(ar[ix])[0].replace('/', '')) {
+      /^<[\w:\-.,]+/.exec(ar[ix - 1]) === /^<\/[\w:\-.,]+/.exec(ar[ix])[0].replace('/', '')) {
       str += ar[ix];
       if (!inComment) deep--;
     } else
@@ -300,15 +300,15 @@ PP.prototype.xmlmin = function (text, preserveComments) {
 }
 
 PP.prototype.cssmin = function (text, preserveComments) {
-
-  let str = preserveComments ? text
-    : text.replace(/\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\//g, "");
-  return str.replace(/\s+/g, ' ')
-    .replace(/\{\s+/g, "{")
-    .replace(/}\s+/g, "}")
-    .replace(/;\s+/g, ";")
-    .replace(/\/\*\s+/g, "/*")
-    .replace(/\*\/\s+/g, "*/");
+  return text
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\s+/g, " ")
+    .replace(/\s*([{}:;,])\s*/g, "$1")
+    .replace(/;}/g, "}")
+    .replace(/(:|\s)0(?:px|em|rem|%|in|cm|mm|pc|pt|ex|ch|vh|vw|vmin|vmax)/g, "$10")
+    .replace(/(:|\s)0+\.(\d+)/g, "$1.$2")
+    .replace(/#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3\b/g, "#$1$2$3")
+    .trim();
 }
 
 PP.prototype.sqlmin = function (text) {
@@ -317,7 +317,11 @@ PP.prototype.sqlmin = function (text) {
 
 // HTML simple minifier by Zerrium
 PP.prototype.htmlmin = function (text) {
-  return text.replace(/(<!--|<--)((.|\s)*?)(-->|--!>)|(\/\*)((.|\s)*?)(\*\/)|^\/\/.*|\s\B/gm, "");
+  return text
+    .replace(/(<!--[\s\S]*?-->|\/\*[\s\S]*?\*\/|\/\/.*)/g, "")
+    .replace(/\s+/g, " ")
+    .replace(/>\s+</g, "><")
+    .trim();
 }
 
 // --------------------------------------------------------------------------------------------
