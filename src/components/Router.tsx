@@ -26,6 +26,7 @@ const JsonViewer = lazy(() => import("./../pages/Text Tools/JsonViewer"));
 const JsonComparator = lazy(() => import("./../pages/Text Tools/JsonComparator"));
 const TextComparator = lazy(() => import("./../pages/Text Tools/TextComparator"));
 const Regex = lazy(() => import("./../pages/Text Tools/Regex"));
+const CharacterCounter = lazy(() => import("./../pages/Text Tools/CharacterCounter"));
 
 const DateTimeConverter = lazy(() => import("./../pages/DateTime Tools/DateTimeConverter"));
 
@@ -62,12 +63,13 @@ export const LinkItems: Array<LinkItemProps> = [
   {
     name: 'Text Tools', icon: FiFileText, key: "textTools",
     child: [
+      {name: "Character Counter", link: "character-counter", element: <CharacterCounter /> },
       { name: "Text Comparator", link: "text-comparator", element: <TextComparator /> },
       { name: "Regex Templates", link: "regex", element: <Regex /> },
       { name: "Beautifier/Minifier", link: "beautifier-minifier", element: <Beautifier /> },
       { name: "JSON Viewer", link: "json-viewer", element: <JsonViewer /> },
       { name: "JSON Comparator", link: "json-comparator", element: <JsonComparator /> },
-      { name: "YAML Validator", link: "yaml-validator", element: <YamlValidator /> }
+      { name: "YAML Validator", link: "yaml-validator", element: <YamlValidator /> },
     ]
   },
   {
