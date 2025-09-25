@@ -1,6 +1,6 @@
 # Zerrium Tool Kit
 > [!IMPORTANT]
-> I just recently migrated from React CRA script to Vite. As the result, I managed to get PWA service worker functionality working again.<br>
+> As of September 2025, I migrated from React CRA script to Vite. As the result, I managed to get PWA service worker functionality working again.<br><br>
 > From now on, I wrap up this personal project. In the future, there might be less updates or maintenance to this repository unless I need a new feature for myself.<br>
 > I think this is my first successful personal project that I actually use every day 😎
 
@@ -32,6 +32,7 @@ A client-side [website](https://tools.zerrium.com) for developers that provides 
 - File Encoder/Decoder
 
 ### Text Tools
+- Character Counter
 - Text Comparator
 - Regex Templates
 - Code Beautifier/Minifier
@@ -39,6 +40,7 @@ A client-side [website](https://tools.zerrium.com) for developers that provides 
 - YAML Validator
 
 ### Date Time Tools
+- Date Time Calculator
 - Date Time Converter<br>
 
 ## 🧑‍💻 Contributing
