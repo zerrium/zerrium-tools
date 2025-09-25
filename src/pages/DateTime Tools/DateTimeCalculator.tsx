@@ -75,8 +75,10 @@ const DateTimeCalculator = () => {
       try {
         let result = ""
         if (useNumber) {
-          result += "Addition: " + moment(textBoxInput1).add(textBoxInput2, unit).format("YYYY-MM-DD HH:mm:ss")
-          result += "\nSubtraction: " + moment(textBoxInput1).subtract(textBoxInput2, unit).format("YYYY-MM-DD HH:mm:ss")
+          // @ts-ignore
+            result += "Addition: " + moment(textBoxInput1).add(textBoxInput2, unit).format("YYYY-MM-DD HH:mm:ss")
+          // @ts-ignore
+            result += "\nSubtraction: " + moment(textBoxInput1).subtract(textBoxInput2, unit).format("YYYY-MM-DD HH:mm:ss")
         } else {
           const x = moment(textBoxInput1)
           const y = moment(textBoxInput2)
