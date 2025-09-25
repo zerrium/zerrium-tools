@@ -28,6 +28,7 @@ const TextComparator = lazy(() => import("./../pages/Text Tools/TextComparator")
 const Regex = lazy(() => import("./../pages/Text Tools/Regex"));
 const CharacterCounter = lazy(() => import("./../pages/Text Tools/CharacterCounter"));
 
+const DateTimeCalculator = lazy(() => import("./../pages/DateTime Tools/DateTimeCalculator"));
 const DateTimeConverter = lazy(() => import("./../pages/DateTime Tools/DateTimeConverter"));
 
 
@@ -48,7 +49,7 @@ export const LinkItems: Array<LinkItemProps> = [
       { name: "Hash Calculator", link: "hash-calculator", element: <HashCalculator /> },
       { name: "UUID Generator", link: "uuid-generator", element: <UuidGenerator /> },
       { name: "UUID Validator", link: "uuid-validator", element: <UuidValidator /> },
-      { name: "Password Generator", link: "password-generator", element: <PasswordGenerator /> }
+      { name: "Password Generator", link: "password-generator", element: <PasswordGenerator /> },
     ]
   },
   {
@@ -57,7 +58,7 @@ export const LinkItems: Array<LinkItemProps> = [
       { name: "HTML Encoder", link: "html-encoder", element: <HtmlEncoder /> },
       { name: "URL Encoder", link: "url-encoder", element: <UrlEncoder /> },
       { name: "Text Encoder", link: "text-encoder", element: <TextEncoder /> },
-      { name: "File Encoder", link: "file-encoder", element: <FileEncoder /> }
+      { name: "File Encoder", link: "file-encoder", element: <FileEncoder /> },
     ]
   },
   {
@@ -75,7 +76,8 @@ export const LinkItems: Array<LinkItemProps> = [
   {
     name: 'Date Time Tools', icon: FiClock, key: "dateTimeTools",
     child: [
-      { name: "Date Time Converter", link: "date-time-converter", element: <DateTimeConverter /> }
+        { name: "Date Time Calculator", link: "date-time-calculator", element: <DateTimeCalculator /> },
+      { name: "Date Time Converter", link: "date-time-converter", element: <DateTimeConverter /> },
     ]
   }
 ]
