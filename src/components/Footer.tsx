@@ -50,7 +50,7 @@ export const Footer = () => {
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}>
         <Box>
-          <Text fontSize="12">Version {import.meta.env.VITE_REACT_APP_VERSION} © 2025 Zerrium. All rights reserved.</Text>
+          <Text fontSize="12">Version {import.meta.env.VITE_REACT_APP_VERSION} © 2026 Zerrium. All rights reserved.</Text>
           <Text fontSize="12">Developed using <a href="https://react.dev/" target="_blank" rel="noreferrer">ReactJS</a> and <a
             href="https://chakra-ui.com/" target="_blank" rel="noreferrer">ChakraUI</a></Text>
         </Box>

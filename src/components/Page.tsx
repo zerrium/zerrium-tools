@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, Suspense, useEffect, useState } from 'react'
 import {
   Accordion,
   AccordionButton,
@@ -30,6 +30,7 @@ import { LinkItems } from "./Router"
 import { isDesktop } from "react-device-detect"
 import { Outlet, useLocation } from 'react-router-dom'
 import { FaSearch } from "react-icons/fa"
+import { Link } from "react-router-dom"
 
 
 const findAccordationIndex = (url: string) => {
@@ -77,7 +78,9 @@ const Page = () => {
           <ColorModeSwitcher/>
         </Box>
         <Box px="25" pb="120" pt={{ base: "100", md: "15" }}>
-          <Outlet />
+          <Suspense fallback={<Box h="100vh" />}>
+            <Outlet/>
+          </Suspense>
         </Box>
         <Box position="absolute" bottom="0" left="0" right="0"
              ml={{ base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
@@ -232,8 +235,8 @@ interface NavItemProps extends FlexProps {
 const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
   return (
     <Box
-      as="a"
-      href={href || "#"}
+      as={Link}
+      to={href || "#"}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}>
       <Flex
