@@ -222,12 +222,11 @@ const Home = () => {
           ))}
         </Accordion>
         <Box flex='1' textAlign='center'>
-          <Button variant='outline'>
+          <Button variant='outline' onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
             <Text
-              color={useColorModeValue("gray.700", "gray.300")}
+              color={useColorModeValue("gray.600", "gray.300")}
               fontSize="sm"
               fontWeight="normal"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               Back to top
             </Text>
