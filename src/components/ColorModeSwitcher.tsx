@@ -11,11 +11,13 @@ import { MdHdrAuto } from "react-icons/md";
 type ColorModeSwitcherProps = Omit<IconButtonProps, "aria-label">
 
 export const ColorModeSwitcher: FC<ColorModeSwitcherProps> = (props) => {
-  const { colorMode, setColorMode } = useColorMode()
+  const { setColorMode } = useColorMode()
   const systemColorMode = useColorModePreference()
   const colorModeCycle = ["system", "light", "dark"]
+
+  const systemColorModeInit = !localStorage?.getItem("is-follow-system-color-mode") ? "true" : localStorage.getItem("is-follow-system-color-mode")
   const [colorModeCycleState, setColorModeCycleState] = useState(
-      localStorage?.getItem("is-follow-system-color-mode") === "true" ? 0 : (colorMode === "light" ? 1 : 2))
+      systemColorModeInit === "true" ? 0 : (localStorage?.getItem("chakra-ui-color-mode") === "light" ? 1 : 2))
 
   const onClick = () => {
     setColorModeCycleState((prev) => (prev + 1) % colorModeCycle.length)
