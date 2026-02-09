@@ -1,13 +1,40 @@
-import type { FC } from "react"
-import { IconButton, type IconButtonProps, useColorMode, useColorModeValue } from "@chakra-ui/react"
+import { type FC, useEffect, useState } from "react"
+import {
+  IconButton,
+  type IconButtonProps,
+  useColorMode,
+  useColorModePreference,
+} from "@chakra-ui/react"
 import { FaMoon, FaSun } from "react-icons/fa"
+import { MdHdrAuto } from "react-icons/md";
 
 type ColorModeSwitcherProps = Omit<IconButtonProps, "aria-label">
 
 export const ColorModeSwitcher: FC<ColorModeSwitcherProps> = (props) => {
-  const { toggleColorMode } = useColorMode()
-  const text = useColorModeValue("dark", "light")
-  const SwitchIcon = useColorModeValue(FaMoon, FaSun)
+  const { colorMode, setColorMode } = useColorMode()
+  const systemColorMode = useColorModePreference()
+  const colorModeCycle = ["system", "light", "dark"]
+  const [colorModeCycleState, setColorModeCycleState] = useState(
+      localStorage?.getItem("is-follow-system-color-mode") === "true" ? 0 : (colorMode === "light" ? 1 : 2))
+
+  const onClick = () => {
+    setColorModeCycleState((prev) => (prev + 1) % colorModeCycle.length)
+  }
+
+  const getIcon = () => {
+    const icons = [<MdHdrAuto />, <FaMoon />, <FaSun />]
+    return icons[colorModeCycleState]
+  }
+
+  useEffect(() => {
+    if (colorModeCycleState === 0) {
+      localStorage.setItem("is-follow-system-color-mode", "true")
+      setColorMode(systemColorMode ?? "system")
+    } else {
+      localStorage.setItem("is-follow-system-color-mode", "false")
+      setColorMode(colorModeCycle[colorModeCycleState])
+    }
+  }, [colorModeCycleState, systemColorMode, setColorMode])
 
   return (
     <IconButton
@@ -18,9 +45,9 @@ export const ColorModeSwitcher: FC<ColorModeSwitcherProps> = (props) => {
       border="1px"
       borderColor="gray.200"
       marginRight="2"
-      onClick={toggleColorMode}
-      icon={<SwitchIcon/>}
-      aria-label={`Switch to ${text} mode`}
+      onClick={onClick}
+      icon={getIcon()}
+      aria-label="Switch color mode"
       {...props}
     />
   )

@@ -1,10 +1,11 @@
-import { ChakraProvider, ColorModeScript, theme } from "@chakra-ui/react"
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react"
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { RouterProvider } from "react-router-dom"
 import { router } from "./components/Router"
-import { registerSW } from "virtual:pwa-register";
-import process from "process";
+import { registerSW } from "virtual:pwa-register"
+import process from "process"
+import theme from "./theme.ts"
 
 window.process = process;
 
@@ -20,7 +21,7 @@ const root = createRoot(container)
 
 root.render(
   <StrictMode>
-    <ColorModeScript />
+    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     <ChakraProvider theme={theme}>
       <RouterProvider router={router}/>
     </ChakraProvider>
