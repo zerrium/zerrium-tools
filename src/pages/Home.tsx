@@ -41,7 +41,8 @@ const changeLogs: ChangeLogProps[] = [
       "Updated dependencies",
       "Added version history (changelog)",
       "Added auto color mode toggle (follow system)",
-      "Added Java stack trace viewer"
+      "Added Java stack trace viewer",
+      "Added YAML comparator"
     ]
   },
   { version: "1.6.2", date: "5 Feb 2026", changes: [

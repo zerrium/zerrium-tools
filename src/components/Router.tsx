@@ -5,6 +5,7 @@ import { FiCode, FiHome, FiLock, FiFileText, FiClock } from "react-icons/fi";
 import type { ReactElement } from "react";
 import { createBrowserRouter } from "react-router-dom"
 import Page from "./Page";
+import { LuCodeXml } from "react-icons/lu";
 
 
 const Home = lazy(() => import("./../pages/Home"));
@@ -22,6 +23,7 @@ const FileEncoder = lazy(() => import("./../pages/Encoding Tools/FileEncoder"));
 
 const Beautifier = lazy(() => import("./../pages/Text Tools/Beautifier"));
 const YamlValidator = lazy(() => import("./../pages/Text Tools/YamlValidator"));
+const YamlComparator = lazy(() => import("./../pages/Text Tools/YamlComparator"));
 const JsonViewer = lazy(() => import("./../pages/Text Tools/JsonViewer"));
 const JsonComparator = lazy(() => import("./../pages/Text Tools/JsonComparator"));
 const TextComparator = lazy(() => import("./../pages/Text Tools/TextComparator"));
@@ -30,6 +32,8 @@ const CharacterCounter = lazy(() => import("./../pages/Text Tools/CharacterCount
 
 const DateTimeCalculator = lazy(() => import("./../pages/DateTime Tools/DateTimeCalculator"));
 const DateTimeConverter = lazy(() => import("./../pages/DateTime Tools/DateTimeConverter"));
+
+const StackTraceViewer = lazy(() => import("./../pages/Debugging Tools/StackTraceViewer"));
 
 
 interface LinkItemProps {
@@ -71,6 +75,7 @@ export const LinkItems: Array<LinkItemProps> = [
       { name: "JSON Viewer", link: "json-viewer", element: <JsonViewer /> },
       { name: "JSON Comparator", link: "json-comparator", element: <JsonComparator /> },
       { name: "YAML Validator", link: "yaml-validator", element: <YamlValidator /> },
+      { name: "YAML Comparator", link: "yaml-comparator", element: <YamlComparator /> },
     ]
   },
   {
@@ -79,7 +84,13 @@ export const LinkItems: Array<LinkItemProps> = [
         { name: "Date Time Calculator", link: "date-time-calculator", element: <DateTimeCalculator /> },
       { name: "Date Time Converter", link: "date-time-converter", element: <DateTimeConverter /> },
     ]
-  }
+  },
+  {
+    name: 'Debugging Tools', icon: LuCodeXml, key: "encodingTools",
+    child: [
+      { name: "Stack Trace Viewer", link: "stack-trace-viewer", element: <StackTraceViewer /> },
+    ]
+  },
 ]
 
 const convertToRouteObject = (input: LinkItemProps[]): RouteObject[] => {
