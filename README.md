@@ -38,10 +38,14 @@ A client-side [website](https://tools.zerrium.com) for developers that provides 
 - Code Beautifier/Minifier
 - JSON Viewer and Comparator
 - YAML Validator
+- YAML Comparator
 
 ### Date Time Tools
 - Date Time Calculator
-- Date Time Converter<br>
+- Date Time Converter
+
+### Debugging Tools
+- Stack Trace Viewer (Java)<br>
 
 ## 🧑‍💻 Contributing
 Feel free to improve/add new feature and submit a pull request to this repo!

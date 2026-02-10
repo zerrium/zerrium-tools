@@ -4,12 +4,13 @@ import {
   Flex,
   FormControl,
   Heading, Select,
-  Stack,
+  Stack, Switch,
   Text,
   Textarea,
   useColorModeValue,
   useToast
 } from "@chakra-ui/react";
+import { decode as decodeHtml, type Level, type EncodeMode } from 'html-entities';
 
 const codes: { label: string, key: string, regex: RegExp[] }[] = [
   { label: "Java", key: "java", regex: [
@@ -30,11 +31,19 @@ const StackTraceViewer = () => {
   const [textBox, setTextBox] = useState<string>("")
   const [code, setCode] = useState<string>(codes[0].key)
   const [result, setResult] = useState<string>("")
+  const [isDecodeHtml, setIsDecodeHtml] = useState<boolean>(false)
+  const [isDecodeUrl, setIsDecodeUrl] = useState<boolean>(false)
 
   const toast = useToast({
     position: "top",
     duration: 2000,
     status: "success"
+  })
+
+  const toastError = useToast({
+    position: "top",
+    duration: 3000,
+    status: "error"
   })
 
   const onChangeInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -43,6 +52,16 @@ const StackTraceViewer = () => {
 
   const onChangeSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     setCode(e.target.value)
+  }
+
+  const onChangeDecodeHtml = (e: ChangeEvent<HTMLInputElement>) => {
+    const toggle = e.target.checked
+    setIsDecodeHtml(toggle)
+  }
+
+  const onChangeDecodeUrl = (e: ChangeEvent<HTMLInputElement>) => {
+    const toggle = e.target.checked
+    setIsDecodeUrl(toggle)
   }
 
   const onClickCopy = () => {
@@ -58,6 +77,26 @@ const StackTraceViewer = () => {
         for (const regex of obj?.regex) {
           temp = temp.replace(regex, "\n$1")
         }
+
+        if (isDecodeUrl) {
+          try {
+            temp = decodeURIComponent(temp)
+          }
+          catch (e) {
+            setIsDecodeUrl(false)
+            toastError({ description: 'Failed to decode URL text, invalid sequence.' })
+          }
+        }
+
+        if (isDecodeHtml) {
+          const options = {
+            level: 'all' as Level,
+            mode: 'nonAscii' as EncodeMode,
+            numeric: 'decimal' as 'decimal'
+          }
+          temp = decodeHtml(temp, options)
+        }
+
         setResult(temp)
       } else {
         setResult("")
@@ -65,7 +104,7 @@ const StackTraceViewer = () => {
     } else {
       setResult("")
     }
-  }, [textBox, code])
+  }, [textBox, code, isDecodeHtml, isDecodeUrl])
 
   return (
     <Flex
@@ -86,7 +125,7 @@ const StackTraceViewer = () => {
             Stack Trace Viewer
           </Heading>
           <FormControl id="stackTrace">
-            <Stack direction="row" w="100%" my={3} pb={3}>
+            <Stack direction="row" w="100%" my={3}>
               <Stack direction="row" w="28%" maxW="200px" px={"1%"}>
                 <Text mx={1} mt="3%">Code</Text>
               </Stack>
@@ -97,6 +136,20 @@ const StackTraceViewer = () => {
                   ))}
                 </Select>
               </Stack>
+            </Stack>
+            <Stack direction="row" w="100%" mb={3}>
+              <Switch colorScheme='green'
+                mx={1} mt="0.2%"
+                isChecked={isDecodeUrl}
+                onChange={onChangeDecodeUrl}/>
+              <Text mx={1}>Decode URL Text</Text>
+            </Stack>
+            <Stack direction="row" w="100%" mb={3}>
+              <Switch colorScheme='green'
+                mx={1} mt="0.2%"
+                isChecked={isDecodeHtml}
+                onChange={onChangeDecodeHtml}/>
+              <Text mx={1}>Decode HTML Entity</Text>
             </Stack>
             <Textarea
               placeholder={code ? `Input ${getCode(code)?.label} stack trace here` : 'Select code first'}
@@ -114,6 +167,7 @@ const StackTraceViewer = () => {
               _placeholder={{ color: 'gray.500' }}
               value={result}
               rows={20}
+              whiteSpace="nowrap"
               fontFamily="monospace"
             />
           </FormControl>
