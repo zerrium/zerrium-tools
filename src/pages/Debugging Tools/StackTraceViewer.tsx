@@ -162,7 +162,6 @@ const StackTraceViewer = () => {
             />
             <Textarea
               mt={4}
-              readOnly
               placeholder="Formatted output"
               _placeholder={{ color: 'gray.500' }}
               value={result}

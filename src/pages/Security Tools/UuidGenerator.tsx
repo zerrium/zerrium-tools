@@ -80,7 +80,6 @@ const UuidGenerator = () => {
           </Heading>
           <FormControl id="uuid">
             <Input
-              readOnly={true}
               placeholder="Generated Random UUID"
               _placeholder={{ color: 'gray.500' }}
               value={textBox}
@@ -144,7 +143,6 @@ const UuidGenerator = () => {
               </NumberInput>
             </Stack>
             <Textarea
-              readOnly={true}
               placeholder="Generated Random UUIDs"
               _placeholder={{ color: 'gray.500' }}
               value={areaTextBox}

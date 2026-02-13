@@ -210,7 +210,6 @@ const DateTimeCalculator = () => {
                       error ? "#f01818" : "current",
                       error ? "#fa3232" : "current")
               }
-              readOnly
             />
         </FormControl>
         <Button

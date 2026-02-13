@@ -128,7 +128,7 @@ const DateTimeConverter = () => {
 
           <Text mb={3}>Output:</Text>
           <Input
-            readOnly={true}
+            readOnly
             placeholder="Output"
             _placeholder={{ color: 'gray.500' }}
             value={textBoxOutput}

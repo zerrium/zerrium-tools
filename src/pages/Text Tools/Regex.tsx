@@ -88,7 +88,6 @@ const Regex = () => {
             placeholder="No result"
             _placeholder={{ color: 'gray.500' }}
             value={textBox}
-            readOnly
             fontFamily="monospace"
             mb={4}
             rows={5}

@@ -366,7 +366,6 @@ const PasswordGenerator = () => {
           </Heading>
           <FormControl id="password">
             <Input
-              readOnly={true}
               placeholder="Generated Password"
               _placeholder={{ color: 'gray.500' }}
               value={textBox}
@@ -430,7 +429,6 @@ const PasswordGenerator = () => {
               </NumberInput>
             </Stack>
             <Textarea
-              readOnly={true}
               placeholder="Generated Random Passwords"
               _placeholder={{ color: 'gray.500' }}
               value={areaTextBox}

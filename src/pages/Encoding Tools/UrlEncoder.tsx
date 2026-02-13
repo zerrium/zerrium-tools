@@ -92,7 +92,6 @@ const UrlEncoder = () => {
 
           <Text mb={3}>Output:</Text>
           <Textarea
-            readOnly={true}
             placeholder="Output"
             _placeholder={{ color: 'gray.500' }}
             value={textBoxOutput}
