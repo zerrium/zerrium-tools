@@ -124,6 +124,7 @@ const DateTimeConverter = () => {
             fontFamily="monospace"
             mb={4}
             readOnly={isNow}
+            spellCheck={false}
           />
 
           <Text mb={3}>Output:</Text>
@@ -139,6 +140,7 @@ const DateTimeConverter = () => {
                 error ? "#f01818" : "current",
                 error ? "#fa3232" : "current")
             }
+            spellCheck={false}
           />
         </FormControl>
         <Button

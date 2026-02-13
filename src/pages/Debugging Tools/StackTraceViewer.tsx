@@ -159,15 +159,18 @@ const StackTraceViewer = () => {
               rows={5}
               fontFamily="monospace"
               disabled={!code}
+              spellCheck={false}
             />
             <Textarea
               mt={4}
               placeholder="Formatted output"
               _placeholder={{ color: 'gray.500' }}
               value={result}
+              onChange={() => {}}
               rows={20}
               whiteSpace="nowrap"
               fontFamily="monospace"
+              spellCheck={false}
             />
           </FormControl>
           <Stack justifyContent="center" direction="row">

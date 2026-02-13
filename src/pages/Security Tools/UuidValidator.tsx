@@ -102,8 +102,9 @@ const UuidValidator = () => {
               value={textBox}
               onChange={onChangeInput}
               fontFamily="monospace"
+              spellCheck={false}
             />
-            <Textarea id="result" value={textBoxResult} display="none" disabled readOnly/>
+            <Textarea id="result" value={textBoxResult} display="none" disabled readOnly spellCheck={false} />
           </FormControl>
           <Stack spacing={5} direction={['column', 'row']}>
             <Button

@@ -97,6 +97,7 @@ const JsonComparator = () => {
                   onChange={onChangeInput1}
                   rows={20}
                   fontFamily="monospace"
+                  spellCheck={false}
                 />
               </FormControl>
             </Stack>
@@ -122,6 +123,7 @@ const JsonComparator = () => {
                   onChange={onChangeInput2}
                   rows={20}
                   fontFamily="monospace"
+                  spellCheck={false}
                 />
               </FormControl>
             </Stack>

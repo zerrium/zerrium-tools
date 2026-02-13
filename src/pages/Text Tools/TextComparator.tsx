@@ -114,6 +114,7 @@ const TextComparator = () => {
                 onChange={onChangeInput1}
                 rows={15}
                 fontFamily="monospace"
+                spellCheck={false}
               />
             </Stack>
             <Stack w={{ base: "100%", xl: "50%" }}>
@@ -124,6 +125,7 @@ const TextComparator = () => {
                 onChange={onChangeInput2}
                 rows={15}
                 fontFamily="monospace"
+                spellCheck={false}
               />
             </Stack>
           </Stack>

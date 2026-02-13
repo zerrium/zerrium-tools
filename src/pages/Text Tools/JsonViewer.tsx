@@ -70,6 +70,7 @@ const JsonViewer = () => {
                   onChange={onChangeInput}
                   rows={20}
                   fontFamily="monospace"
+                  spellCheck={false}
                 />
               </FormControl>
             </Stack>

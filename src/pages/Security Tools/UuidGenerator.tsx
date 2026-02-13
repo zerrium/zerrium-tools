@@ -83,7 +83,9 @@ const UuidGenerator = () => {
               placeholder="Generated Random UUID"
               _placeholder={{ color: 'gray.500' }}
               value={textBox}
+              onChange={() => {}}
               fontFamily="monospace"
+              spellCheck={false}
             />
           </FormControl>
           <Stack spacing={5} direction={['column', 'row']}>
@@ -146,7 +148,9 @@ const UuidGenerator = () => {
               placeholder="Generated Random UUIDs"
               _placeholder={{ color: 'gray.500' }}
               value={areaTextBox}
+              onChange={() => {}}
               fontFamily="monospace"
+              spellCheck={false}
             />
           </FormControl>
           <Stack spacing={5} direction={['column', 'row']}>

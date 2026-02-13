@@ -369,7 +369,9 @@ const PasswordGenerator = () => {
               placeholder="Generated Password"
               _placeholder={{ color: 'gray.500' }}
               value={textBox}
+              onChange={() => {}}
               fontFamily="monospace"
+              spellCheck={false}
             />
           </FormControl>
           <Stack spacing={5} direction={['column', 'row']}>
@@ -432,7 +434,9 @@ const PasswordGenerator = () => {
               placeholder="Generated Random Passwords"
               _placeholder={{ color: 'gray.500' }}
               value={areaTextBox}
+              onChange={() => {}}
               fontFamily="monospace"
+              spellCheck={false}
             />
           </FormControl>
           <Stack spacing={5} direction={['column', 'row']}>

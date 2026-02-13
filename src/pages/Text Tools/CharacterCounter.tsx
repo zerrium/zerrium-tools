@@ -35,6 +35,7 @@ const CharacterCounter = () => {
               fontFamily="monospace"
               rows={10}
               mb={2}
+              spellCheck={false}
             />
             <Badge>
               Character Count: {count}

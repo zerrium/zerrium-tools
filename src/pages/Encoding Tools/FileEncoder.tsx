@@ -207,11 +207,12 @@ const FileEncoder = () => {
                 value={fileName}
                 fontFamily="monospace"
                 mb={4}
+                spellCheck={false}
               />
             </Stack>
             <Stack direction="row" w="30%">
               <Input ref={input => fileUpload = input}
-                      type="file" display="none" onChange={onChangeFile} />
+                      type="file" display="none" onChange={onChangeFile} spellCheck={false} />
               <Button
                 bg={useColorModeValue("green.400", "green.600")}
                 color={'white'}
@@ -237,6 +238,7 @@ const FileEncoder = () => {
             mb={4}
             isDisabled={!decode}
             display={decode ? "current" : "none"}
+            spellCheck={false}
           />
 
           <Text whiteSpace={"pre"} mb={3}>{"Output: " +
@@ -250,6 +252,7 @@ const FileEncoder = () => {
             placeholder="Output"
             _placeholder={{ color: 'gray.500' }}
             value={textBoxOutput}
+            onChange={() => {}}
             fontFamily="monospace"
             fontWeight={error ? "bold" : "none"}
             display={decode ? "none" : "current"}
@@ -258,6 +261,7 @@ const FileEncoder = () => {
                 error ? "#f01818" : "current",
                 error ? "#fa3232" : "current")
             }
+            spellCheck={false}
           />
         </FormControl>
         <Button

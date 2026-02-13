@@ -105,6 +105,7 @@ const YamlComparator = () => {
                   onChange={onChangeInput1}
                   rows={20}
                   fontFamily="monospace"
+                  spellCheck={false}
                 />
               </FormControl>
             </Stack>
@@ -130,6 +131,7 @@ const YamlComparator = () => {
                   onChange={onChangeInput2}
                   rows={20}
                   fontFamily="monospace"
+                  spellCheck={false}
                 />
               </FormControl>
             </Stack>

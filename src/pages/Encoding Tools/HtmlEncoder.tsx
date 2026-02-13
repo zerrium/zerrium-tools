@@ -87,6 +87,7 @@ const HtmlEncoder = () => {
             onChange={onChangeInput}
             fontFamily="monospace"
             mb={4}
+            spellCheck={false}
           />
 
           <Text mb={3}>Output:</Text>
@@ -94,11 +95,13 @@ const HtmlEncoder = () => {
             placeholder="Output"
             _placeholder={{ color: 'gray.500' }}
             value={textBoxOutput}
+            onChange={() => {}}
             fontFamily="monospace"
             fontWeight={"none"}
             textColor={
               useColorModeValue("current", "current")
             }
+            spellCheck={false}
           />
         </FormControl>
         <Button

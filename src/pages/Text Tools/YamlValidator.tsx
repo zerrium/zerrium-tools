@@ -83,6 +83,7 @@ const YamlValidator = () => {
               onChange={onChangeInput}
               rows={20}
               fontFamily="monospace"
+              spellCheck={false}
             />
           </FormControl>
           <Stack justifyContent="center" direction="row">

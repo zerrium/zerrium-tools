@@ -180,6 +180,7 @@ const Beautifier = () => {
             fontFamily="monospace"
             mb={4}
             rows={5}
+            spellCheck={false}
           />
 
           <Text mb={3}>Output:</Text>
@@ -187,6 +188,7 @@ const Beautifier = () => {
             placeholder="Output"
             _placeholder={{ color: 'gray.500' }}
             value={textBoxOutput}
+            onChange={() => {}}
             fontFamily="monospace"
             fontWeight={error ? "bold" : "none"}
             rows={5}
@@ -195,6 +197,7 @@ const Beautifier = () => {
                 error ? "#f01818" : "current",
                 error ? "#fa3232" : "current")
             }
+            spellCheck={false}
           />
         </FormControl>
         <Button

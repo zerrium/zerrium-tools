@@ -128,6 +128,7 @@ const TextEncoder = () => {
             onChange={onChangeInput}
             fontFamily="monospace"
             mb={4}
+            spellCheck={false}
           />
 
           <Text mb={3}>Output:</Text>
@@ -135,6 +136,7 @@ const TextEncoder = () => {
             placeholder="Output"
             _placeholder={{ color: 'gray.500' }}
             value={textBoxOutput}
+            onChange={() => {}}
             fontFamily="monospace"
             fontWeight={error ? "bold" : "none"}
             textColor={
@@ -142,6 +144,7 @@ const TextEncoder = () => {
                 error ? "#f01818" : "current",
                 error ? "#fa3232" : "current")
             }
+            spellCheck={false}
           />
         </FormControl>
         <Button
