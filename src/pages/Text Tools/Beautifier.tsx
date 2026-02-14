@@ -120,7 +120,7 @@ const Beautifier = () => {
       <Stack
         spacing={4}
         w={'full'}
-        maxW={'2xl'}
+        maxW={'3xl'}
         bg={useColorModeValue('white', 'gray.700')}
         rounded={'lg'}
         boxShadow={'lg'}

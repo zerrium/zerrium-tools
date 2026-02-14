@@ -58,7 +58,7 @@ const Regex = () => {
       <Stack
         spacing={4}
         w={'full'}
-        maxW={'lg'}
+        maxW={'xl'}
         bg={useColorModeValue('white', 'gray.700')}
         rounded={'lg'}
         boxShadow={'lg'}

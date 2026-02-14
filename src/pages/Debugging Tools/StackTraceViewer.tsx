@@ -114,7 +114,7 @@ const StackTraceViewer = () => {
         <Stack
           spacing={4}
           w={'full'}
-          maxW={'1440px'}
+          maxW={'1920px'}
           bg={useColorModeValue('white', 'gray.700')}
           rounded={'lg'}
           boxShadow={'lg'}
