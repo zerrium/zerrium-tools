@@ -74,6 +74,10 @@ const JsonComparator = () => {
           <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
             JSON Object Comparator
           </Heading>
+          <Text fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool parses JSON according to ECMA-404 <a
+            href="https://www.json.org" target="_blank"
+            rel="noreferrer"><u>the JSON data interchange syntax standard.</u></a>
+          </Text>
           <Stack direction={["column", "column", "column", "row", "row"]} spacing={'20px'}>
             <Stack w={{ base: "100%", lg: "50%" }}>
               <FormControl id="json1">

@@ -106,7 +106,7 @@ const Regex = () => {
         >
           Copy
         </Button>
-        <Text>
+        <Text fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>
           Debug your regex <a href="https://regex101.com/" target="_blank" rel="noreferrer"><u>here</u></a> (regex101.com)
         </Text>
       </Stack>

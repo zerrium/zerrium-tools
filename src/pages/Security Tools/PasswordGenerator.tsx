@@ -346,7 +346,7 @@ const PasswordGenerator = () => {
               URL-friendy symbols
             </Checkbox>
           </FormControl>
-          <Text mt={3} textAlign="justify">Note: this password generator relies on <a
+          <Text mt={3} textAlign="justify" fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: this password generator relies on <a
             href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API" target="_blank"
             rel="noreferrer"><u>Web Crypto API</u></a> and it is claimed to be "cryptographically secure" which <b>cannot be guaranteed</b> 100% but still secure enough</Text>
         </Stack>

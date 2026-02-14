@@ -72,13 +72,18 @@ const HtmlEncoder = () => {
           HTML Entity {decode ? "Decoder" : "Encoder"}
         </Heading>
         <FormControl id="html">
-          <Stack direction="row" w="100%" mb={3}>
+          <Stack direction="row" w="100%" mb={2}>
             <Switch colorScheme='green'
                     mx={1} mt="0.6%"
                     isChecked={decode}
                     onChange={onChangeSwitch}/>
             <Text mx={1}>Decode Text</Text>
           </Stack>
+
+          <Text mb={4} fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool {decode ? "decodes" : "encodes"} HTML entity according to <a
+            href="https://html.spec.whatwg.org/multipage/named-characters.html" target="_blank"
+            rel="noreferrer"><u>HTML Living standard.</u></a>
+          </Text>
 
           <Textarea
             placeholder={"Input any text to " + (decode ? "decode" : "encode")}

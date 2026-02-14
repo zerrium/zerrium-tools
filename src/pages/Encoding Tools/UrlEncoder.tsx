@@ -43,7 +43,13 @@ const UrlEncoder = () => {
 
   useEffect(() => {
     try {
-      const result = decode ? decodeURIComponent(textBoxInput) : encodeURIComponent(textBoxInput)
+      const result = decode ? decodeURIComponent(textBoxInput) :
+        encodeURIComponent(textBoxInput)
+          .replaceAll("!", "%21")
+          .replaceAll("'", "%27")
+          .replaceAll("(", "%28")
+          .replaceAll(")", "%29")
+          .replaceAll("*", "%2A")
       setTextBoxOutput(result)
       setError(false)
     } catch (e) {
@@ -73,13 +79,18 @@ const UrlEncoder = () => {
           URL {decode ? "Decoder" : "Encoder"}
         </Heading>
         <FormControl id="url">
-          <Stack direction="row" w="100%" mb={3}>
+          <Stack direction="row" w="100%" mb={2}>
             <Switch colorScheme='green'
                     mx={1} mt="0.6%"
                     isChecked={decode}
                     onChange={onChangeSwitch}/>
             <Text mx={1}>Decode Text</Text>
           </Stack>
+
+          <Text mb={4} fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool {decode ? "decodes" : "encodes"} URI object according to <a
+            href="https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding" target="_blank"
+            rel="noreferrer"><u>RFC 3986 standard.</u></a>
+          </Text>
 
           <Textarea
             placeholder={"Input any text to " + (decode ? "decode" : "encode")}

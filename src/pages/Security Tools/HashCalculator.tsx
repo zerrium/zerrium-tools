@@ -113,6 +113,8 @@ const HashCalculator = () => {
         const hash = hashAlgorithm[index].function(fileInput ? fileData : textBoxInput)
         setTextBoxOutput(hash)
       }
+    } else {
+      setTextBoxOutput("")
     }
     if (fileInput) {
       setFileLoading(false)
@@ -141,10 +143,10 @@ const HashCalculator = () => {
         </Heading>
         <FormControl id="hash">
           <Stack direction="row" w="100%" my={3}>
-            <Stack direction="row" w="28%" px={"1%"}>
+            <Stack direction="row" w="35%" px={"1%"}>
               <Text mx={1} mt="5%">Hash Algorithm</Text>
             </Stack>
-            <Stack direction="row" w="72%" px={"1%"}>
+            <Stack direction="row" w="65%" px={"1%"}>
               <Select placeholder="Select Hash Algorithm..." value={hashAlgo} onChange={onChangeSelect}>
                 {hashAlgorithm.map((ha) => (
                   <option value={ha.key} key={ha.key}>{ha.label}</option>
@@ -160,6 +162,29 @@ const HashCalculator = () => {
                     onChange={onChangeSwitch}/>
             <Text mx={1}>File Input</Text>
           </Stack>
+
+          {hashAlgo.startsWith("sha3_") && (
+            <Text mb={3} fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool calculates SHA3 according to <a
+              href="https://www.rfc-editor.org/rfc/rfc9688.html" target="_blank"
+              rel="noreferrer"><u>RFC 9688</u></a> / <a
+              href="https://csrc.nist.gov/pubs/fips/202/final" target="_blank"
+              rel="noreferrer"><u>FIPS 202</u></a> standard.
+            </Text>
+          )}
+
+          {hashAlgo.startsWith("SHA-") && (
+            <Text mb={3} fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool calculates SHA according to <a
+              href="https://csrc.nist.gov/pubs/fips/180-4/upd1/final" target="_blank"
+              rel="noreferrer"><u>FIPS 180-4 standard.</u></a>
+            </Text>
+          )}
+
+          {hashAlgo.startsWith("keccak") && (
+            <Text mb={3} fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool calculates Keccak hash according to <a
+              href="https://csrc.nist.gov/pubs/fips/202/final" target="_blank"
+              rel="noreferrer"><u>FIPS 202 standard.</u></a>
+            </Text>
+          )}
 
           <Input
             placeholder="Input any text"

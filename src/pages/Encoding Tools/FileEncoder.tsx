@@ -198,6 +198,13 @@ const FileEncoder = () => {
             <Text mx={1}>Decode File</Text>
           </Stack>
 
+          {encoding === "Base64Url" && (
+            <Text mx={1} mb={3} fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool {decode ? "decodes" : "encodes"} URI object according to <a
+              href="https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding" target="_blank"
+              rel="noreferrer"><u>RFC 3986 standard.</u></a>
+            </Text>
+          )}
+
           <Stack direction="row" w="100%" mb={3} display={decode ? "none" : "flex"}>
             <Stack direction="row" w="70%" me={"1%"}>
               <Input
@@ -242,7 +249,7 @@ const FileEncoder = () => {
           />
 
           <Text whiteSpace={"pre"} mb={3}>{"Output: " +
-            (decode && !error && textBoxInput.length !== 0 ? "detected as a " + fileExt + " file." +
+            (encoding && decode && !error && textBoxInput.length !== 0 ? "detected as a " + fileExt + " file." +
                 (fileExt === "bin" ? "\nFile type can't be determined. File result is set as .bin file instead." : "")
               : ""
             )
@@ -254,33 +261,33 @@ const FileEncoder = () => {
             value={textBoxOutput}
             onChange={() => {}}
             fontFamily="monospace"
-            fontWeight={error ? "bold" : "none"}
+            fontWeight={(error || !encoding) ? "bold" : "none"}
             display={decode ? "none" : "current"}
             textColor={
               useColorModeValue(
-                error ? "#f01818" : "current",
-                error ? "#fa3232" : "current")
+                (error || !encoding) ? "#f01818" : "current",
+                (error || !encoding) ? "#fa3232" : "current")
             }
             spellCheck={false}
           />
         </FormControl>
         <Button
           bg={useColorModeValue(
-            error && decode ? "#f01818" : "green.400",
-            error && decode ? "#fa3232" : "green.600")}
+            (error || !encoding) && decode ? "#f01818" : "green.400",
+            (error || !encoding) && decode ? "#fa3232" : "green.600")}
           color={'white'}
           _hover={{
             bg: useColorModeValue("green.600", "green.400"),
           }}
           onClick={onClickCopy}
-          isDisabled={(decode ? fileData.length === 0 : textBoxOutput.length === 0) || error}
+          isDisabled={(decode ? fileData.length === 0 : textBoxOutput.length === 0) || error || !encoding}
           isLoading={fileLoading}
           loadingText="Calculating..."
         >
-          {decode ? (error ? "Invalid input!" : "Download Result File") : "Copy"}
+          {decode ? (error || !encoding ? "Invalid input!" : "Download Result File") : "Copy"}
         </Button>
-        <Text mt={3} display={decode ? "current" : "none"}>Disclaimer:<br/>
-          File type detection may not be accurate. It is determined based on&nbsp;
+        <Text mt={1} display={decode ? "current" : "none"} fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Disclaimer:
+          file type detection may not be accurate. It is determined based on&nbsp;
           <a
             href="https://en.wikipedia.org/wiki/List_of_file_signatures" target="_blank"
             rel="noreferrer"><u>magic number</u>

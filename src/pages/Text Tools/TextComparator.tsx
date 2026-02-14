@@ -104,7 +104,7 @@ const TextComparator = () => {
                     onChange={onChangeSwitch}/>
             <Text mx={1}>Enable live compare</Text>
           </Stack>
-          <Text>Disable for large text to improve performance</Text>
+          <Text fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Disable for large text to improve performance</Text>
           <Stack direction={["column", "column", "column", "column", "row", "row"]} spacing={'20px'}>
             <Stack w={{ base: "100%", xl: "50%" }}>
               <Textarea

@@ -154,7 +154,7 @@ const Beautifier = () => {
             <Text mx={1}>Minify Code</Text>
           </Stack>
 
-          <Stack direction='row' w="100%" mb={3} display={isMinify ? "none": "flex"}>
+          <Stack direction='row' w="100%" display={isMinify ? "none": "flex"}>
             <Text mx={2} mt="1.5%" align="center">Number of spaces </Text>
             <NumberInput
               value={numberOfSpaces}
@@ -172,12 +172,20 @@ const Beautifier = () => {
             </NumberInput>
           </Stack>
 
+          {code === "json" && (
+            <Text mx={2} fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool parses JSON according to ECMA-404 <a
+              href="https://www.json.org" target="_blank"
+              rel="noreferrer"><u>the JSON data interchange syntax standard.</u></a>
+            </Text>
+          )}
+
           <Textarea
             placeholder={"Input any text to " + (isMinify ? "minify" : "beautify")}
             _placeholder={{ color: 'gray.500' }}
             value={textBoxInput}
             onChange={onChangeInput}
             fontFamily="monospace"
+            mt={3}
             mb={4}
             rows={5}
             spellCheck={false}
@@ -211,8 +219,8 @@ const Beautifier = () => {
         >
           Copy
         </Button>
-        <Text mt={3} display={!isMinify && code === "html" ? "current" : "none"}>Note:<br/>
-          If HTML beautify result is messy, you have invalid HTML code.
+        <Text mt={3} display={!isMinify && code === "html" ? "current" : "none"} fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note:<br/>
+          If HTML beautify result is messy, you might have invalid HTML code.
         </Text>
       </Stack>
     </Flex>
