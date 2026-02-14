@@ -50,7 +50,7 @@ export const LinkItems: Array<LinkItemProps> = [
   {
     name: 'Security Tools', icon: FiLock, key: "securityTools",
     child: [
-      { name: "Hash Calculator", link: "hash-calculator", element: <HashCalculator />, keyword: "sha,sha3" },
+      { name: "Hash Calculator", link: "hash-calculator", element: <HashCalculator />, keyword: "sha,sha3,file,keccak" },
       { name: "UUID Generator", link: "uuid-generator", element: <UuidGenerator /> },
       { name: "UUID Validator", link: "uuid-validator", element: <UuidValidator /> },
       { name: "Password Generator", link: "password-generator", element: <PasswordGenerator />, keyword: "pwd,psswd,psswrd" },
@@ -60,7 +60,7 @@ export const LinkItems: Array<LinkItemProps> = [
     name: 'Encoding Tools', icon: FiCode, key: "encodingTools",
     child: [
       { name: "HTML Encoder", link: "html-encoder", element: <HtmlEncoder />, keyword: "entity,decoder" },
-      { name: "URL Encoder", link: "url-encoder", element: <UrlEncoder />, keyword: "decoder,link" },
+      { name: "URL Encoder", link: "url-encoder", element: <UrlEncoder />, keyword: "decoder,link,uri,percent" },
       { name: "Text Encoder", link: "text-encoder", element: <TextEncoder />, keyword: "decoder,base64,base64url,hex,dec,oct" },
       { name: "File Encoder", link: "file-encoder", element: <FileEncoder />, keyword: "decoder,base64,base64url,hex,dec,oct" },
     ]
