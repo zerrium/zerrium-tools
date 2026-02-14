@@ -33,6 +33,7 @@ const CharacterCounter = lazy(() => import("./../pages/Text Tools/CharacterCount
 const DateTimeCalculator = lazy(() => import("./../pages/DateTime Tools/DateTimeCalculator"));
 const DateTimeConverter = lazy(() => import("./../pages/DateTime Tools/DateTimeConverter"));
 
+const Cron = lazy(() => import("./../pages/Debugging Tools/Cron"));
 const StackTraceViewer = lazy(() => import("./../pages/Debugging Tools/StackTraceViewer"));
 
 
@@ -88,6 +89,7 @@ export const LinkItems: Array<LinkItemProps> = [
   {
     name: 'Debugging Tools', icon: LuCodeXml, key: "encodingTools",
     child: [
+      { name: "Cron Viewer", link: "cron", element: <Cron />, keyword: "debug,format,tab,crontab,desc,translate,translator,tab,validator" },
       { name: "Stack Trace Viewer", link: "stack-trace-viewer", element: <StackTraceViewer />, keyword: "java,debug,format" },
     ]
   },
