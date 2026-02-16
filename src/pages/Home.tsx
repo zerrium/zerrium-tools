@@ -37,6 +37,16 @@ const features: FeatureProps[] = [
 ]
 
 const changeLogs: ChangeLogProps[] = [
+  { version: "1.8.0", date: "15 Feb 2026", changes: [
+      "Enabled text selection on all text box output",
+      "Disabled spell check on all text box",
+      "Improved search functionality significantly",
+      "Added disclaimer note for JSON, YAML, URI object, HTML entity, hash and UUID",
+      "Improved URL encoder/decoder to comply with RFC 3986",
+      "Added cron viewer/translator",
+      "Optimized some tools view for large high resolution displays",
+    ]
+  },
   { version: "1.7.0", date: "10 Feb 2026", changes: [
       "Updated dependencies",
       "Added version history (changelog)",

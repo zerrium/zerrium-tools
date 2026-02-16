@@ -346,7 +346,7 @@ const PasswordGenerator = () => {
               URL-friendy symbols
             </Checkbox>
           </FormControl>
-          <Text mt={3} textAlign="justify">Note: this password generator relies on <a
+          <Text mt={3} textAlign="justify" fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: this password generator relies on <a
             href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API" target="_blank"
             rel="noreferrer"><u>Web Crypto API</u></a> and it is claimed to be "cryptographically secure" which <b>cannot be guaranteed</b> 100% but still secure enough</Text>
         </Stack>
@@ -366,11 +366,12 @@ const PasswordGenerator = () => {
           </Heading>
           <FormControl id="password">
             <Input
-              readOnly={true}
               placeholder="Generated Password"
               _placeholder={{ color: 'gray.500' }}
               value={textBox}
+              onChange={() => {}}
               fontFamily="monospace"
+              spellCheck={false}
             />
           </FormControl>
           <Stack spacing={5} direction={['column', 'row']}>
@@ -430,11 +431,12 @@ const PasswordGenerator = () => {
               </NumberInput>
             </Stack>
             <Textarea
-              readOnly={true}
               placeholder="Generated Random Passwords"
               _placeholder={{ color: 'gray.500' }}
               value={areaTextBox}
+              onChange={() => {}}
               fontFamily="monospace"
+              spellCheck={false}
             />
           </FormControl>
           <Stack spacing={5} direction={['column', 'row']}>

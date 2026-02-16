@@ -124,11 +124,12 @@ const DateTimeConverter = () => {
             fontFamily="monospace"
             mb={4}
             readOnly={isNow}
+            spellCheck={false}
           />
 
           <Text mb={3}>Output:</Text>
           <Input
-            readOnly={true}
+            readOnly
             placeholder="Output"
             _placeholder={{ color: 'gray.500' }}
             value={textBoxOutput}
@@ -139,6 +140,7 @@ const DateTimeConverter = () => {
                 error ? "#f01818" : "current",
                 error ? "#fa3232" : "current")
             }
+            spellCheck={false}
           />
         </FormControl>
         <Button

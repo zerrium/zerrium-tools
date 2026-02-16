@@ -11,7 +11,7 @@ const CharacterCounter = () => {
         <Stack
           spacing={4}
           w={'full'}
-          maxW={'2xl'}
+          maxW={'3xl'}
           bg={useColorModeValue('white', 'gray.700')}
           rounded={'lg'}
           boxShadow={'lg'}
@@ -35,6 +35,7 @@ const CharacterCounter = () => {
               fontFamily="monospace"
               rows={10}
               mb={2}
+              spellCheck={false}
             />
             <Badge>
               Character Count: {count}

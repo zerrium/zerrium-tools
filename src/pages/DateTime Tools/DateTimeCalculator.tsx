@@ -159,6 +159,7 @@ const DateTimeCalculator = () => {
             onChange={onChangeInput1}
             fontFamily="monospace"
             mb={4}
+            spellCheck={false}
           />
             {useNumber ? (
               <Stack direction="row" mx={1}>
@@ -169,6 +170,7 @@ const DateTimeCalculator = () => {
                     onChange={onChangeInput2}
                     fontFamily="monospace"
                     mb={4}
+                    spellCheck={false}
                 />
                 <Select
                     placeholder="Select unit"
@@ -176,7 +178,7 @@ const DateTimeCalculator = () => {
                     value={unit}
                     onChange={onChangeUnit}
                 >
-                    <option value='ms'>Miliseconds</option>
+                    <option value='ms'>Milliseconds</option>
                     <option value='s'>Seconds</option>
                     <option value='m'>Minutes</option>
                     <option value='h'>Hours</option>
@@ -195,6 +197,7 @@ const DateTimeCalculator = () => {
                 onChange={onChangeInput2}
                 fontFamily="monospace"
                 mb={4}
+                spellCheck={false}
               />
             )}
           <Text mb={3}>Output:</Text>
@@ -202,6 +205,7 @@ const DateTimeCalculator = () => {
               placeholder="Output"
               _placeholder={{ color: 'gray.500' }}
               value={textBoxOutput}
+              onChange={() => {}}
               fontFamily="monospace"
               rows={2}
               fontWeight={error ? "bold" : "none"}
@@ -210,7 +214,7 @@ const DateTimeCalculator = () => {
                       error ? "#f01818" : "current",
                       error ? "#fa3232" : "current")
               }
-              readOnly
+              spellCheck={false}
             />
         </FormControl>
         <Button

@@ -58,7 +58,7 @@ const Regex = () => {
       <Stack
         spacing={4}
         w={'full'}
-        maxW={'lg'}
+        maxW={'xl'}
         bg={useColorModeValue('white', 'gray.700')}
         rounded={'lg'}
         boxShadow={'lg'}
@@ -88,10 +88,11 @@ const Regex = () => {
             placeholder="No result"
             _placeholder={{ color: 'gray.500' }}
             value={textBox}
-            readOnly
+            onChange={() => {}}
             fontFamily="monospace"
             mb={4}
             rows={5}
+            spellCheck={false}
           />
         </FormControl>
         <Button
@@ -105,7 +106,7 @@ const Regex = () => {
         >
           Copy
         </Button>
-        <Text>
+        <Text fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>
           Debug your regex <a href="https://regex101.com/" target="_blank" rel="noreferrer"><u>here</u></a> (regex101.com)
         </Text>
       </Stack>

@@ -87,7 +87,7 @@ const TextEncoder = () => {
       <Stack
         spacing={4}
         w={'full'}
-        maxW={'lg'}
+        maxW={'3xl'}
         bg={useColorModeValue('white', 'gray.700')}
         rounded={'lg'}
         boxShadow={'lg'}
@@ -121,6 +121,13 @@ const TextEncoder = () => {
             <Text mx={1}>Decode Text</Text>
           </Stack>
 
+          {encoding === "Base64Url" && (
+            <Text mx={1} mb={3} fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool {decode ? "decodes" : "encodes"} URI object according to <a
+              href="https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding" target="_blank"
+              rel="noreferrer"><u>RFC 3986 standard.</u></a>
+            </Text>
+          )}
+
           <Textarea
             placeholder={"Input any text to " + (decode ? "decode" : "encode")}
             _placeholder={{ color: 'gray.500' }}
@@ -128,14 +135,15 @@ const TextEncoder = () => {
             onChange={onChangeInput}
             fontFamily="monospace"
             mb={4}
+            spellCheck={false}
           />
 
           <Text mb={3}>Output:</Text>
           <Textarea
-            readOnly={true}
             placeholder="Output"
             _placeholder={{ color: 'gray.500' }}
             value={textBoxOutput}
+            onChange={() => {}}
             fontFamily="monospace"
             fontWeight={error ? "bold" : "none"}
             textColor={
@@ -143,6 +151,7 @@ const TextEncoder = () => {
                 error ? "#f01818" : "current",
                 error ? "#fa3232" : "current")
             }
+            spellCheck={false}
           />
         </FormControl>
         <Button

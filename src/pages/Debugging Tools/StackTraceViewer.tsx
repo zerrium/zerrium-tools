@@ -114,7 +114,7 @@ const StackTraceViewer = () => {
         <Stack
           spacing={4}
           w={'full'}
-          maxW={'1440px'}
+          maxW={'1920px'}
           bg={useColorModeValue('white', 'gray.700')}
           rounded={'lg'}
           boxShadow={'lg'}
@@ -151,7 +151,20 @@ const StackTraceViewer = () => {
                 onChange={onChangeDecodeHtml}/>
               <Text mx={1}>Decode HTML Entity</Text>
             </Stack>
+            {isDecodeUrl && (
+              <Text mb={1} fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool decodes URI object according to <a
+                href="https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding" target="_blank"
+                rel="noreferrer"><u>RFC 3986 standard.</u></a>
+              </Text>
+            )}
+            {isDecodeHtml && (
+              <Text mb={1} fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool decodes HTML entity according to <a
+                href="https://html.spec.whatwg.org/multipage/named-characters.html" target="_blank"
+                rel="noreferrer"><u>HTML Living standard.</u></a>
+              </Text>
+            )}
             <Textarea
+              mt={2}
               placeholder={code ? `Input ${getCode(code)?.label} stack trace here` : 'Select code first'}
               _placeholder={{ color: 'gray.500' }}
               value={textBox}
@@ -159,16 +172,18 @@ const StackTraceViewer = () => {
               rows={5}
               fontFamily="monospace"
               disabled={!code}
+              spellCheck={false}
             />
             <Textarea
               mt={4}
-              readOnly
               placeholder="Formatted output"
               _placeholder={{ color: 'gray.500' }}
               value={result}
+              onChange={() => {}}
               rows={20}
               whiteSpace="nowrap"
               fontFamily="monospace"
+              spellCheck={false}
             />
           </FormControl>
           <Stack justifyContent="center" direction="row">

@@ -80,11 +80,12 @@ const UuidGenerator = () => {
           </Heading>
           <FormControl id="uuid">
             <Input
-              readOnly={true}
               placeholder="Generated Random UUID"
               _placeholder={{ color: 'gray.500' }}
               value={textBox}
+              onChange={() => {}}
               fontFamily="monospace"
+              spellCheck={false}
             />
           </FormControl>
           <Stack spacing={5} direction={['column', 'row']}>
@@ -121,8 +122,7 @@ const UuidGenerator = () => {
           borderWidth={1}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
           p={6}
-          mt={2}
-          mb={12}>
+          mt={2}>
           <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
             Multiple UUID Generator
           </Heading>
@@ -144,11 +144,12 @@ const UuidGenerator = () => {
               </NumberInput>
             </Stack>
             <Textarea
-              readOnly={true}
               placeholder="Generated Random UUIDs"
               _placeholder={{ color: 'gray.500' }}
               value={areaTextBox}
+              onChange={() => {}}
               fontFamily="monospace"
+              spellCheck={false}
             />
           </FormControl>
           <Stack spacing={5} direction={['column', 'row']}>
@@ -173,6 +174,13 @@ const UuidGenerator = () => {
               Copy
             </Button>
           </Stack>
+        </Stack>
+
+        <Stack px={4} w="full" maxW="md">
+          <Text fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool generates UUID v4 according to RFC 9562 <a
+            href="https://www.rfc-editor.org/rfc/rfc9562" target="_blank"
+            rel="noreferrer"><u>Universally Unique IDentifiers standard.</u></a>
+          </Text>
         </Stack>
       </Stack>
     </Flex>

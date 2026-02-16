@@ -82,6 +82,10 @@ const UuidValidator = () => {
           <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
             UUID Validator
           </Heading>
+          <Text fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool parses any UUID versions according to RFC 9562 <a
+            href="https://www.rfc-editor.org/rfc/rfc9562" target="_blank"
+            rel="noreferrer"><u>Universally Unique IDentifiers standard.</u></a>
+          </Text>
           <FormControl id="uuid">
             <Text
               my={2}
@@ -102,8 +106,9 @@ const UuidValidator = () => {
               value={textBox}
               onChange={onChangeInput}
               fontFamily="monospace"
+              spellCheck={false}
             />
-            <Textarea id="result" value={textBoxResult} display="none" disabled readOnly/>
+            <Textarea id="result" value={textBoxResult} display="none" disabled readOnly spellCheck={false} />
           </FormControl>
           <Stack spacing={5} direction={['column', 'row']}>
             <Button

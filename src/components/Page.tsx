@@ -27,7 +27,7 @@ import type { IconType } from 'react-icons'
 import { Footer } from "./Footer"
 import { LinkItems } from "./Router"
 // @ts-ignore
-import { isDesktop } from "react-device-detect"
+import { isDesktop, isMobile } from "react-device-detect"
 import { Outlet, useLocation } from 'react-router-dom'
 import { FaSearch } from "react-icons/fa"
 import { Link } from "react-router-dom"
@@ -100,9 +100,8 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const { pathname } = useLocation()
   const [url, setUrl] = useState<string>(pathname.replace("/", ""))
   const [search, setSearch] = useState<string>("")
-  const [indexExpanded, setIndexExpanded] = useState<number[] | undefined>(undefined)
-
-  const accordationIndex = findAccordationIndex(url)
+  const [defaultIndex, setDefaultIndex] = useState<number>(findAccordationIndex(url))
+  const [indexExpanded, setIndexExpanded] = useState<number[]>(Array.of(defaultIndex))
 
   useEffect(() => {
     setUrl(pathname.replace("/", ""))
@@ -110,17 +109,37 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
   useEffect(() => {
     if (search.length > 0) {
-      const indexList = LinkItems.map((link, index) => {
-        if (link.child && link.child.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()) || item.link === url).length > 0) {
-          return index - 1
+      const result = new Set(Array.of(defaultIndex));
+      for (let index = 0; index < LinkItems.length; index++) {
+        if (LinkItems?.[index]?.child) {
+          // @ts-ignore
+          for (const item of LinkItems?.[index]?.child) {
+            if (item.link === url || item.name.toLowerCase().includes(search.toLowerCase()) || item?.keyword?.split(',')?.includes(search.toLowerCase())) {
+              result.add(index - 1)
+            }
+          }
         }
-        return undefined
-      }).filter((i) => i !== undefined)
-      setIndexExpanded(indexList.length === 0 ? undefined : indexList as number[])
+      }
+      setIndexExpanded(Array.from(result).sort((a, b) => a - b))
     } else {
-      setIndexExpanded(undefined)
+      setIndexExpanded(Array.of(defaultIndex))
     }
-  }, [search, url])
+  }, [search])
+
+  useEffect(() => {
+    if (url) {
+      const i = findAccordationIndex(url)
+      setDefaultIndex(i)
+      if (!indexExpanded.find((e) => e === i)) {
+        setIndexExpanded(Array.of(i))
+      }
+      setSearch("")
+    }
+  }, [url]);
+
+  const onChangeAccordion = (index: number[]) => {
+    setIndexExpanded(index.length === 0 ? Array.of(defaultIndex) : index)
+  }
 
   return (
     <Box
@@ -143,10 +162,11 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           <Input
               pr="4.5rem"
               type="text"
-              autoFocus
+              autoFocus={!isMobile}
               placeholder="Search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              spellCheck={false}
           />
           <InputRightElement width='3.3rem'>
               <IconButton
@@ -161,53 +181,56 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </InputGroup>
       </Flex>
       <Box>
-        <Accordion allowMultiple width="100%" maxW="lg" rounded="lg" defaultIndex={indexExpanded ? undefined : [accordationIndex]} index={indexExpanded ? new Array(indexExpanded?.length).fill(null).map((_, i) => i) : undefined}>
+        <Accordion allowMultiple width="100%" maxW="lg" rounded="lg" index={indexExpanded} onChange={onChangeAccordion}>
           {LinkItems.map((link, index) => (
             <Fragment key={link.name}>
               {link.child ? (
-                ((indexExpanded && indexExpanded.filter((i) => i === (index - 1)).length > 0) || search.length === 0) && (
-                  <AccordionItem key={link.name}>
-                    <AccordionButton
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="space-between"
-                      p={4}
-                      _hover={{
-                        bg: 'green.300',
-                        color: 'white',
-                      }}>
-                      <Box w="100%" display="flex">
-                        {link.icon ? (
-                          <>
-                            <Icon
-                              mr="4"
-                              mt="1"
-                              fontSize="16"
-                              _groupHover={{
-                                color: 'white',
-                              }}
-                              as={link.icon}
-                            />
-                            <Text fontSize="md">{link.name}</Text>
-                          </>
-                        ) : (
-                          <Text ml="8" fontSize="md">{link.name}</Text>
-                        )}
-                      </Box>
-                      <AccordionIcon/>
-                    </AccordionButton>
-                    <AccordionPanel pb={4}>
-                      {link.child.map((child) => (
-                        ((search.length === 0 || url === child.link || child.name.toLowerCase().includes(search.toLowerCase())) && (
-                          <NavItem key={child.name} href={/*basename + */child.link} fontWeight={url === child.link ? "bold" : "none"}
-                                background={url === child.link ? activeColor : "none"}>
-                          {child.name}
-                        </NavItem>
-                        ))
-                      ))}
-                    </AccordionPanel>
-                  </AccordionItem>
-                )
+                <AccordionItem
+                  key={link.name}
+                  display={(indexExpanded.filter(
+                      (i) => i === (index - 1)).length > 0) ||
+                    search.length === 0 ? undefined : 'none'}
+                >
+                  <AccordionButton
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    p={4}
+                    _hover={{
+                      bg: 'green.300',
+                      color: 'white',
+                    }}>
+                    <Box w="100%" display="flex">
+                      {link.icon ? (
+                        <>
+                          <Icon
+                            mr="4"
+                            mt="1"
+                            fontSize="16"
+                            _groupHover={{
+                              color: 'white',
+                            }}
+                            as={link.icon}
+                          />
+                          <Text fontSize="md">{link.name}</Text>
+                        </>
+                      ) : (
+                        <Text ml="8" fontSize="md">{link.name}</Text>
+                      )}
+                    </Box>
+                    <AccordionIcon/>
+                  </AccordionButton>
+                  <AccordionPanel pb={4}>
+                    {link.child.map((child) => (
+                      ((search.length === 0 || url === child.link || child.name.toLowerCase().includes(search.toLowerCase()) || child?.keyword?.split(',')?.includes(search.toLowerCase())) && (
+                        <NavItem key={child.name} href={/*basename + */child.link} fontWeight={url === child.link ? "bold" : "none"}
+                              background={url === child.link ? activeColor : "none"}>
+                        {child.name}
+                      </NavItem>
+                      ))
+                    ))}
+                  </AccordionPanel>
+                </AccordionItem>
               ) : (
                 <NavItem key={link.name} icon={link?.icon} ps={link.icon ? "4" : "12"} href={/*basename + */(link.link || "#")}
                          fontWeight={url === link.link || (index === 0 && url.length === 0) ? "bold" : "none"}

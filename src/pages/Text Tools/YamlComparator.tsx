@@ -82,6 +82,10 @@ const YamlComparator = () => {
           <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
             YAML Object Comparator
           </Heading>
+          <Text fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool parses YAML according to <a
+            href="https://yaml.org/spec/1.2.2" target="_blank"
+            rel="noreferrer"><u>YAML specification v1.2.2</u></a> and backwards compatible.
+          </Text>
           <Stack direction={["column", "column", "column", "row", "row"]} spacing={'20px'}>
             <Stack w={{ base: "100%", lg: "50%" }}>
               <FormControl id="yaml1">
@@ -105,6 +109,7 @@ const YamlComparator = () => {
                   onChange={onChangeInput1}
                   rows={20}
                   fontFamily="monospace"
+                  spellCheck={false}
                 />
               </FormControl>
             </Stack>
@@ -130,6 +135,7 @@ const YamlComparator = () => {
                   onChange={onChangeInput2}
                   rows={20}
                   fontFamily="monospace"
+                  spellCheck={false}
                 />
               </FormControl>
             </Stack>
