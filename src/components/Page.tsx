@@ -48,42 +48,46 @@ const findAccordationIndex = (url: string) => {
 
 const Page = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  // const isTouchScreenDevice = () => {
-  //   try{
-  //     document.createEvent('TouchEvent');
-  //     return true;
-  //   }catch(e){
-  //     return false;
-  //   }
-  // }
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false)
 
   return (
     <Box>
-      <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }}/>
+      <SidebarContent
+          onClose={() => onClose}
+          display={isFullScreen && !isMobile ? 'none' : { base: 'none', md: 'block' }}
+          isFullScreen={isFullScreen}
+      />
       <Drawer
         isOpen={isOpen}
         placement="left"
         onClose={onClose}
         returnFocusOnClose={false}
-        onOverlayClick={onClose}
-        size="full">
+        onOverlayClick={onClose}>
         <DrawerContent>
-          <SidebarContent onClose={onClose}/>
+          <SidebarContent onClose={onClose} isFullScreen={isFullScreen}/>
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
       <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} position="fixed" w="100%"/>
-      <Box ml={{ base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
+      <Box ml={isFullScreen && !isMobile ? 0 : { base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
+        <Box position="fixed" left="0" p="5" display={isFullScreen && !isMobile ? { base: 'none', md: 'block'} : 'none'}>
+          <IconButton
+              variant="outline"
+              onClick={onOpen}
+              aria-label="open menu"
+              icon={<FiMenu/>}
+          />
+        </Box>
         <Box position="fixed" right="0" zIndex="9999" p="5" display={{ base: "none", md: "block" }}>
           <ColorModeSwitcher/>
         </Box>
         <Box px="25" pb="120" pt={{ base: "100", md: "15" }}>
           <Suspense fallback={<Box h="100vh" />}>
-            <Outlet/>
+            <Outlet context={{ isFullScreen, setIsFullScreen }} />
           </Suspense>
         </Box>
         <Box position="absolute" bottom="0" left="0" right="0"
-             ml={{ base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
+             ml={isFullScreen && !isMobile ? 0 : { base: 0, md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}>
           <Footer/>
         </Box>
       </Box>
@@ -93,9 +97,10 @@ const Page = () => {
 
 interface SidebarProps extends BoxProps {
   onClose: () => void
+  isFullScreen?: boolean
 }
 
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+const SidebarContent = ({ onClose, isFullScreen, ...rest }: SidebarProps) => {
   const activeColor = useColorModeValue("green.200", "green.800")
   const { pathname } = useLocation()
   const [url, setUrl] = useState<string>(pathname.replace("/", ""))
@@ -146,7 +151,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       bg={useColorModeValue('white', 'gray.900')}
       borderRight="1px"
       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-      w={{ base: 'full', md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}
+      w={isFullScreen && !isMobile ? { base: 'md', md: 'sm' } : { base: 'full', md: "30%", lg: "25%", xl: "20%", "2xl": "17%" }}
       pos="fixed"
       h="full"
       {...rest}
@@ -155,14 +160,14 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
           Zerrium Tools
         </Text>
-        <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose}/>
+        <CloseButton display={isFullScreen && !isMobile ? 'flex' : { base: 'flex', md: 'none' }} onClick={onClose}/>
       </Flex>
       <Flex mx="3" mb="3">
         <InputGroup size='lg' width="100%" margin={"auto"}>
           <Input
               pr="4.5rem"
               type="text"
-              autoFocus={!isMobile}
+              autoFocus={!isFullScreen && !isMobile}
               placeholder="Search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}

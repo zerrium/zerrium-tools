@@ -2,15 +2,19 @@ import { type ChangeEvent, useEffect, useState } from "react";
 import {
   Flex,
   FormControl,
-  Heading,
+  Heading, IconButton,
   Stack,
   Text,
-  Textarea,
+  Textarea, Tooltip,
   useColorModeValue
 } from "@chakra-ui/react";
 import { JsonDiffComponent } from "json-diff-react";
 import _ from 'lodash';
 import { parse, parseDocument } from "yaml";
+import { useOutletContext } from "react-router-dom"
+import type { IOutletContext } from "../../interface/Interfaces.ts"
+import { LuExpand, LuShrink } from "react-icons/lu";
+import { isMobile } from "react-device-detect";
 
 const YamlComparator = () => {
   const [textBox1, setTextBox1] = useState<string>("")
@@ -20,6 +24,8 @@ const YamlComparator = () => {
   const [yamlObj1, setYamlObj1] = useState()
   const [yamlObj2, setYamlObj2] = useState()
   const [isEqual, setIsEqual] = useState<boolean>(false);
+
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
 
   const onChangeInput1 = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTextBox1(e.target.value)
@@ -72,16 +78,32 @@ const YamlComparator = () => {
         <Stack
           spacing={4}
           w={'full'}
-          maxW={'1920px'}
+          maxW={isFullScreen ? 'full' : '1920px'}
           bg={useColorModeValue('white', 'gray.700')}
           rounded={'lg'}
           boxShadow={'lg'}
           borderWidth={1}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
-          p={6}>
-          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-            YAML Object Comparator
-          </Heading>
+          p={6}
+          mt={12}
+        >
+          <Stack direction="row" w="100%" justify="space-between">
+            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+              YAML Object Comparator
+            </Heading>
+            {!isMobile && (
+                <Tooltip label={`${isFullScreen ? "Exit" : "Enter"} fullscreen mode`} mr="2">
+                  <IconButton
+                      variant="outline"
+                      aria-label="open menu"
+                      icon={isFullScreen ? <LuShrink fontSize="22px" /> : <LuExpand fontSize="22px" />}
+                      size="sm"
+                      m={0}
+                      onClick={() => setIsFullScreen(!isFullScreen)}
+                  />
+                </Tooltip>
+            )}
+          </Stack>
           <Text fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool parses YAML according to <a
             href="https://yaml.org/spec/1.2.2" target="_blank"
             rel="noreferrer"><u>YAML specification v1.2.2</u></a> and backwards compatible.
@@ -107,7 +129,7 @@ const YamlComparator = () => {
                   _placeholder={{ color: 'gray.500' }}
                   value={textBox1}
                   onChange={onChangeInput1}
-                  rows={20}
+                  rows={isFullScreen && !isMobile ? 30 : 20}
                   fontFamily="monospace"
                   spellCheck={false}
                 />
@@ -133,7 +155,7 @@ const YamlComparator = () => {
                   _placeholder={{ color: 'gray.500' }}
                   value={textBox2}
                   onChange={onChangeInput2}
-                  rows={20}
+                  rows={isFullScreen && !isMobile ? 30 : 20}
                   fontFamily="monospace"
                   spellCheck={false}
                 />

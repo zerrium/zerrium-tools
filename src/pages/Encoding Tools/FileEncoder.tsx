@@ -3,15 +3,20 @@ import {
   Button,
   Flex,
   FormControl,
-  Heading, Input, Select,
+  Heading, IconButton, Input, Select,
   Stack,
   Switch,
   Text,
-  Textarea,
+  Textarea, Tooltip,
   useColorModeValue,
   useToast
 } from "@chakra-ui/react";
 import { filetypeextension } from 'magic-bytes.js'
+import { useOutletContext } from "react-router-dom"
+import type { IOutletContext } from "../../interface/Interfaces.ts"
+import { LuExpand, LuShrink } from "react-icons/lu";
+import { isMobile } from "react-device-detect";
+import { FaRegCopy } from "react-icons/fa";
 
 const encodings: { label: string, key: number | string }[] = [
   { label: "Binary", key: 2 },
@@ -32,6 +37,8 @@ const FileEncoder = () => {
   const [fileData, setFileData] = useState<string | Uint8Array>("")
   const [fileLoading, setFileLoading] = useState<boolean>(false)
   const [fileExt, setFileExt] = useState<string>("")
+
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
 
   let fileUpload: HTMLInputElement | null
   const data = new FileReader()
@@ -164,7 +171,7 @@ const FileEncoder = () => {
       <Stack
         spacing={4}
         w={'full'}
-        maxW={'3xl'}
+        maxW={isFullScreen ? 'full' : '3xl'}
         bg={useColorModeValue('white', 'gray.700')}
         rounded={'lg'}
         boxShadow={'lg'}
@@ -173,11 +180,25 @@ const FileEncoder = () => {
         p={6}
         mt={12}
         mb={2}>
-        <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-          File {decode ? "Decoder" : "Encoder"}
-        </Heading>
+        <Stack direction="row" w="100%" justify="space-between">
+          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+            File {decode ? "Decoder" : "Encoder"}
+          </Heading>
+          {!isMobile && (
+              <Tooltip label={`${isFullScreen ? "Exit" : "Enter"} fullscreen mode`} mr="2">
+                <IconButton
+                    variant="outline"
+                    aria-label="open menu"
+                    icon={isFullScreen ? <LuShrink fontSize="22px" /> : <LuExpand fontSize="22px" />}
+                    size="sm"
+                    m={0}
+                    onClick={() => setIsFullScreen(!isFullScreen)}
+                />
+              </Tooltip>
+          )}
+        </Stack>
         <FormControl id="url">
-          <Stack direction="row" w="100%" my={3}>
+          <Stack direction="row" w={isFullScreen && !isMobile ? "40%" : "100%"} my={3}>
             <Stack direction="row" w="28%" px={"1%"}>
               <Text mx={1} mt="5%">{decode ? "Decode from" : "Encode to"}</Text>
             </Stack>
@@ -192,7 +213,7 @@ const FileEncoder = () => {
 
           <Stack direction="row" w="100%" mb={3}>
             <Switch colorScheme='green'
-                    mx={1} mt="0.6%"
+                    mx={1} mt="0.2%"
                     isChecked={decode}
                     onChange={onChangeSwitch}/>
             <Text mx={1}>Decode File</Text>
@@ -205,7 +226,7 @@ const FileEncoder = () => {
             </Text>
           )}
 
-          <Stack direction="row" w="100%" mb={3} display={decode ? "none" : "flex"}>
+          <Stack direction="row" w={isFullScreen && !isMobile ? "40%" : "100%"} mb={3} display={decode ? "none" : "flex"}>
             <Stack direction="row" w="70%" me={"1%"}>
               <Input
                 placeholder="Uploaded file"
@@ -246,14 +267,31 @@ const FileEncoder = () => {
             isDisabled={!decode}
             display={decode ? "current" : "none"}
             spellCheck={false}
+            rows={isFullScreen && !isMobile ? 20 : 5}
           />
 
-          <Text whiteSpace={"pre"} mb={3}>{"Output: " +
-            (encoding && decode && !error && textBoxInput.length !== 0 ? "detected as a " + fileExt + " file." +
-                (fileExt === "bin" ? "\nFile type can't be determined. File result is set as .bin file instead." : "")
-              : ""
-            )
-          }</Text>
+          <Stack direction="row" w="100%" mb={3}>
+            <Text whiteSpace={"pre"}>{"Output: " +
+                (encoding && decode && !error && textBoxInput.length !== 0 ? "detected as a " + fileExt + " file." +
+                        (fileExt === "bin" ? "\nFile type can't be determined. File result is set as .bin file instead." : "")
+                        : ""
+                )
+            }</Text>
+            {isFullScreen && !decode && (
+                <Button
+                    variant="outline"
+                    aria-label="open menu"
+                    leftIcon={<FaRegCopy fontSize="22px" />}
+                    size="sm"
+                    m={0}
+                    isLoading={fileLoading}
+                    onClick={onClickCopy}
+                    isDisabled={(decode ? fileData.length === 0 : textBoxOutput.length === 0) || error || !encoding}
+                >
+                  {decode ? (error || !encoding ? "Invalid input!" : "Download Result File") : "Copy"}
+                </Button>
+            )}
+          </Stack>
 
           <Textarea
             placeholder="Output"
@@ -269,23 +307,27 @@ const FileEncoder = () => {
                 (error || !encoding) ? "#fa3232" : "current")
             }
             spellCheck={false}
+            rows={isFullScreen && !isMobile ? 20 : 5}
           />
         </FormControl>
-        <Button
-          bg={useColorModeValue(
-            (error || !encoding) && decode ? "#f01818" : "green.400",
-            (error || !encoding) && decode ? "#fa3232" : "green.600")}
-          color={'white'}
-          _hover={{
-            bg: useColorModeValue("green.600", "green.400"),
-          }}
-          onClick={onClickCopy}
-          isDisabled={(decode ? fileData.length === 0 : textBoxOutput.length === 0) || error || !encoding}
-          isLoading={fileLoading}
-          loadingText="Calculating..."
-        >
-          {decode ? (error || !encoding ? "Invalid input!" : "Download Result File") : "Copy"}
-        </Button>
+        <Stack alignItems="center" w="100%">
+          <Button
+              bg={useColorModeValue(
+                  (error || !encoding) && decode ? "#f01818" : "green.400",
+                  (error || !encoding) && decode ? "#fa3232" : "green.600")}
+              color={'white'}
+              _hover={{
+                bg: useColorModeValue("green.600", "green.400"),
+              }}
+              onClick={onClickCopy}
+              isDisabled={(decode ? fileData.length === 0 : textBoxOutput.length === 0) || error || !encoding}
+              isLoading={fileLoading}
+              loadingText="Calculating..."
+              w={isFullScreen && !isMobile ? "40%" : "100%"}
+          >
+            {decode ? (error || !encoding ? "Invalid input!" : "Download Result File") : "Copy"}
+          </Button>
+        </Stack>
         <Text mt={1} display={decode ? "current" : "none"} fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Disclaimer:
           file type detection may not be accurate. It is determined based on&nbsp;
           <a
