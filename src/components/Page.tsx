@@ -229,7 +229,7 @@ const SidebarContent = ({ onClose, isFullScreen, ...rest }: SidebarProps) => {
                     {link.child.map((child) => (
                       ((search.length === 0 || url === child.link || child.name.toLowerCase().includes(search.toLowerCase()) || child?.keyword?.split(',')?.includes(search.toLowerCase())) && (
                         <NavItem key={child.name} href={/*basename + */child.link} fontWeight={url === child.link ? "bold" : "none"}
-                              background={url === child.link ? activeColor : "none"}>
+                              background={url === child.link ? activeColor : "none"} onClick={onClose}>
                         {child.name}
                       </NavItem>
                       ))
@@ -239,7 +239,8 @@ const SidebarContent = ({ onClose, isFullScreen, ...rest }: SidebarProps) => {
               ) : (
                 <NavItem key={link.name} icon={link?.icon} ps={link.icon ? "4" : "12"} href={/*basename + */(link.link || "#")}
                          fontWeight={url === link.link || (index === 0 && url.length === 0) ? "bold" : "none"}
-                         background={url === link.link || (index === 0 && url.length === 0) ? activeColor : "none"}>
+                         background={url === link.link || (index === 0 && url.length === 0) ? activeColor : "none"}
+                         onClick={onClose}>
                   {link.name}
                 </NavItem>
               )}

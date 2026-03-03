@@ -1,8 +1,25 @@
-import { Badge, Flex, FormControl, Heading, Stack, Textarea, useColorModeValue } from "@chakra-ui/react"
+import {
+  Badge,
+  Flex,
+  FormControl,
+  Heading,
+  IconButton,
+  Stack,
+  Textarea,
+  Tooltip,
+  useColorModeValue
+} from "@chakra-ui/react"
 import { useState } from "react";
+import type { IOutletContext } from "../../interface/Interfaces.ts"
+import { LuShrink } from "react-icons/lu";
+import { useOutletContext } from "react-router-dom";
+
 const CharacterCounter = () => {
   const [text, setText] = useState("");
   const [count, setCount] = useState(0);
+
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
+
   return (
     <Flex
       minH={'100vh'}
@@ -18,9 +35,23 @@ const CharacterCounter = () => {
           borderWidth={1}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
           p={6}>
-          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-            Character Counter
-          </Heading>
+          <Stack direction="row" w="100%" justify="space-between">
+            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+              Character Counter
+            </Heading>
+            {isFullScreen && (
+                <Tooltip label="Exit fullscreen mode" mr="2">
+                  <IconButton
+                      variant="outline"
+                      aria-label="open menu"
+                      icon={<LuShrink fontSize="22px" />}
+                      size="sm"
+                      m={0}
+                      onClick={() => setIsFullScreen(!isFullScreen)}
+                  />
+                </Tooltip>
+            )}
+          </Stack>
             <FormControl id="characterCounter">
             <Textarea
               placeholder="Input Text"

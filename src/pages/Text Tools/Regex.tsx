@@ -3,13 +3,16 @@ import {
   Button,
   Flex,
   FormControl,
-  Heading, Select,
+  Heading, IconButton, Select,
   Stack,
   Text,
-  Textarea,
+  Textarea, Tooltip,
   useColorModeValue,
   useToast
 } from "@chakra-ui/react";
+import type { IOutletContext } from "../../interface/Interfaces.ts"
+import { LuShrink } from "react-icons/lu";
+import { useOutletContext } from "react-router-dom";
 
 const templates: { label: string, key: string, value: RegExp }[] = [
   { label: "Username", key: "username", value: /^[a-z0-9_-]{3,15}$/g },
@@ -29,6 +32,8 @@ const templates: { label: string, key: string, value: RegExp }[] = [
 const Regex = () => {
   const [textBox, setTextBox] = useState<string>("")
   const [template, setTemplate] = useState<string>("")
+
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
 
   const toast = useToast({
     position: "top",
@@ -67,9 +72,23 @@ const Regex = () => {
         p={6}
         mt={12}
         mb={2}>
-        <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-          Regex Templates
-        </Heading>
+        <Stack direction="row" w="100%" justify="space-between">
+          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+            Regex Templates
+          </Heading>
+          {isFullScreen && (
+              <Tooltip label="Exit fullscreen mode" mr="2">
+                <IconButton
+                    variant="outline"
+                    aria-label="open menu"
+                    icon={<LuShrink fontSize="22px" />}
+                    size="sm"
+                    m={0}
+                    onClick={() => setIsFullScreen(!isFullScreen)}
+                />
+              </Tooltip>
+          )}
+        </Stack>
         <FormControl id="regex">
           <Stack direction="row" w="100%" my={3}>
             <Stack direction="row" w="28%" px={"1%"}>

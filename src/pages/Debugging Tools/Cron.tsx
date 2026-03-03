@@ -5,21 +5,26 @@ import {
   Button,
   Flex,
   FormControl,
-  Heading, Input,
+  Heading, IconButton, Input,
   Stack,
-  Text,
+  Text, Tooltip,
   useColorModeValue,
   useToast
 } from "@chakra-ui/react";
 import { CronExpressionParser } from "cron-parser";
 import moment from "moment/moment.js";
 import cronstrue from 'cronstrue';
+import type { IOutletContext } from "../../interface/Interfaces.ts"
+import { LuShrink } from "react-icons/lu";
+import { useOutletContext } from "react-router-dom";
 
 const Cron = () => {
   const [textBox, setTextBox] = useState<string>("* * * * *")
   const [status, setStatus] = useState<"Invalid" | "Valid">("Valid")
   const [nextDate, setNextDate] = useState<string>("")
   const [desc, setDesc] = useState<string>("")
+
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
 
   const toast = useToast({
     position: "top",
@@ -70,9 +75,23 @@ const Cron = () => {
           borderWidth={1}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
           p={6}>
-          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-            Cron Viewer
-          </Heading>
+          <Stack direction="row" w="100%" justify="space-between">
+            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+              Cron Viewer
+            </Heading>
+            {isFullScreen && (
+                <Tooltip label="Exit fullscreen mode" mr="2">
+                  <IconButton
+                      variant="outline"
+                      aria-label="open menu"
+                      icon={<LuShrink fontSize="22px" />}
+                      size="sm"
+                      m={0}
+                      onClick={() => setIsFullScreen(!isFullScreen)}
+                  />
+                </Tooltip>
+            )}
+          </Stack>
           <Text fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: There is no definitive standard of cron format. However, this tool supports both <a
             href="https://www.javadoc.io/doc/org.quartz-scheduler/quartz/latest/org/quartz/CronExpression.html" target="_blank"
             rel="noreferrer"><u>Quartz format (Java)</u></a> and <a

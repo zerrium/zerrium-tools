@@ -3,15 +3,18 @@ import {
   Button,
   Flex,
   FormControl,
-  Heading,
+  Heading, IconButton,
   Input,
   Stack,
   Switch,
-  Text,
+  Text, Tooltip,
   useColorModeValue,
   useToast
 } from "@chakra-ui/react";
 import moment from 'moment/moment.js';
+import type { IOutletContext } from "../../interface/Interfaces.ts"
+import { LuShrink } from "react-icons/lu";
+import { useOutletContext } from "react-router-dom";
 
 const DateTimeConverter = () => {
   const [textBoxInput, setTextBoxInput] = useState<string>("")
@@ -20,6 +23,8 @@ const DateTimeConverter = () => {
   const [isNow, setIsNow] = useState<boolean>(true)
   const [error, setError] = useState<boolean>(false)
   const [now, setNow] = useState(moment())
+
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
 
   setInterval(() => {
     setNow(moment())
@@ -96,9 +101,23 @@ const DateTimeConverter = () => {
         p={6}
         mt={12}
         mb={2}>
-        <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-          {decode ? "UNIX Timestamp to Date Time" : "Date Time to UNIX Timestamp"}
-        </Heading>
+        <Stack direction="row" w="100%" justify="space-between">
+          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+            {decode ? "UNIX Timestamp to Date Time" : "Date Time to UNIX Timestamp"}
+          </Heading>
+          {isFullScreen && (
+              <Tooltip label="Exit fullscreen mode" mr="2">
+                <IconButton
+                    variant="outline"
+                    aria-label="open menu"
+                    icon={<LuShrink fontSize="22px" />}
+                    size="sm"
+                    m={0}
+                    onClick={() => setIsFullScreen(!isFullScreen)}
+                />
+              </Tooltip>
+          )}
+        </Stack>
         <FormControl id="url">
           <Stack direction="row" w="100%" mb={3}>
             <Switch colorScheme='green'

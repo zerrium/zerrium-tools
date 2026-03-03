@@ -3,17 +3,20 @@ import {
   Button,
   Flex,
   FormControl,
-  Heading,
+  Heading, IconButton,
   Input,
   Select,
   Stack,
   Switch,
   Text,
-  Textarea,
+  Textarea, Tooltip,
   useColorModeValue,
   useToast
 } from "@chakra-ui/react";
 import { type Hash, keccak224, keccak256, keccak384, keccak512, sha3_224, sha3_256, sha3_384, sha3_512 } from 'js-sha3';
+import type { IOutletContext } from "../../interface/Interfaces.ts"
+import { LuShrink } from "react-icons/lu";
+import { useOutletContext } from "react-router-dom";
 
 const hashAlgorithm: { label: string, key: string, lib?: string, function?:Hash | void }[] = [
   { label: "SHA3-256", key: "sha3_256", lib: "js-sha3", function: sha3_256 },
@@ -44,6 +47,8 @@ const HashCalculator = () => {
   const [fileName, setFileName] = useState<string>("")
   const [fileData, setFileData] = useState<ArrayBuffer>(new ArrayBuffer())
   const [fileLoading, setFileLoading] = useState<boolean>(false)
+
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
 
   let fileUpload: HTMLInputElement | null
   const data = new FileReader()
@@ -138,9 +143,23 @@ const HashCalculator = () => {
         p={6}
         mt={12}
         mb={2}>
-        <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-          Hash Calculator
-        </Heading>
+        <Stack direction="row" w="100%" justify="space-between">
+          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+            Hash Calculator
+          </Heading>
+          {isFullScreen && (
+              <Tooltip label="Exit fullscreen mode" mr="2">
+                <IconButton
+                    variant="outline"
+                    aria-label="open menu"
+                    icon={<LuShrink fontSize="22px" />}
+                    size="sm"
+                    m={0}
+                    onClick={() => setIsFullScreen(!isFullScreen)}
+                />
+              </Tooltip>
+          )}
+        </Stack>
         <FormControl id="hash">
           <Stack direction="row" w="100%" my={3}>
             <Stack direction="row" w="35%" px={"1%"}>

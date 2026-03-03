@@ -11,8 +11,11 @@ import {
   Textarea,
   Text,
   useColorModeValue,
-  useToast
+  useToast, Tooltip, IconButton
 } from "@chakra-ui/react";
+import type { IOutletContext } from "../../interface/Interfaces.ts"
+import { LuShrink } from "react-icons/lu";
+import { useOutletContext } from "react-router-dom";
 
 const generateUuid = () => {
   return uuidv4()
@@ -22,6 +25,8 @@ const UuidGenerator = () => {
   const [textBox, setTextBox] = useState<string>("")
   const [numberOfUuid, setNumberOfUuid] = useState<number>(2)
   const [areaTextBox, setAreaTextBox] = useState<string>("")
+
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
 
   const toast = useToast({
     position: "top",
@@ -75,9 +80,23 @@ const UuidGenerator = () => {
           p={6}
           mt={12}
           mb={2}>
-          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-            Random UUID Generator
-          </Heading>
+          <Stack direction="row" w="100%" justify="space-between">
+            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+              Random UUID Generator
+            </Heading>
+            {isFullScreen && (
+                <Tooltip label="Exit fullscreen mode" mr="2">
+                  <IconButton
+                      variant="outline"
+                      aria-label="open menu"
+                      icon={<LuShrink fontSize="22px" />}
+                      size="sm"
+                      m={0}
+                      onClick={() => setIsFullScreen(!isFullScreen)}
+                  />
+                </Tooltip>
+            )}
+          </Stack>
           <FormControl id="uuid">
             <Input
               placeholder="Generated Random UUID"

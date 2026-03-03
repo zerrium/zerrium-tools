@@ -1,18 +1,21 @@
 import {
-  Accordion, AccordionButton, AccordionIcon,
-  AccordionItem, AccordionPanel,
-  Box, Button,
-  Container,
-  Heading,
-  HStack,
-  Icon, ListItem,
-  SimpleGrid,
-  Stack,
-  Text, UnorderedList, useColorModeValue,
-  VStack
+    Accordion, AccordionButton, AccordionIcon,
+    AccordionItem, AccordionPanel,
+    Box, Button,
+    Container,
+    Heading,
+    HStack,
+    Icon, IconButton, ListItem,
+    SimpleGrid,
+    Stack,
+    Text, Tooltip, UnorderedList, useColorModeValue,
+    VStack
 } from "@chakra-ui/react";
 import { FiCheck, FiX } from 'react-icons/fi'
 import { useEffect } from "react";
+import type { IOutletContext } from "../interface/Interfaces.ts"
+import { LuShrink } from "react-icons/lu";
+import { useOutletContext } from "react-router-dom";
 
 interface FeatureProps {
   id: string,
@@ -146,6 +149,7 @@ const changeLogs: ChangeLogProps[] = [
 
 const Home = () => {
   const textColor = useColorModeValue("gray.500", "gray.400")
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
 
   useEffect(() => {
     const originalRestoration = window.history.scrollRestoration;
@@ -164,91 +168,106 @@ const Home = () => {
   }, []);
 
   return (
-    <Container maxW={'4xl'}>
-      <Stack
-        as={Box}
-        textAlign={'center'}
-        spacing={{ base: 8, md: 14 }}
-        pt={{ base: "10%", md: "12%", lg: "15%", xl: "17%", "2xl": "35%" }}>
-        <Heading
-          fontWeight={700}
-          fontSize={{ base: '5xl', md: '6xl' }}
-          lineHeight={'110%'}>
-          Welcome to <br/>
-          <Text as={'span'} color={'green.400'}>
-            Zerrium Tool Kit
-          </Text>
-        </Heading>
-        <Text color={textColor} fontSize="xl">
-          A handy website for developers that provides many useful tools to help with your development.
-        </Text>
-      </Stack>
-      <Stack w="100%" my={12} py={{ base: "10%", md: "11%", lg: "12%", xl: "13%", "2xl": "15%" }}>
-        <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={10} w="100%">
-          {features.map((feature) => (
-            <HStack key={feature.id} align={'top'}>
-              <Box color={feature?.note ? 'red.400' : 'green.400'} px={2} pt={1}>
-                <Icon as={feature?.note ? FiX : FiCheck} />
-              </Box>
-              <VStack align={'start'}>
-                <Text fontWeight={600}>{feature.title}</Text>
-                <Text color={textColor} textAlign={'justify'}>
-                  {feature?.note ? (
-                    <>
-                      <del>{feature.text}</del>
-                      <br />{feature.note}
-                    </>
-                  ) : feature.text}
-                </Text>
-              </VStack>
-            </HStack>
-          ))}
-        </SimpleGrid>
-      </Stack>
-      <Stack w="100%" pt={6} pb={{ base: "8%", md: "10%", lg: "12%", xl: "15%", "2xl": "18%" }}>
-        <Text fontWeight={600} fontSize="3xl" textAlign="center" pb={2}>
-          What's new?
-        </Text>
-        <Accordion defaultIndex={[0]} allowMultiple>
-          {changeLogs.map((log) => (
-            <AccordionItem key={log.version}>
-              <AccordionButton pb={2}>
-                <AccordionIcon />
-                <Box as='span' flex='1' textAlign='left' pl={3}>
-                  <Text fontWeight={600} fontSize="xl">Version {log.version}</Text>
-                </Box>
-                <Box as='span' flex='1' textAlign='right' pr={2}>
-                  <Text color={textColor} fontSize="sm">{log.date}</Text>
-                </Box>
-              </AccordionButton>
-              <AccordionPanel pb={6}>
-                {log?.note && <Text color={textColor} whiteSpace="pre-line" textAlign={'justify'} pb={1}>{log.note}</Text>}
-                {log?.changes && log?.changes?.length > 0 && (
-                  <UnorderedList>
-                    {log.changes.map((change, index) => (
-                      <ListItem color={textColor} key={index}>
-                        <Text color={textColor} whiteSpace="pre-line" textAlign={'justify'}>{change}</Text>
-                      </ListItem>
-                    ))}
-                  </UnorderedList>
-                )}
-              </AccordionPanel>
-            </AccordionItem>
-          ))}
-        </Accordion>
-        <Box flex='1' textAlign='center'>
-          <Button variant='outline' onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-            <Text
-              color={useColorModeValue("gray.600", "gray.300")}
-              fontSize="sm"
-              fontWeight="normal"
-            >
-              Back to top
-            </Text>
-          </Button>
-        </Box>
-      </Stack>
-    </Container>
+      <>
+          <Box position="fixed" right="0" pt="12" pr="5" display={isFullScreen ? "block" : "none"}>
+              <Tooltip label="Exit fullscreen mode" mr="2">
+                  <IconButton
+                      variant="outline"
+                      aria-label="open menu"
+                      icon={<LuShrink fontSize="24px" />}
+                      size="md"
+                      marginRight={2}
+                      onClick={() => setIsFullScreen(!isFullScreen)}
+                  />
+              </Tooltip>
+          </Box>
+          <Container maxW={'4xl'}>
+              <Stack
+                  as={Box}
+                  textAlign={'center'}
+                  spacing={{ base: 8, md: 14 }}
+                  pt={{ base: "10%", md: "12%", lg: "15%", xl: "17%", "2xl": "35%" }}>
+                  <Heading
+                      fontWeight={700}
+                      fontSize={{ base: '5xl', md: '6xl' }}
+                      lineHeight={'110%'}>
+                      Welcome to <br/>
+                      <Text as={'span'} color={'green.400'}>
+                          Zerrium Tool Kit
+                      </Text>
+                  </Heading>
+                  <Text color={textColor} fontSize="xl">
+                      A handy website for developers that provides many useful tools to help with your development.
+                  </Text>
+              </Stack>
+              <Stack w="100%" my={12} py={{ base: "10%", md: "11%", lg: "12%", xl: "13%", "2xl": "15%" }}>
+                  <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={10} w="100%">
+                      {features.map((feature) => (
+                          <HStack key={feature.id} align={'top'}>
+                              <Box color={feature?.note ? 'red.400' : 'green.400'} px={2} pt={1}>
+                                  <Icon as={feature?.note ? FiX : FiCheck} />
+                              </Box>
+                              <VStack align={'start'}>
+                                  <Text fontWeight={600}>{feature.title}</Text>
+                                  <Text color={textColor} textAlign={'justify'}>
+                                      {feature?.note ? (
+                                          <>
+                                              <del>{feature.text}</del>
+                                              <br />{feature.note}
+                                          </>
+                                      ) : feature.text}
+                                  </Text>
+                              </VStack>
+                          </HStack>
+                      ))}
+                  </SimpleGrid>
+              </Stack>
+              <Stack w="100%" pt={6} pb={{ base: "8%", md: "10%", lg: "12%", xl: "15%", "2xl": "18%" }}>
+                  <Text fontWeight={600} fontSize="3xl" textAlign="center" pb={2}>
+                      What's new?
+                  </Text>
+                  <Accordion defaultIndex={[0]} allowMultiple>
+                      {changeLogs.map((log) => (
+                          <AccordionItem key={log.version}>
+                              <AccordionButton pb={2}>
+                                  <AccordionIcon />
+                                  <Box as='span' flex='1' textAlign='left' pl={3}>
+                                      <Text fontWeight={600} fontSize="xl">Version {log.version}</Text>
+                                  </Box>
+                                  <Box as='span' flex='1' textAlign='right' pr={2}>
+                                      <Text color={textColor} fontSize="sm">{log.date}</Text>
+                                  </Box>
+                              </AccordionButton>
+                              <AccordionPanel pb={6}>
+                                  {log?.note && <Text color={textColor} whiteSpace="pre-line" textAlign={'justify'} pb={1}>{log.note}</Text>}
+                                  {log?.changes && log?.changes?.length > 0 && (
+                                      <UnorderedList>
+                                          {log.changes.map((change, index) => (
+                                              <ListItem color={textColor} key={index}>
+                                                  <Text color={textColor} whiteSpace="pre-line" textAlign={'justify'}>{change}</Text>
+                                              </ListItem>
+                                          ))}
+                                      </UnorderedList>
+                                  )}
+                              </AccordionPanel>
+                          </AccordionItem>
+                      ))}
+                  </Accordion>
+                  <Box flex='1' textAlign='center'>
+                      <Button variant='outline' onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+                          <Text
+                              color={useColorModeValue("gray.600", "gray.300")}
+                              fontSize="sm"
+                              fontWeight="normal"
+                          >
+                              Back to top
+                          </Text>
+                      </Button>
+                  </Box>
+              </Stack>
+          </Container>
+      </>
+
   )
 }
 
