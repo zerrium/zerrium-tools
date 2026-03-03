@@ -1,17 +1,20 @@
 import { type ChangeEvent, useEffect, useState } from "react";
 import {
-    Button,
-    Flex,
-    FormControl,
-    Heading,
-    Input, Select,
-    Stack,
-    Switch,
-    Text, Textarea,
-    useColorModeValue,
-    useToast
+  Button,
+  Flex,
+  FormControl,
+  Heading, IconButton,
+  Input, Select,
+  Stack,
+  Switch,
+  Text, Textarea, Tooltip,
+  useColorModeValue,
+  useToast
 } from "@chakra-ui/react";
 import moment from 'moment/moment.js';
+import type { IOutletContext } from "../../interface/Interfaces.ts"
+import { LuShrink } from "react-icons/lu";
+import { useOutletContext } from "react-router-dom";
 
 const DateTimeCalculator = () => {
   const [textBoxInput1, setTextBoxInput1] = useState<string>("")
@@ -22,6 +25,8 @@ const DateTimeCalculator = () => {
   const [error, setError] = useState<boolean>(false)
   const [now, setNow] = useState(moment())
     const [unit, setUnit] = useState<string>('d')
+
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
 
   setInterval(() => {
     setNow(moment())
@@ -131,9 +136,23 @@ const DateTimeCalculator = () => {
         p={6}
         mt={12}
         mb={2}>
-        <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-          Date Time Calculator
-        </Heading>
+        <Stack direction="row" w="100%" justify="space-between">
+          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+            Date Time Calculator
+          </Heading>
+          {isFullScreen && (
+              <Tooltip label="Exit fullscreen mode" mr="2">
+                <IconButton
+                    variant="outline"
+                    aria-label="open menu"
+                    icon={<LuShrink fontSize="22px" />}
+                    size="sm"
+                    m={0}
+                    onClick={() => setIsFullScreen(!isFullScreen)}
+                />
+              </Tooltip>
+          )}
+        </Stack>
         <FormControl id="url">
           <Stack direction="row" w="100%" mb={3}>
             <Text mx={1}>Duration between 2 Dates</Text>

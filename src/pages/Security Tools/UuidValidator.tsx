@@ -5,13 +5,16 @@ import {
   Button,
   Flex,
   FormControl,
-  Heading,
+  Heading, IconButton,
   Stack,
   Text,
-  Textarea,
+  Textarea, Tooltip,
   useColorModeValue,
   useToast
 } from "@chakra-ui/react";
+import type { IOutletContext } from "../../interface/Interfaces.ts"
+import { LuShrink } from "react-icons/lu";
+import { useOutletContext } from "react-router-dom";
 
 const validateUuid = (uuid: string) => {
   return validate(uuid)
@@ -21,6 +24,8 @@ const UuidValidator = () => {
   const [textBox, setTextBox] = useState<string>("")
   const [textBoxResult, setTextBoxResult] = useState<string>("")
   const [status, setStatus] = useState<"Invalid" | "Valid">("Invalid")
+
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
 
   const toast = useToast({
     position: "top",
@@ -79,9 +84,23 @@ const UuidValidator = () => {
           borderWidth={1}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
           p={6}>
-          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-            UUID Validator
-          </Heading>
+          <Stack direction="row" w="100%" justify="space-between">
+            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+              UUID Validator
+            </Heading>
+            {isFullScreen && (
+                <Tooltip label="Exit fullscreen mode" mr="2">
+                  <IconButton
+                      variant="outline"
+                      aria-label="open menu"
+                      icon={<LuShrink fontSize="22px" />}
+                      size="sm"
+                      m={0}
+                      onClick={() => setIsFullScreen(!isFullScreen)}
+                  />
+                </Tooltip>
+            )}
+          </Stack>
           <Text fontSize="sm" color={useColorModeValue("gray.500", "gray.400")}>Note: This tool parses any UUID versions according to RFC 9562 <a
             href="https://www.rfc-editor.org/rfc/rfc9562" target="_blank"
             rel="noreferrer"><u>Universally Unique IDentifiers standard.</u></a>

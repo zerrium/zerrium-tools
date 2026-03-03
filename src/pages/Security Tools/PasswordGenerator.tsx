@@ -9,8 +9,11 @@ import {
   Textarea,
   Text,
   useColorModeValue,
-  useToast, Checkbox
+  useToast, Checkbox, Tooltip, IconButton
 } from "@chakra-ui/react";
+import type { IOutletContext } from "../../interface/Interfaces.ts"
+import { LuShrink } from "react-icons/lu";
+import { useOutletContext } from "react-router-dom";
 
 const lowerAlphabets = "abcdefghijklmnopqrstuvwxyz"
 const upperAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -36,6 +39,8 @@ const PasswordGenerator = () => {
   const [isSpecial, setIsSpecial] = useState<boolean>(true)
   const [isSpecialURL, setIsSpecialURL] = useState<boolean>(false)
   const [avoidAmbiguous, setAvoidAmbiguous] = useState<boolean>(false)
+
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
 
   const toast = useToast({
     position: "top",
@@ -244,9 +249,23 @@ const PasswordGenerator = () => {
           p={6}
           mt={12}
           mb={2}>
-          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-            Password Generator Options
-          </Heading>
+          <Stack direction="row" w="100%" justify="space-between">
+            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+              Password Generator Options
+            </Heading>
+            {isFullScreen && (
+                <Tooltip label="Exit fullscreen mode" mr="2">
+                  <IconButton
+                      variant="outline"
+                      aria-label="open menu"
+                      icon={<LuShrink fontSize="22px" />}
+                      size="sm"
+                      m={0}
+                      onClick={() => setIsFullScreen(!isFullScreen)}
+                  />
+                </Tooltip>
+            )}
+          </Stack>
           <FormControl id="optionPassword">
             <Stack direction="row" w="100%">
               <Stack direction="row" w="50%" px={"1%"} justifyContent="right">
