@@ -37,6 +37,10 @@ const features: FeatureProps[] = [
 ]
 
 const changeLogs: ChangeLogProps[] = [
+  { version: "1.8.1", date: "3 Mar 2026", changes: [
+      "Added fullscreen mode for some pages",
+    ]
+  },
   { version: "1.8.0", date: "15 Feb 2026", changes: [
       "Enabled text selection on all text box output",
       "Disabled spell check on all text box",

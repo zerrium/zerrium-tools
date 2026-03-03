@@ -2,22 +2,28 @@ import { type ChangeEvent, useEffect, useState } from "react";
 import {
   Button,
   Flex,
-  Heading,
+  Heading, IconButton,
   Stack,
   Switch,
   Text,
-  Textarea,
+  Textarea, Tooltip,
   useColorMode,
   useColorModeValue
 } from "@chakra-ui/react";
 // @ts-ignore
 import DiffMatchPatch from 'diff-match-patch';
+import { useOutletContext } from "react-router-dom"
+import type { IOutletContext } from "../../interface/Interfaces.ts"
+import { LuExpand, LuShrink } from "react-icons/lu";
+import { isMobile } from "react-device-detect";
 
 const TextComparator = () => {
   const [textBox1, setTextBox1] = useState<string>("")
   const [textBox2, setTextBox2] = useState<string>("")
   const [isLive, setIsLive] = useState<boolean>(false)
   const [hasResult, setHasResult] = useState<boolean>(false)
+
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
 
   const { colorMode } = useColorMode()
 
@@ -87,16 +93,32 @@ const TextComparator = () => {
         <Stack
           spacing={4}
           w={'full'}
-          maxW={'1920px'}
+          maxW={isFullScreen ? 'full' : '1920px'}
           bg={useColorModeValue('white', 'gray.700')}
           rounded={'lg'}
           boxShadow={'lg'}
           borderWidth={1}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
-          p={6}>
-          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-            Text Comparator
-          </Heading>
+          p={6}
+          mt={12}
+        >
+          <Stack direction="row" w="100%" justify="space-between">
+            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+              Text Comparator
+            </Heading>
+            {!isMobile && (
+                <Tooltip label={`${isFullScreen ? "Exit" : "Enter"} fullscreen mode`} mr="2">
+                  <IconButton
+                      variant="outline"
+                      aria-label="open menu"
+                      icon={isFullScreen ? <LuShrink fontSize="22px" /> : <LuExpand fontSize="22px" />}
+                      size="sm"
+                      m={0}
+                      onClick={() => setIsFullScreen(!isFullScreen)}
+                  />
+                </Tooltip>
+            )}
+          </Stack>
           <Stack direction="row" w="100%">
             <Switch colorScheme='green'
                     mx={1} mt="0.2%"
@@ -112,7 +134,7 @@ const TextComparator = () => {
                 _placeholder={{ color: 'gray.500' }}
                 value={textBox1}
                 onChange={onChangeInput1}
-                rows={15}
+                rows={isFullScreen ? 25 : 15}
                 fontFamily="monospace"
                 spellCheck={false}
               />
@@ -123,7 +145,7 @@ const TextComparator = () => {
                 _placeholder={{ color: 'gray.500' }}
                 value={textBox2}
                 onChange={onChangeInput2}
-                rows={15}
+                rows={isFullScreen ? 25 : 15}
                 fontFamily="monospace"
                 spellCheck={false}
               />
@@ -149,7 +171,7 @@ const TextComparator = () => {
             mt={6}
             spacing={4}
             w={'full'}
-            maxW={'960px'}
+            maxW={isFullScreen ? 'full' : '960px'}
             bg={useColorModeValue('white', 'gray.700')}
             rounded={'lg'}
             boxShadow={'lg'}

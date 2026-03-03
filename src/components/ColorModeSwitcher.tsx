@@ -1,7 +1,7 @@
 import { type FC, useEffect, useState } from "react"
 import {
   IconButton,
-  type IconButtonProps,
+  type IconButtonProps, Text, Tooltip,
   useColorMode,
   useColorModePreference,
 } from "@chakra-ui/react"
@@ -39,18 +39,26 @@ export const ColorModeSwitcher: FC<ColorModeSwitcherProps> = (props) => {
   }, [colorModeCycleState, systemColorMode, setColorMode])
 
   return (
-    <IconButton
-      size="md"
-      fontSize="lg"
-      variant="ghost"
-      color="current"
-      border="1px"
-      borderColor="gray.200"
-      marginRight="2"
-      onClick={onClick}
-      icon={getIcon()}
-      aria-label="Switch color mode"
-      {...props}
-    />
+      <Tooltip label={
+        <Text>
+          Current color mode is {["auto", "light", "dark"][colorModeCycleState]}<br/>
+          Click to change it.
+        </Text>
+      } mr="2" closeOnClick={false}>
+      <IconButton
+          size="md"
+          fontSize="lg"
+          variant="ghost"
+          color="current"
+          border="1px"
+          borderColor="gray.200"
+          marginRight="2"
+          onClick={onClick}
+          icon={getIcon()}
+          aria-label="Switch color mode"
+          {...props}
+      />
+    </Tooltip>
+
   )
 }

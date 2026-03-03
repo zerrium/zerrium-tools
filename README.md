@@ -37,14 +37,14 @@ A client-side [website](https://tools.zerrium.com) for developers that provides 
 - Regex Templates
 - Code Beautifier/Minifier
 - JSON Viewer and Comparator
-- YAML Validator
-- YAML Comparator
+- YAML Validator and Comparator
 
 ### Date Time Tools
 - Date Time Calculator
 - Date Time Converter
 
 ### Debugging Tools
+- Cron Viewer
 - Stack Trace Viewer (Java)<br>
 
 ## 🧑‍💻 Contributing

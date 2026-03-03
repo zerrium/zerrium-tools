@@ -3,14 +3,19 @@ import {
   Button,
   Flex,
   FormControl,
-  Heading, Select,
+  Heading, IconButton, Select,
   Stack, Switch,
   Text,
-  Textarea,
+  Textarea, Tooltip,
   useColorModeValue,
   useToast
 } from "@chakra-ui/react";
 import { decode as decodeHtml, type Level, type EncodeMode } from 'html-entities';
+import { useOutletContext } from "react-router-dom"
+import type { IOutletContext } from "../../interface/Interfaces.ts"
+import { LuExpand, LuShrink } from "react-icons/lu";
+import { isMobile } from "react-device-detect";
+import { FaRegCopy } from "react-icons/fa";
 
 const codes: { label: string, key: string, regex: RegExp[] }[] = [
   { label: "Java", key: "java", regex: [
@@ -33,6 +38,8 @@ const StackTraceViewer = () => {
   const [result, setResult] = useState<string>("")
   const [isDecodeHtml, setIsDecodeHtml] = useState<boolean>(false)
   const [isDecodeUrl, setIsDecodeUrl] = useState<boolean>(false)
+
+  const { isFullScreen, setIsFullScreen } = useOutletContext<IOutletContext>()
 
   const toast = useToast({
     position: "top",
@@ -114,16 +121,32 @@ const StackTraceViewer = () => {
         <Stack
           spacing={4}
           w={'full'}
-          maxW={'1920px'}
+          maxW={isFullScreen ? 'full' : '1920px'}
           bg={useColorModeValue('white', 'gray.700')}
           rounded={'lg'}
           boxShadow={'lg'}
           borderWidth={1}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
-          p={6}>
-          <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-            Stack Trace Viewer
-          </Heading>
+          p={6}
+          mt={12}
+        >
+          <Stack direction="row" w="100%" justify="space-between">
+            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+              Stack Trace Viewer
+            </Heading>
+            {!isMobile && (
+                <Tooltip label={`${isFullScreen ? "Exit" : "Enter"} fullscreen mode`} mr="2">
+                  <IconButton
+                      variant="outline"
+                      aria-label="open menu"
+                      icon={isFullScreen ? <LuShrink fontSize="22px" /> : <LuExpand fontSize="22px" />}
+                      size="sm"
+                      m={0}
+                      onClick={() => setIsFullScreen(!isFullScreen)}
+                  />
+                </Tooltip>
+            )}
+          </Stack>
           <FormControl id="stackTrace">
             <Stack direction="row" w="100%" my={3}>
               <Stack direction="row" w="28%" maxW="200px" px={"1%"}>
@@ -174,8 +197,21 @@ const StackTraceViewer = () => {
               disabled={!code}
               spellCheck={false}
             />
+            {isFullScreen && (
+                <Button
+                    mt={2}
+                    variant="outline"
+                    aria-label="open menu"
+                    leftIcon={<FaRegCopy fontSize="22px" />}
+                    size="sm"
+                    onClick={onClickCopy}
+                    isDisabled={result.length === 0}
+                >
+                  Copy Output
+                </Button>
+            )}
             <Textarea
-              mt={4}
+              mt={isFullScreen ? 2 : 4}
               placeholder="Formatted output"
               _placeholder={{ color: 'gray.500' }}
               value={result}
